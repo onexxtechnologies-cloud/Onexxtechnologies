@@ -50,7 +50,7 @@ const HeroSection = () => {
             zIndex: 1,
           }}
         >
-          <Wave3d amplitude={1.5} distance={0} enableMouseInteraction={true} />
+          <Wave3d amplitude={1} distance={0}  />
         </div>
 
         {/* CONTENT */}
