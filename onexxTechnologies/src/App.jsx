@@ -4,7 +4,6 @@ import Halfmoon from "./pages/halfmoon.jsx";
 function App() {
   return (
     <>
-
       <Navbar />
       <HeroSection />
       <Halfmoon />
