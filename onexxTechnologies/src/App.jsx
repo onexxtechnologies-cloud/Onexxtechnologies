@@ -5,7 +5,6 @@ import OnexxatronModel from "./pages/3dmodel.jsx"
 function App() {
   return (
     <>
-
       <Navbar />
       
       <HeroSection />
