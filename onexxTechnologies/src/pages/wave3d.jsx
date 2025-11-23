@@ -22,15 +22,10 @@ uniform float uDistance;
 uniform vec2 uMouse;
 
 #define PI 3.1415926538
-
-// OPTIMIZATION: Reduced line count from 40 to 25. 
-// Visually similar, but 40% less math per pixel.
-const int u_line_count = 25; 
-
+const int u_line_count = 20; // reduced for performance
 const float u_line_width = 7.0;
 const float u_line_blur = 10.0;
 
-// Optimized Perlin Noise
 float Perlin2D(vec2 P) {
     vec2 Pi = floor(P);
     vec4 Pf_Pfmin1 = P.xyxy - vec4(Pi, Pi + 1.0);
@@ -99,14 +94,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 uv = fragCoord / iResolution.xy;
 
     float line_strength = 1.0;
-    
-    // Loop unrolling hint isn't always supported in WebGL1, but keeping logic simple helps
     for (int i = 0; i < u_line_count; i++) {
         float p = float(i) / float(u_line_count);
-        
-        // Optimization: If the line is almost invisible, skip calculation? 
-        // In shaders, branching is expensive, so we stick to raw math but reduced count.
-        
         line_strength *= (1.0 - lineFn(
             uv,
             u_line_width * pixel(1.0, iResolution.xy) * (1.0 - p),
@@ -128,12 +117,13 @@ void main() {
 }
 `;
 
-const Threads = ({ 
-    color = [0.2, 0.4, 1.0], 
-    amplitude = 1, 
-    distance = 0, 
-    enableMouseInteraction = false, 
-    ...rest 
+const Threads = ({
+  color = [0.2, 0.4, 1.0],
+  amplitude = 1,
+  distance = 0,
+  enableMouseInteraction = false,
+  resolutionScale = 1, // scale 0.5~1 for performance
+  ...rest
 }) => {
   const containerRef = useRef(null);
   const animationFrameId = useRef();
@@ -142,17 +132,11 @@ const Threads = ({
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    // OPTIMIZATION 1: Disable depth buffer (not needed for 2D)
-    // OPTIMIZATION 2: Cap DPR at 2. Mobile screens with DPR 3.0 kill performance.
-    const renderer = new Renderer({ 
-        alpha: true, 
-        depth: false,
-        dpr: Math.min(window.devicePixelRatio, 2) 
-    });
-    
+    const renderer = new Renderer({ alpha: true });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
-    
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     container.appendChild(gl.canvas);
 
     const geometry = new Triangle(gl);
@@ -161,87 +145,84 @@ const Threads = ({
       fragment: fragmentShader,
       uniforms: {
         iTime: { value: 0 },
-        iResolution: {
-          value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
-        },
+        iResolution: { value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height) },
         uColor: { value: new Color(...color) },
         uAmplitude: { value: amplitude },
         uDistance: { value: distance },
-        uMouse: { value: new Float32Array([0.5, 0.5]) }
-      }
+        uMouse: { value: new Float32Array([0.5, 0.5]) },
+      },
     });
 
     const mesh = new Mesh(gl, { geometry, program });
 
+    // --- Resize ---
     function resize() {
-      if (!container) return;
       const { clientWidth, clientHeight } = container;
-      
-      // Renderer handles DPR internally if passed in constructor, 
-      // but we ensure sizes are passed as CSS pixels here
-      renderer.setSize(clientWidth, clientHeight);
-      
-      // Pass the actual pixel values to the shader
-      program.uniforms.iResolution.value.r = gl.canvas.width;
-      program.uniforms.iResolution.value.g = gl.canvas.height;
-      program.uniforms.iResolution.value.b = gl.canvas.width / gl.canvas.height;
+      const width = clientWidth * resolutionScale;
+      const height = clientHeight * resolutionScale;
+      renderer.setSize(width, height);
+      gl.canvas.style.width = clientWidth + "px";
+      gl.canvas.style.height = clientHeight + "px";
+      program.uniforms.iResolution.value.r = width;
+      program.uniforms.iResolution.value.g = height;
+      program.uniforms.iResolution.value.b = width / height;
     }
-    
     window.addEventListener('resize', resize);
     resize();
 
+    // --- Mouse ---
     let currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
 
     function handleMouseMove(e) {
       const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
-      targetMouse = [x, y];
+      targetMouse = [
+        (e.clientX - rect.left) / rect.width,
+        1.0 - (e.clientY - rect.top) / rect.height,
+      ];
     }
-
     function handleMouseLeave() {
       targetMouse = [0.5, 0.5];
     }
-
     if (enableMouseInteraction) {
       container.addEventListener('mousemove', handleMouseMove);
       container.addEventListener('mouseleave', handleMouseLeave);
     }
 
-    function update(t) {
+    // --- Animation ---
+    function update(now) {
+      const currentTime = now * 0.001; // absolute time
+      program.uniforms.iTime.value = currentTime;
+
       if (enableMouseInteraction) {
         const smoothing = 0.05;
         currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
         currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
-        program.uniforms.uMouse.value[0] = currentMouse[0];
-        program.uniforms.uMouse.value[1] = currentMouse[1];
       } else {
-        program.uniforms.uMouse.value[0] = 0.5;
-        program.uniforms.uMouse.value[1] = 0.5;
+        currentMouse[0] = 0.5;
+        currentMouse[1] = 0.5;
       }
-      program.uniforms.iTime.value = t * 0.001;
+
+      program.uniforms.uMouse.value[0] = currentMouse[0];
+      program.uniforms.uMouse.value[1] = currentMouse[1];
 
       renderer.render({ scene: mesh });
       animationFrameId.current = requestAnimationFrame(update);
     }
+
     animationFrameId.current = requestAnimationFrame(update);
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       window.removeEventListener('resize', resize);
-
       if (enableMouseInteraction) {
         container.removeEventListener('mousemove', handleMouseMove);
         container.removeEventListener('mouseleave', handleMouseLeave);
       }
-      
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
-      
-      // Force loose context to prevent memory leaks
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [color, amplitude, distance, enableMouseInteraction]);
+  }, [color, amplitude, distance, enableMouseInteraction, resolutionScale]);
 
   return <div ref={containerRef} className="w-full h-full relative" {...rest} />;
 };

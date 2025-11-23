@@ -5,70 +5,91 @@ import * as THREE from "three";
 
 function OnexxatronModel() {
   const group = useRef();
+  const glowLight = useRef();
 
-  // Load GLB model
-  const { scene: glbScene, animations } = useGLTF("/public/2robo.glb"); // ✅ path
-  const model = React.useMemo(() => glbScene.clone(true), [glbScene]); // deep clone for skeleton
+  const { scene: glbScene, animations } = useGLTF("/public/2robo.glb");
+  const model = React.useMemo(() => glbScene.clone(true), [glbScene]);
 
-  // Setup animations
   const { actions } = useAnimations(animations, model);
 
-  // Stop all GLB animations only
+  // Stop animations
   useEffect(() => {
     if (!actions) return;
     Object.values(actions).forEach((action) => action.stop());
   }, [actions]);
 
-  // Apply custom pose and force skeleton update
+  // Pose adjustments
   useEffect(() => {
+    if (!model) return;
+
+    const rUpper = model.getObjectByName("CC_Base_R_Upperarm");
+    const rFore = model.getObjectByName("CC_Base_R_Forearm");
+    const rHand = model.getObjectByName("CC_Base_R_Hand");
+
+    const lUpper = model.getObjectByName("CC_Base_L_Upperarm");
+    const lFore = model.getObjectByName("CC_Base_L_Forearm");
+    const lHand = model.getObjectByName("CC_Base_L_Hand");
+
+    if (rUpper) rUpper.rotation.set(THREE.MathUtils.degToRad(-10), 0, THREE.MathUtils.degToRad(-75));
+    if (rFore) rFore.rotation.set(0, 0, THREE.MathUtils.degToRad(-15));
+    if (rHand) rHand.rotation.set(THREE.MathUtils.degToRad(-90), THREE.MathUtils.degToRad(10), 0);
+
+    if (lUpper) lUpper.rotation.set(THREE.MathUtils.degToRad(-10), 0, THREE.MathUtils.degToRad(-75));
+    if (lFore) lFore.rotation.set(0, 0, THREE.MathUtils.degToRad(-15));
+    if (lHand) lHand.rotation.set(THREE.MathUtils.degToRad(-90), THREE.MathUtils.degToRad(10), 0);
+
+    model.traverse((obj) => {
+      if (obj.isSkinnedMesh) {
+        obj.skeleton.pose();
+        obj.updateMatrixWorld(true);
+      }
+    });
+
+    model.traverse((obj) => {
+      if (obj.isMesh && obj.material) {
+        obj.material.metalness = 0.85;
+        obj.material.roughness = 0.25;
+        obj.material.envMapIntensity = 1.3;
+      }
+    });
+  }, [model]);
+
+  // ⭐ ADD GLOWING POINT LIGHT IN CENTER
+useEffect(() => {
   if (!model) return;
 
-  const rUpper = model.getObjectByName("CC_Base_R_Upperarm");
-  const rFore = model.getObjectByName("CC_Base_R_Forearm");
-  const rHand = model.getObjectByName("CC_Base_R_Hand");
+  const light = new THREE.SpotLight("#016396", 100, 5, Math.PI / 5.5, 0.5, 2);
+  light.position.set(0, 0.2, 3);        // position of spotlight
+  
 
-  const lUpper = model.getObjectByName("CC_Base_L_Upperarm");
-  const lFore = model.getObjectByName("CC_Base_L_Forearm");
-  const lHand = model.getObjectByName("CC_Base_L_Hand");
+  model.add(light);
+  
 
-  // Right arm downward
-  if (rUpper) rUpper.rotation.set(THREE.MathUtils.degToRad(-10), 0, THREE.MathUtils.degToRad(-75));
-  if (rFore) rFore.rotation.set(0, 0, THREE.MathUtils.degToRad(-15));
-  if (rHand) rHand.rotation.set(THREE.MathUtils.degToRad(-90), THREE.MathUtils.degToRad(10), 0);
-
-  // Left arm downward (mirrored)
-  if (lUpper) lUpper.rotation.set(THREE.MathUtils.degToRad(-10), 0, THREE.MathUtils.degToRad(-75));
-  if (lFore) lFore.rotation.set(0, 0, THREE.MathUtils.degToRad(-15));
-  if (lHand) lHand.rotation.set(THREE.MathUtils.degToRad(-90), THREE.MathUtils.degToRad(10), 0);
-
-  model.traverse((obj) => {
-    if (obj.isSkinnedMesh) {
-      obj.skeleton.pose();
-      obj.updateMatrixWorld(true);
-    }
-  });
-
-  model.traverse((obj) => {
-    if (obj.isMesh && obj.material) {
-      obj.material.metalness = 0.85;
-      obj.material.roughness = 0.25;
-      obj.material.envMapIntensity = 1.3;
-    }
-  });
+  glowLight.current = light;
 }, [model]);
 
 
-  return <primitive ref={group} object={model} scale={1} position={[0, 0, 0]} />;
+  return (
+    <group ref={group}>
+      <primitive object={model} scale={1} position={[0, 0, 0]} />
+    </group>
+  );
 }
 
 export default function RobotAnimation() {
+  const robotRef = useRef();
+
   return (
     <div style={{ width: "100%", height: "700px" }}>
       <Canvas camera={{ position: [3, 2, 5], fov: 45 }}>
         <ambientLight intensity={0.25} />
         <directionalLight position={[5, 5, 5]} intensity={0.5} />
         <Environment preset="city" environmentIntensity={0.4} />
-        <OnexxatronModel />
+
+        <group ref={robotRef}>
+          <OnexxatronModel />
+        </group>
+
         <OrbitControls enableZoom={false} />
       </Canvas>
     </div>
