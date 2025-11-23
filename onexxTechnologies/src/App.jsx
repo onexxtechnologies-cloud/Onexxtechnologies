@@ -1,7 +1,15 @@
-import RobotWaving from "./components/3dmodelRobo";
-
+import HeroSection from "./pages/herosection.jsx";
+import Navbar from "./pages/navbar.jsx";
+import Halfmoon from "./pages/halfmoon.jsx";
 function App() {
-  return <RobotWaving />;
+  return (
+    <>
+
+      <Navbar />
+      <HeroSection />
+      <Halfmoon />
+    </>
+  );
 }
 
 export default App;
