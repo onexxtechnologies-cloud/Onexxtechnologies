@@ -50,20 +50,20 @@ const HeroSection = () => {
             zIndex: 1,
           }}
         >
-          <Wave3d amplitude={1.5} distance={0} enableMouseInteraction={true} />
+          <Wave3d amplitude={0.5} distance={0}  />
         </div>
 
         {/* CONTENT */}
         <div className="relative z-10 flex flex-col justify-center h-full pl-20 max-w-xl translate-y-[-135px]">
 
           <h1
-            className="text-6xl font-bold"
+            className="text-6xl font-bold text-left whitespace-wrap"
             style={{
               fontFamily: "Rubik Mono One, sans-serif",
               animation: "glowPulse 2s ease-in-out infinite, rippleWave 4s infinite ease-in-out"
             }}
           >
-            Innovative Solution To Accelerate Your Business
+            Innovative Solution To<br/> Accelerate Your Business
           </h1>
 
           <p
