@@ -1,85 +1,39 @@
-import React from "react"; 
-import Wave3d from "./wave3d";
+"use client";
+
+import React from "react";
+import AuroraBackground from "./Aurorabackground";
+import "./AuroraBackground.css"
 
 const HeroSection = () => {
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');`}</style>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');`}</style>
+      {/* Fonts */}
 
-      {/* GLOW + RIPPLE ANIMATIONS */}
-      <style>{`
-        @keyframes glowPulse {
-          0% { text-shadow: 0 0 10px #3b82f6, 0 0 25px #3b82f6, 0 0 40px #3b82f6; }
-          50% { text-shadow: 0 0 20px #60a5fa, 0 0 45px #3b82f6, 0 0 70px #3b82f6; }
-          100% { text-shadow: 0 0 10px #3b82f6, 0 0 25px #3b82f6, 0 0 40px #3b82f6; }
-        }
 
-        @keyframes rippleWave {
-          0% {
-            text-shadow:
-              0 0 10px rgba(80,150,255,0.7),
-              0 0 20px rgba(80,150,255,0.4),
-              0 0 40px rgba(80,150,255,0.2);
-          }
-          50% {
-            text-shadow:
-              0 0 20px rgba(80,150,255,1),
-              0 0 40px rgba(80,150,255,0.6),
-              0 0 60px rgba(80,150,255,0.3);
-          }
-          100% {
-            text-shadow:
-              0 0 10px rgba(80,150,255,0.7),
-              0 0 20px rgba(80,150,255,0.4),
-              0 0 40px rgba(80,150,255,0.2);
-          }
-        }
-      `}</style>
+      <AuroraBackground
+        colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+        blend={0.5}
+        amplitude={1.0}
+        speed={0.5}
+      />
 
-      <div className="relative w-full h-screen bg-black text-white overflow-hidden">
 
-        {/* FULLSCREEN BACKGROUND */}
-        <div
-          style={{
-            width: "100%",
-            height: "600px",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            zIndex: 1,
-          }}
-        >
-          <Wave3d amplitude={0.5} distance={0}  />
-        </div>
-
-        {/* CONTENT */}
-        <div className=" relative z-10 flex flex-col justify-center h-full pl-20 max-w-xl translate-y-[-135px]">
-
+      <div className="relative w-full text-center -translate-y-[200%] sm:-translate-y-[50%] px-6">
+        <div className="mx-auto max-w-3xl mx-[2%] sm:mx-0">
           <h1
-            className="text-6xl font-bold text-left whitespace-wrap"
-            style={{
-              fontFamily: "Rubik Mono One, sans-serif",
-              animation: "glowPulse 2s ease-in-out infinite, rippleWave 4s infinite ease-in-out"
-            }}
+            className="relative text-4xl sm:text-5xl md:text-6xl font-bold glow-layer"
           >
-            Innovative Solution To<br/> Accelerate Your Business
+            Innovative Solution To <br /> Accelerate Your Business
           </h1>
 
-          <p
-            className="mt-4 text-lg"
-            style={{
-              fontFamily: "Abril Fatface, serif",
-              animation: "glowPulse 2s ease-in-out infinite, rippleWave 4s infinite ease-in-out"
-            }}
-          >
-            Customize every element with optun’s
-            intuitive design tools and robust
-            editing options
+          <p className="mt-6 text-lg sm:text-xl glow-layer2">
+            Customize every element with optun’s intuitive design tools
+            and robust editing options.
           </p>
-
         </div>
       </div>
+
+
     </>
   );
 };

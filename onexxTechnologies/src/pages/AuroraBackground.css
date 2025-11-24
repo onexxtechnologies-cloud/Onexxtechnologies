@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+
+.glow-layer {
+    font-style: "Rubik Mono One", sans-serif;
+    pointer-events: none;
+    color: inherit;
+    text-shadow:
+        0 0 10px #3b82f6,
+        0 0 25px #3b82f6,
+        0 0 40px #3b82f6;
+    animation: glowPulse 2s ease-in-out infinite, rippleWave 4s ease-in-out infinite;
+}
+
+.glow-layer2 {
+    font-family: "Abril Fatface", sans-serif;
+
+    pointer-events: none;
+    color: inherit;
+    text-shadow:
+        0 0 10px #3b82f6,
+        0 0 25px #3b82f6,
+        0 0 40px #3b82f6;
+    animation: glowPulse 2s ease-in-out infinite, rippleWave 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0% {
+        text-shadow: 0 0 10px #3b82f6, 0 0 25px #3b82f6, 0 0 40px #3b82f6;
+    }
+
+    50% {
+        text-shadow: 0 0 20px #60a5fa, 0 0 45px #3b82f6, 0 0 70px #3b82f6;
+    }
+
+    100% {
+        text-shadow: 0 0 10px #3b82f6, 0 0 25px #3b82f6, 0 0 40px #3b82f6;
+    }
+}
+
+@keyframes rippleWave {
+    0% {
+        text-shadow:
+            0 0 10px rgba(80, 150, 255, 0.7),
+            0 0 20px rgba(80, 150, 255, 0.4),
+            0 0 40px rgba(80, 150, 255, 0.2);
+    }
+
+    50% {
+        text-shadow:
+            0 0 20px rgba(80, 150, 255, 1),
+            0 0 40px rgba(80, 150, 255, 0.6),
+            0 0 60px rgba(80, 150, 255, 0.3);
+    }
+
+    100% {
+        text-shadow:
+            0 0 10px rgba(80, 150, 255, 0.7),
+            0 0 20px rgba(80, 150, 255, 0.4),
+            0 0 40px rgba(80, 150, 255, 0.2);
+    }
+}
