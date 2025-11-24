@@ -170,30 +170,11 @@ const GooeyNav = ({
           .effect.text.active {
             color: black;
           }
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
           
           }
 
            
           }
-=======
-          // .effect.filter {
-          //   filter: blur(1px) contrast(100) blur(0);
-          //   mix-blend-mode: lighten;
-          // }
-
-          // .effect.filter::before {
-          //   content: "";
-          //   position: absolute;
-          //   inset: -75px;
-          //   z-index: -2;
-          //   background: transparent;
-          // }
->>>>>>> Stashed changes
-
-=======
           // .effect.filter {
           //   filter: blur(1px) contrast(100) blur(0);
           //   mix-blend-mode: lighten;
@@ -207,7 +188,19 @@ const GooeyNav = ({
           //   background: transparent;
           // }
 
->>>>>>> Stashed changes
+          // .effect.filter {
+          //   filter: blur(1px) contrast(100) blur(0);
+          //   mix-blend-mode: lighten;
+          // }
+
+          // .effect.filter::before {
+          //   content: "";
+          //   position: absolute;
+          //   inset: -75px;
+          //   z-index: -2;
+          //   background: transparent;
+          // }
+
           // .effect.filter::after {
           //   content: "";
           //   position: absolute;
