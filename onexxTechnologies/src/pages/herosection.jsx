@@ -54,7 +54,6 @@ const HeroSection = () => {
         </div>
 
         {/* CONTENT */}
-        <div className="relative z-10 flex flex-col justify-center h-full pl-20 max-w-xl translate-y-[-135px]">
 
           <h1
             className="text-6xl font-bold text-left whitespace-wrap"
