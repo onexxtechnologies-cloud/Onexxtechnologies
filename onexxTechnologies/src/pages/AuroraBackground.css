@@ -1,20 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 
-
 .glow-layer {
-    font-style: "Rubik Mono One", sans-serif;
+    display: inline-block;
+    font-family: "Rubik Mono One", sans-serif;
     pointer-events: none;
-    color: inherit;
-    text-shadow:
-        0 0 10px #3b82f6,
-        0 0 25px #3b82f6,
-        0 0 40px #3b82f6;
-    animation: glowPulse 2s ease-in-out infinite, rippleWave 4s ease-in-out infinite;
+
+    background: linear-gradient(90deg,
+            #ffffff 0%,
+            #ffffff 50%,
+            #4f7bff 75%,
+            #1a3cff 100%);
+    background-size: 300% 100%;
+    animation: gradientShift 10s ease-in-out infinite;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    transform: translateY(-60vh);
+    /* ⬅ Add this */
 }
 
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+
 .glow-layer2 {
-    font-family: "Abril Fatface", sans-serif;
+    font-family: "Rubik Mono One", sans-serif;
 
     pointer-events: none;
     color: inherit;
@@ -23,6 +49,7 @@
         0 0 25px #3b82f6,
         0 0 40px #3b82f6;
     animation: glowPulse 2s ease-in-out infinite, rippleWave 4s ease-in-out infinite;
+    transform: translateY(-65vh);
 }
 
 @keyframes glowPulse {
