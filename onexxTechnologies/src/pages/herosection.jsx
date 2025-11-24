@@ -4,8 +4,8 @@ import Wave3d from "./wave3d";
 const HeroSection = () => {
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');`}</style>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');`}</style>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" />
 
       {/* GLOW + RIPPLE ANIMATIONS */}
       <style>{`
