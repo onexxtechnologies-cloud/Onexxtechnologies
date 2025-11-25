@@ -1,9 +1,7 @@
 import HeroSection from "./pages/herosection.jsx";
 import Navbar from "./pages/navbar.jsx";
 import Halfmoon from "./pages/halfmoon.jsx";
-import OnexxatronModel from "./pages/3dmodel.jsx";
-import NeonWavesCenterGlow from "./pages/wavetest.jsx";
-
+import OnexxatronModel from "./pages/3dmodel.jsx"
 function App() {
   return (
     <>
@@ -11,7 +9,6 @@ function App() {
       <HeroSection />
       <Halfmoon />
       <OnexxatronModel/>
- 
     </>
   );
 }

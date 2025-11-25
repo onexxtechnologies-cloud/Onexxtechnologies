@@ -26,7 +26,13 @@ export default function NeonWavesCenterGlow() {
       {/* THIN BEAM EMITTED FROM FIRST WAVE */}
       <motion.div
         className="absolute left-0 w-full pointer-events-none"
-        style={{ bottom: "100px", height: "150px" }}
+        style={{
+          bottom: "100px",
+          height: "150px",
+          background:
+            "linear-gradient(to top, rgba(0,150,255,0.55), rgba(0,150,255,0.32), transparent)",
+          mixBlendMode: "screen",
+        }}
         animate={{
           opacity: [0.05, 0.25, 0.1, 0.3, 0.05],
           filter: [
@@ -38,11 +44,6 @@ export default function NeonWavesCenterGlow() {
           ]
         }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          background:
-            "linear-gradient(to top, rgba(0,150,255,0.55), rgba(0,150,255,0.32), transparent)",
-          mixBlendMode: "screen",
-        }}
       />
 
       <svg className="absolute inset-0 w-[300%] h-full" viewBox="0 0 8000 500" preserveAspectRatio="none">

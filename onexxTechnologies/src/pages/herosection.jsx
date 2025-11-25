@@ -4,7 +4,6 @@ import React from "react";
 import AuroraBackground from "./Aurorabackground";
 import "./AuroraBackground.css"
 import NeonWavesCenterGlow from "./wavetest";
-
 const HeroSection = () => {
   return (
     <>
