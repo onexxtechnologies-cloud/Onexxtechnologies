@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 
+// --- GOOEY NAV COMPONENT (UNCHANGED) ---
 const GooeyNav = ({
   items,
   animationTime = 600,
@@ -146,13 +147,11 @@ const GooeyNav = ({
 
   return (
     <>
-      {/* Extra CSS for gooey effect */}
       <style>
         {`
           :root {
             --linear-ease: linear(0, 0.068, 0.19 2.7%, 0.804 8.1%, 1.037, 1.199 13.2%, 1.245, 1.27 15.8%, 1.274, 1.272 17.4%, 1.249 19.1%, 0.996 28%, 0.949, 0.928 33.3%, 0.926, 0.933 36.8%, 1.001 45.6%, 1.013, 1.019 50.8%, 1.018 54.4%, 1 63.1%, 0.995 68%, 1.001 85%, 1);
           }
-
           .effect {
             position: absolute;
             opacity: 1;
@@ -161,190 +160,67 @@ const GooeyNav = ({
             place-items: center;
             z-index: 1;
           }
-
           .effect.text {
             color: white;
             transition: color 0.3s ease;
           }
-
           .effect.text.active {
             color: black;
           }
-          
-          }
-
-           
-          }
-          // .effect.filter {
-          //   filter: blur(1px) contrast(100) blur(0);
-          //   mix-blend-mode: lighten;
-          // }
-
-          // .effect.filter::before {
-          //   content: "";
-          //   position: absolute;
-          //   inset: -75px;
-          //   z-index: -2;
-          //   background: transparent;
-          // }
-
-          // .effect.filter {
-          //   filter: blur(1px) contrast(100) blur(0);
-          //   mix-blend-mode: lighten;
-          // }
-
-          // .effect.filter::before {
-          //   content: "";
-          //   position: absolute;
-          //   inset: -75px;
-          //   z-index: -2;
-          //   background: transparent;
-          // }
-
-          // .effect.filter::after {
-          //   content: "";
-          //   position: absolute;
-          //   inset: 0;
-          //   background: white;
-          //   transform: scale(0);
-          //   opacity: 0;
-          //   z-index: -1;
-          //   border-radius: 9999px;
-          // }
-
           .effect.active::after {
             animation: pill 0.3s ease both;
           }
-
           @keyframes pill {
-            to {
-              transform: scale(1);
-              opacity: 1;
-            }
+            to { transform: scale(1); opacity: 1; }
           }
-
-          .particle,
-          .point {
-            display: block;
-            opacity: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 9999px;
-            transform-origin: center;
+          .particle, .point {
+            display: block; opacity: 0; width: 20px; height: 20px; border-radius: 9999px; transform-origin: center;
           }
-
           .particle {
-            --time: 5s;
-            position: absolute;
-            top: calc(50% - 8px);
-            left: calc(50% - 8px);
+            --time: 5s; position: absolute; top: calc(50% - 8px); left: calc(50% - 8px);
             animation: particle calc(var(--time)) ease 1 -350ms;
           }
-
           .point {
-            background: var(--color);
-            opacity: 1;
-            animation: point calc(var(--time)) ease 1 -350ms;
+            background: var(--color); opacity: 1; animation: point calc(var(--time)) ease 1 -350ms;
           }
-
           @keyframes particle {
-            0% {
-              transform: rotate(0deg) translate(calc(var(--start-x)), calc(var(--start-y)));
-              opacity: 1;
-              animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
-            }
-            70% {
-              transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2));
-              opacity: 1;
-              animation-timing-function: ease;
-            }
-            85% {
-              transform: rotate(calc(var(--rotate) * 0.66)) translate(calc(var(--end-x)), calc(var(--end-y)));
-              opacity: 1;
-            }
-            100% {
-              transform: rotate(calc(var(--rotate) * 1.2)) translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5));
-              opacity: 1;
-            }
+            0% { transform: rotate(0deg) translate(calc(var(--start-x)), calc(var(--start-y))); opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+            70% { transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2)); opacity: 1; animation-timing-function: ease; }
+            85% { transform: rotate(calc(var(--rotate) * 0.66)) translate(calc(var(--end-x)), calc(var(--end-y))); opacity: 1; }
+            100% { transform: rotate(calc(var(--rotate) * 1.2)) translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5)); opacity: 1; }
           }
-
           @keyframes point {
-            0% {
-              transform: scale(0);
-              opacity: 0;
-              animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
-            }
-            25% {
-              transform: scale(calc(var(--scale) * 0.25));
-            }
-            38% {
-              opacity: 1;
-            }
-            65% {
-              transform: scale(var(--scale));
-              opacity: 1;
-              animation-timing-function: ease;
-            }
-            85% {
-              transform: scale(var(--scale));
-              opacity: 1;
-            }
-            100% {
-              transform: scale(0);
-              opacity: 0;
-            }
+            0% { transform: scale(0); opacity: 0; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+            25% { transform: scale(calc(var(--scale) * 0.25)); }
+            38% { opacity: 1; }
+            65% { transform: scale(var(--scale)); opacity: 1; animation-timing-function: ease; }
+            85% { transform: scale(var(--scale)); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
           }
-
-          li.active {
-            color: black;
-            text-shadow: none;
-          }
-
-          li.active::after {
-            opacity: 1;
-            transform: scale(1);
-          }
-
-          li::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 8px;
-            background: white;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.3s ease;
-            z-index: -1;
-          }
+          li.active { color: black; text-shadow: none; }
+          li.active::after { opacity: 1; transform: scale(1); }
+          li::after { content: ""; position: absolute; inset: 0; border-radius: 8px; background: white; opacity: 0; transform: scale(0); transition: all 0.3s ease; z-index: -1; }
         `}
       </style>
 
       <div className="relative" ref={containerRef}>
-        <nav
-          className="flex relative"
-          style={{ transform: "translate3d(0,0,0.01px)" }}
-        >
+        <nav className="flex relative" style={{ transform: "translate3d(0,0,0.01px)" }}>
           <ul
             ref={navRef}
             className="flex gap-6 md:gap-8 list-none p-0 px-2 md:px-4 m-0 relative z-[3]"
-            style={{
-              color: "white",
-              textShadow: "0 1px 1px hsl(205deg 30% 10% / 0.2)",
-            }}
+            style={{ color: "white", textShadow: "0 1px 1px hsl(205deg 30% 10% / 0.2)" }}
           >
             {items.map((item, index) => (
               <li
                 key={index}
-                className={`rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
-                  activeIndex === index ? "active" : ""
-                }`}
+                className={`rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${activeIndex === index ? "active" : ""}`}
               >
                 <a
                   onClick={(e) => handleClick(e, index)}
                   href={item.href}
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   className="outline-none py-[0.5em] px-[0.9em] md:py-[0.6em] md:px-[1em] inline-block text-sm md:text-base no-underline"
-                  style={{ textDecoration: "none" }} // extra safe: no underline
+                  style={{ textDecoration: "none" }}
                 >
                   {item.label}
                 </a>
@@ -352,7 +228,6 @@ const GooeyNav = ({
             ))}
           </ul>
         </nav>
-
         <span className="effect filter" ref={filterRef} />
         <span className="effect text" ref={textRef} />
       </div>
@@ -360,21 +235,19 @@ const GooeyNav = ({
   );
 };
 
+// --- MAIN NAVBAR COMPONENT ---
 export default function Navbar() {
-  // 🔹 Scroll state: true = user scrolled down
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // 🔹 Listen to scroll and update state
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40); // change 40 if you want earlier/later effect
+      setIsScrolled(window.scrollY > 40);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 🔹 Your Onexx nav items
   const items = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
@@ -383,62 +256,184 @@ export default function Navbar() {
   ];
 
   return (
-    <header className=" fixed top-0 left-0 right-0 z-50 transition-all duration-300 nav-glass shawow-lg w-full flex justify-center py-3 md:py-4 bg-transparent">
-      <div
-        className={`
-          px-4 md:px-8 py-3 md:py-4 h-[64px] md:h-[70px]
-          rounded-full flex items-center justify-between gap-4
-          transition-all duration-500
-          shadow-[0_0_25px_rgba(0,0,0,0.1)]
-          hover:shadow-[0_0_35px_rgba(0,0,0,0.15)]
-          ${
-            isScrolled
-              ? "w-[95%] md:w-[80%] lg:w-[70%]" // 👉 bigger when scrolled
-              : "w-[70%] md:w-[55%] lg:w-[45%]"
-          }  // 👉 smaller at top
+    <>
+      <style>
+        {`
+          .desktop-only { display: none !important; }
+          .mobile-only { display: block !important; }
+
+          @media (min-width: 900px) {
+            .desktop-only { display: flex !important; }
+            .mobile-only { display: none !important; }
+          }
         `}
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(30, 30, 40, 0.75) 0%, rgba(60, 60, 70, 0.65) 50%, rgba(100, 100, 110, 0.55) 100%)",
-          backdropFilter: "blur(120px) saturate(180%)",
-          WebkitBackdropFilter: "blur(120px) saturate(180%)",
-          border: "0px solid rgba(255, 255, 255, 0.1)",
-        }}
-      >
-        {/* Logo */}
-        <div className="text-white text-xl md:text-2xl font-bold tracking-[0.25em] uppercase">
-          ONEXX
-        </div>
+      </style>
 
-        {/* Gooey nav in the middle */}
-        <div className="flex-1 flex justify-center">
-          <GooeyNav
-            items={items}
-            particleCount={15}
-            particleDistances={[90, 10]}
-            particleR={100}
-            initialActiveIndex={0}
-            animationTime={600}
-            timeVariance={300}
-            colors={[1, 2, 3, 1, 2, 3, 1, 4]}
-          />
-        </div>
-
-        {/* Button */}
-        <button
-          className="
-            sm:inline-flex
-            px-5 md:px-6 py-6 rounded-full font-semibold text-white text-sm md:text-base
-            bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
-            shadow-[0_0_20px_rgba(0,102,255,0.35)]
-            hover:shadow-[0_0_30px_rgba(80,150,255,0.9)]
-            transition
-            whitespace-nowrap
-          "
+      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full flex justify-center py-3 md:py-4 bg-transparent pointer-events-none">
+        <div
+          className={`
+            pointer-events-auto
+            px-4 md:px-8 py-3 md:py-4 h-[64px] md:h-[70px]
+            rounded-full flex items-center justify-between gap-4
+            transition-all duration-500
+            shadow-[0_0_25px_rgba(0,0,0,0.1)]
+            hover:shadow-[0_0_35px_rgba(0,0,0,0.15)]
+            ${
+              isScrolled
+                ? "w-[95%] sm:w-[80%] lg:w-[70%]"
+                : "w-[90%] sm:w-[60%] lg:w-[45%]"
+            }
+          `}
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(30, 30, 40, 0.75) 0%, rgba(60, 60, 70, 0.65) 50%, rgba(100, 100, 110, 0.55) 100%)",
+            backdropFilter: "blur(120px) saturate(180%)",
+            WebkitBackdropFilter: "blur(120px) saturate(180%)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+          }}
         >
-          LET&apos;S CONNECT
-        </button>
-      </div>
-    </header>
+          {/* Logo */}
+          <div className="text-white text-lg md:text-2xl font-bold tracking-[0.25em] uppercase z-50">
+            ONEXX
+          </div>
+
+          {/* DESKTOP MENU */}
+          <div className="desktop-only flex-1 justify-center w-full">
+            <GooeyNav
+              items={items}
+              particleCount={15}
+              particleDistances={[90, 10]}
+              particleR={100}
+              initialActiveIndex={0}
+              animationTime={600}
+              timeVariance={300}
+              colors={[1, 2, 3, 1, 2, 3, 1, 4]}
+            />
+          </div>
+
+          {/* DESKTOP BUTTON */}
+          <button
+            className="
+              desktop-only
+              px-5 md:px-6 py-6 rounded-full font-semibold text-white text-sm md:text-base
+              bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
+              shadow-[0_0_20px_rgba(0,102,255,0.35)]
+              hover:shadow-[0_0_30px_rgba(80,150,255,0.9)]
+              transition
+              whitespace-nowrap
+            "
+          >
+            LET&apos;S CONNECT
+          </button>
+
+          {/* MOBILE HAMBURGER BUTTON */}
+          <button
+            className="mobile-only text-white p-2 focus:outline-none z-50"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            )}
+          </button>
+        </div>
+      </header>
+
+      {/* 🔹 MOBILE DROPDOWN MENU - CENTERED BIG CARD 🔹 */}
+   {isMobileMenuOpen && (
+  <div className="fixed inset-0 z-40 mobile-only">
+    {/* Background blur */}
+    <div
+      className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+      onClick={() => setIsMobileMenuOpen(false)}
+    />
+
+    {/* Glass dropdown that attaches to navbar */}
+    <div
+      className="
+        absolute left-1/2 -translate-x-1/2
+        w-[92%] max-w-[450px]
+        mt-[90px]  /* 👈 pushes card exactly below logo/hamburger */
+        rounded-3xl p-10 pt-12 flex flex-col gap-8
+        animate-[fadeDown_0.35s_ease-out]
+      "
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.05) 100%)",
+        backdropFilter: "blur(40px) saturate(200%)",
+        WebkitBackdropFilter: "blur(40px) saturate(200%)",
+        border: "1px solid rgba(255,255,255,0.2)",
+        boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+      }}
+    >
+      {items.map((item, index) => (
+        <a
+          key={index}
+          href={item.href}
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="text-white text-2xl font-semibold py-3 text-center w-full hover:text-[#4AB3FF] transition"
+        >
+          {item.label}
+        </a>
+      ))}
+
+      <div className="h-px bg-white/20 w-full"></div>
+
+      <button
+        className="
+          w-full py-4 rounded-2xl font-bold text-white text-lg
+          bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
+          shadow-[0_0_25px_rgba(0,102,255,0.4)]
+          active:scale-95 transition-transform
+        "
+      >
+        LET'S CONNECT
+      </button>
+    </div>
+
+    {/* 🔽 Smooth fade-down animation */}
+    <style>{`
+      @keyframes fadeDown {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(-50%, 0px);
+        }
+      }
+    `}</style>
+  </div>
+)}
+    </>
   );
 }
