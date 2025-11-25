@@ -88,7 +88,7 @@ export default function NeonWavesCenterGlow() {
                 fill="none"
                 style={{ opacity, filter: "drop-shadow(0 0 6px #00aaff)" }}
                 animate={{ x: [0, -halfWidth] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               />
 
               {/* Second half */}
@@ -101,7 +101,7 @@ export default function NeonWavesCenterGlow() {
                 fill="none"
                 style={{ opacity, filter: "drop-shadow(0 0 6px #00aaff)" }}
                 animate={{ x: [0, -halfWidth] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               />
             </>
           );

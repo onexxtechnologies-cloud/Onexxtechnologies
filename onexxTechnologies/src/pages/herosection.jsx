@@ -29,9 +29,9 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="-mt-10 sm:-mt-16 md:-mt-20">
+      
         <NeonWavesCenterGlow />
-      </div>
+      
 
 
 
