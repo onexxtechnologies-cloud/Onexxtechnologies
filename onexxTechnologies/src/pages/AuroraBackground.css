@@ -1,90 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 
+/* ------------------------- */
+/*   GLOW TEXT (Headline)    */
+/* ------------------------- */
+
 .glow-layer {
     display: inline-block;
     font-family: "Rubik Mono One", sans-serif;
-    pointer-events: none;
 
-    background: linear-gradient(90deg,
-            #ffffff 0%,
-            #ffffff 50%,
-            #4f7bff 75%,
-            #1a3cff 100%);
-    background-size: 300% 100%;
-    animation: gradientShift 10s ease-in-out infinite;
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #ffffff 50%,
+        #4f7bff 75%,
+        #1a3cff 100%
+    );
+    background-size: 200% auto;
+    animation: gradientShift 8s ease-in-out infinite;
 
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
     transform: translateY(-60vh);
-    /* ⬅ Add this */
+    will-change: background-position, transform;
 }
 
 @keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 
-
+/* ------------------------- */
+/*      SUBTEXT GLOW         */
+/* ------------------------- */
 
 .glow-layer2 {
     font-family: "Rubik Mono One", sans-serif;
+    color: #ffffff;
 
-    pointer-events: none;
-    color: inherit;
+    /* Lightweight glow (static – not animated) */
     text-shadow:
-        0 0 10px #3b82f6,
-        0 0 25px #3b82f6,
-        0 0 40px #3b82f6;
-    animation: glowPulse 2s ease-in-out infinite, rippleWave 4s ease-in-out infinite;
+        0 0 12px #3b82f6,
+        0 0 22px #3b82f6;
+
+    /* Soft breathing animation (opacity only = GPU friendly) */
+    animation: glowSoft 3s ease-in-out infinite;
+
     transform: translateY(-65vh);
+    will-change: opacity, transform;
 }
 
-@keyframes glowPulse {
-    0% {
-        text-shadow: 0 0 10px #3b82f6, 0 0 25px #3b82f6, 0 0 40px #3b82f6;
-    }
-
-    50% {
-        text-shadow: 0 0 20px #60a5fa, 0 0 45px #3b82f6, 0 0 70px #3b82f6;
-    }
-
-    100% {
-        text-shadow: 0 0 10px #3b82f6, 0 0 25px #3b82f6, 0 0 40px #3b82f6;
-    }
-}
-
-@keyframes rippleWave {
-    0% {
-        text-shadow:
-            0 0 10px rgba(80, 150, 255, 0.7),
-            0 0 20px rgba(80, 150, 255, 0.4),
-            0 0 40px rgba(80, 150, 255, 0.2);
-    }
-
-    50% {
-        text-shadow:
-            0 0 20px rgba(80, 150, 255, 1),
-            0 0 40px rgba(80, 150, 255, 0.6),
-            0 0 60px rgba(80, 150, 255, 0.3);
-    }
-
-    100% {
-        text-shadow:
-            0 0 10px rgba(80, 150, 255, 0.7),
-            0 0 20px rgba(80, 150, 255, 0.4),
-            0 0 40px rgba(80, 150, 255, 0.2);
-    }
+@keyframes glowSoft {
+    0%   { opacity: 0.9; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.9; }
 }
