@@ -367,71 +367,42 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* 🔹 MOBILE DROPDOWN MENU - CENTERED BIG CARD 🔹 */}
-   {isMobileMenuOpen && (
-  <div className="fixed inset-0 z-40 mobile-only">
-    {/* Background blur */}
-    <div
-      className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-      onClick={() => setIsMobileMenuOpen(false)}
-    />
-
-    {/* Glass dropdown that attaches to navbar */}
-    <div
-      className="
-        absolute left-1/2 -translate-x-1/2
-        w-[92%] max-w-[450px]
-        mt-[90px]  /* 👈 pushes card exactly below logo/hamburger */
-        rounded-3xl p-10 pt-12 flex flex-col gap-8
-        animate-[fadeDown_0.35s_ease-out]
-      "
-      style={{
-        background:
-          "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.05) 100%)",
-        backdropFilter: "blur(40px) saturate(200%)",
-        WebkitBackdropFilter: "blur(40px) saturate(200%)",
-        border: "1px solid rgba(255,255,255,0.2)",
-        boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
-      }}
-    >
-      {items.map((item, index) => (
-        <a
-          key={index}
-          href={item.href}
+{/* 🔹 MOBILE DROPDOWN MENU - CENTERED BIG CARD 🔹 */}
+{isMobileMenuOpen && (
+  <div className="mobile-only fixed inset-0 z-40 flex items-center justify-center p-6">
+    <div className="w-full max-w-md bg-[#0a0a1f] rounded-2xl p-6 shadow-lg">
+      <div className="flex items-center justify-between mb-4">
+        <div className="text-2xl font-bold text-white tracking-widest">ONEXX</div>
+        <button
+          className="text-white text-2xl"
           onClick={() => setIsMobileMenuOpen(false)}
-          className="text-white text-2xl font-semibold py-3 text-center w-full hover:text-[#4AB3FF] transition"
+          aria-label="Close menu"
         >
-          {item.label}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <nav className="flex flex-col space-y-4">
+        {items.map((item, index) => (
+          <a
+            key={index}
+            href={item.href}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-white text-lg"
+          >
+            {item.label}
+          </a>
+        ))}
+
+        <a
+          href="#"
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="mt-4 py-3 px-6 rounded-full bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF] text-center text-white font-bold"
+        >
+          LET'S CONNECT
         </a>
-      ))}
-
-      <div className="h-px bg-white/20 w-full"></div>
-
-      <button
-        className="
-          w-full py-4 rounded-2xl font-bold text-white text-lg
-          bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
-          shadow-[0_0_25px_rgba(0,102,255,0.4)]
-          active:scale-95 transition-transform
-        "
-      >
-        LET'S CONNECT
-      </button>
+      </nav>
     </div>
-
-    {/* 🔽 Smooth fade-down animation */}
-    <style>{`
-      @keyframes fadeDown {
-        0% {
-          opacity: 0;
-          transform: translate(-50%, -20px);
-        }
-        100% {
-          opacity: 1;
-          transform: translate(-50%, 0px);
-        }
-      }
-    `}</style>
   </div>
 )}
     </>
