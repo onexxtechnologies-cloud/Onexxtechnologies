@@ -31,8 +31,8 @@ const UltimateBlueHorizon = () => {
       {/* Planet Body */}
       <div
         className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] 
-                      bg-black rounded-full overflow-hidden z-0
-                      shadow-[inset_0_-40px_140px_rgba(56,189,248,0.55)]
+                      bg-black rounded-[50%] overflow-hidden z-10
+                      shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)] {/* spread blue inner glow */}
                       border-t border-blue-500/30"
       >
         <div
@@ -43,15 +43,15 @@ const UltimateBlueHorizon = () => {
 
       {/* Outer Soft Glow */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] rounded-full 
+        className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] rounded-[50%] 
                       shadow-[0_0_200px_rgba(59,130,246,0.85)]
                       pointer-events-none z-10"
       />
 
       {/* Bright Horizon Line */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] rounded-full 
-                      border-t-[8px] border-blue-100/90
+            className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] rounded-[50%] 
+                          border-t-[8px] border-blue-100/90
                       blur-[1.5px] 
                       shadow-[0_0_60px_rgba(96,165,250,0.95)]
                       pointer-events-none z-20"
