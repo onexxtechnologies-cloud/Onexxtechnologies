@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
+import { Rocket, GaugeCircle, Handshake } from "lucide-react";
 
 const UltimateBlueHorizon = () => {
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden flex flex-col items-center font-sans">
+    <div className="relative w-full h-[140vh] bg-black overflow-hidden flex flex-col items-center font-sans">
       {/* ================= 1. TITLE (MOVED TO TOP) ================= */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -71,68 +72,82 @@ const UltimateBlueHorizon = () => {
           type: "spring",
           stiffness: 50,
         }}
-        className="relative z-30 w-[60%] max-w-6xl flex flex-col gap-6 top-[40vh]"
+        className="relative z-30 w-[70%] max-w-6xl flex flex-col gap-6 top-[40vh]"
       >
         {/* --- MAIN GLASS CONTAINER (SIDE-BY-SIDE FIXED) --- */}
         {/* Key Change: 'grid-cols-3' forces side-by-side. 'divide-x' adds vertical lines. */}
         <div
-          className="w-full grid grid-cols-3 
+          className="w-full grid grid-cols-3
                         bg-gradient-to-r from-[#D9D9D9]/10 to-[#737373]/10 
                         backdrop-blur-7xl  
                         rounded-[40px] overflow-hidden shadow-2xl shadow-blue-900/20 
                         divide-x divide-white/10"
         >
           {/* BLOCK 1 */}
-          <div className="p-8 flex flex-col xl:flex-row items-center justify-center xl:justify-start gap-5 hover:bg-white/5 transition-colors duration-300">
-            {/* Icon Placeholder */}
-            <div className="w-12 h-12 shrink-0 bg-gradient-to-br from-orange-400 to-red-600 rounded-lg blur-[1px] opacity-80" />
-            <div className="text-center xl:text-left">
-              <h3 className="text-4xl lg:text-5xl font-bold text-white mb-1">
-                10+
-              </h3>
-              <p className="text-gray-300 text-xs lg:text-sm uppercase tracking-wide">
-                Years of Experience
-              </p>
+          <div className="p-20 flex flex-col items-center xl:items-start text-center xl:text-left gap-4 hover:bg-white/5 transition-colors duration-300">
+            {/* ICON */}
+            <div
+              className="w-12 h-12 flex items-center justify-center rounded-2xl 
+               bg-gradient-to-br from-blue-500/60 to-cyan-400/60 
+               shadow-[0_0_18px_rgba(59,130,246,0.7)]"
+            >
+              <Rocket className="w-6 h-6 text-white" />
             </div>
+
+            {/* TEXT */}
+            <h3 className="text-lg lg:text-xl font-semibold text-white uppercase tracking-wide">
+              Performance-Driven
+            </h3>
+
+            <p className="text-gray-300 text-xs lg:text-sm max-w-[250px]">
+              We craft every page for speed, SEO and smooth user journeys from
+              day one.
+            </p>
           </div>
 
           {/* BLOCK 2 */}
-          <div className="p-8 flex flex-col xl:flex-row items-center justify-center xl:justify-start gap-5 hover:bg-white/5 transition-colors duration-300">
-            {/* Icon Placeholder */}
-            {/* <div className="w-12 h-12 shrink-0 rounded-full border-4 border-emerald-500/30 relative flex items-center justify-center">
-                <div className="w-6 h-6 bg-emerald-400 rounded-full blur-sm" />
-            </div> */}
-            <div className="text-center xl:text-left">
-              <h3 className="text-4xl lg:text-5xl font-bold text-white mb-1">
-                250+
-              </h3>
-              <p className="text-gray-300 text-xs lg:text-sm uppercase tracking-wide">
-                Successful Projects
-              </p>
+          <div className="p-20 flex flex-col items-center xl:items-start text-center xl:text-left gap-4 hover:bg-white/5 transition-colors duration-300">
+            <div
+              className="w-12 h-12 flex items-center justify-center rounded-2xl 
+                    bg-gradient-to-br from-emerald-400/60 to-teal-500/60 
+                    shadow-[0_0_18px_rgba(16,185,129,0.7)]"
+            >
+              <GaugeCircle className="w-6 h-6 text-white" />
             </div>
+            
+            <h3 className="text-lg lg:text-xl font-semibold text-white uppercase tracking-wide">
+                Modern Tech Stack
+              </h3>
+              <p className="text-gray-300 text-xs lg:text-sm">
+                React, Vite, Tailwind and 3D-ready builds—no legacy baggage,
+                only fresh code.
+              </p>
           </div>
 
           {/* BLOCK 3 */}
-          <div className="p-8 flex flex-col xl:flex-row items-center justify-center xl:justify-start gap-5 hover:bg-white/5 transition-colors duration-300">
-            {/* Icon Placeholder */}
-            {/* <div className="w-12 h-12 shrink-0 flex items-center justify-center relative">
-                <div className="w-8 h-8 bg-purple-600 rotate-45 blur-md absolute" />
-                <div className="w-8 h-8 border border-purple-300 rotate-45 relative z-10" />
-            </div> */}
-            <div className="text-center xl:text-left">
-              <h3 className="text-4xl lg:text-5xl font-bold text-white mb-1">
-                300%
-              </h3>
-              <p className="text-gray-300 text-xs lg:text-sm uppercase tracking-wide">
-                Average Client Growth
-              </p>
+          <div className="p-20 flex flex-col items-center xl:items-start text-center xl:text-left gap-4 hover:bg-white/5 transition-colors duration-300">
+            <div
+              className="w-12 h-12 flex items-center justify-center rounded-2xl 
+                    bg-gradient-to-br from-purple-500/60 to-fuchsia-500/60 
+                    shadow-[0_0_18px_rgba(168,85,247,0.7)]"
+            >
+              <Handshake className="w-6 h-6 text-white" />
             </div>
+            
+            <h3 className="text-lg lg:text-xl font-semibold text-white uppercase tracking-wide">
+                Startup-Friendly Partner
+              </h3>
+              <p className="text-gray-300 text-xs lg:text-sm">
+                Transparent communication, fast iterations and a team that grows
+                with your brand.
+              </p>
+            
           </div>
         </div>
 
         {/* BOTTOM TEXT & BUTTON */}
-        <div className="flex flex-col md:flex-row justify-between items-end w-full px-2">
-          <p className="text-gray-400 text-sm md:text-base max-w-lg text-left md:text-left">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full px-2">
+          <p className="text-gray-400 text-sm md:text-base max-w-lg text-center md:text-center">
             We transform ideas into impactful digital solutions that empower
             your brand to rise above the ordinary.
           </p>
@@ -143,8 +158,8 @@ const UltimateBlueHorizon = () => {
             className="mt-6 md:mt-0 flex items-center gap-3 text-white font-semibold group cursor-pointer"
           >
             Explore More
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.6)] group-hover:bg-blue-500 transition-colors">
-              <ArrowDown size={18} />
+            <div className="w-10 h-10 rounded-full flex items-center justify-center">
+              <ArrowDown size={20} />
             </div>
           </motion.button>
         </div>
