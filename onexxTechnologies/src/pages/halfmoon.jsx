@@ -5,19 +5,23 @@ import { Rocket, GaugeCircle, Handshake } from "lucide-react";
 
 const UltimateBlueHorizon = () => {
   return (
-    <div className="relative w-full h-[140vh] bg-black overflow-hidden flex flex-col items-center font-sans">
+    <div className="relative w-full h-[160vh] md:h-[220vh] bg-black overflow-hidden flex flex-col items-center font-sans">
+
       {/* ================= 1. TITLE (MOVED TO TOP) ================= */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative z-30 text-center mt-20 md:mt-24 px-4"
+        className="relative z-30 text-center mt-25 md:mt-24 px-4"
       >
-        <h1 className="text-white text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+        <h1 className=" text-4xl md:text-7xl font-bold tracking-tight leading-tight">
+          <span className="bg-gradient-to-b from-[#D8E2FF] to-[#6A75FF] text-transparent bg-clip-text">
           Building Brands That Shine Among the Stars
-          <br />
-          <span className="text-white bg-clip-text bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
+          </span><br />
+          <span className=" bg-clip-text bg-gradient-to-r from-blue-300 via-indigo-400 to-purple-500">
+            <span className="bg-gradient-to-r from-[#7AA0FF] via-[#5C68FF] to-[#4A3BFF] text-transparent bg-clip-text">
             Crafting Digital Impacts.
+            </span>
           </span>
         </h1>
       </motion.div>
@@ -29,33 +33,47 @@ const UltimateBlueHorizon = () => {
       */}
 
       {/* Planet Body */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] 
-                      bg-black rounded-[50%] overflow-hidden z-10
-                      shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)] {/* spread blue inner glow */}
-                      border-t border-blue-500/30"
-      >
-        <div
-          className="absolute top-0 left-0 w-full h-[32vh]
-                        bg-gradient-to-b from-blue-400/90 via-blue-700/35 to-transparent"
-        />
-      </div>
+{/* 🌙 MAIN PLANET CONTAINER */}
+<div
+  className="
+absolute left-1/2 -translate-x-1/2 top-[25vh] 
 
-      {/* Outer Soft Glow */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] rounded-[50%] 
-                      shadow-[0_0_200px_rgba(59,130,246,0.85)]
-                      pointer-events-none z-10"
-      />
+    w-[2000px] md:w-[185vw] h-[2000px]
+     md:h-[185vw]
+    bg-black rounded-[50%] overflow-hidden z-10
+    shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)]
+    border-t border-blue-500/30
+  "
+>
+</div>
 
-      {/* Bright Horizon Line */}
-      <div
-            className="absolute left-1/2 -translate-x-1/2 top-[30vh] w-[185vw] h-[185vw] rounded-[50%] 
-                          border-t-[8px] border-blue-100/90
-                      blur-[1.5px] 
-                      shadow-[0_0_60px_rgba(96,165,250,0.95)]
-                      pointer-events-none z-20"
-      />
+{/* 🌙 OUTER BLUE SOFT GLOW */}
+<div
+  className="
+    absolute left-1/2 -translate-x-1/2 top-[25vh]
+    w-[2000px] md:w-[185vw] h-[2000px]
+     md:h-[185vw]
+    rounded-[50%]
+    shadow-[0_0_200px_rgba(59,130,246,0.85)]
+    pointer-events-none z-10
+  "
+></div>
+
+{/* 🌙 BRIGHT HORIZON LINE */}
+<div
+  className="
+    absolute left-1/2 -translate-x-1/2 top-[25vh] 
+
+    w-[2000px]  md:w-[185vw] h-[2000px]
+    md:h-[185vw]
+    rounded-[50%]
+    border-t-[8px] border-blue-100/90
+    blur-[1.5px]
+    shadow-[0_0_60px_rgba(96,165,250,0.95)]
+    pointer-events-none z-20
+  "
+></div>
+
 
       {/* ================= 3. BOXES (MOVED TO BOTTOM) ================= */}
       {/* POSITIONING FIX:
@@ -72,7 +90,7 @@ const UltimateBlueHorizon = () => {
           type: "spring",
           stiffness: 50,
         }}
-        className="relative z-30 w-[70%] max-w-6xl flex flex-col gap-6 top-[40vh]"
+        className="relative z-30 w-[90%] max-w-6xl flex flex-col gap-6 top-[35vh]"
       >
         {/* --- MAIN GLASS CONTAINER (SIDE-BY-SIDE FIXED) --- */}
         {/* Key Change: 'grid-cols-3' forces side-by-side. 'divide-x' adds vertical lines. */}

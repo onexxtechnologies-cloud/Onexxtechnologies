@@ -34,6 +34,8 @@ const HeroSection = () => {
       
 
 
+<div class="bg-red-500 w-40 h-40 sm:bg-green-500 md:bg-blue-500 lg:bg-purple-500">
+</div>
 
     </>
   );
