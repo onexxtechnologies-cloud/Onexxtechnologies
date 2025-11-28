@@ -18,7 +18,7 @@ const OpenCloseScroll = () => {
   // 1. BACKGROUND CIRCLE SCALE
   const scale = useTransform(scrollYProgress, 
     [0, 0.25, 0.75, 0.8], 
-    [1, 20,  20,   20] 
+    [1, 20,  20,   1] 
     // Scale 1 (Start) -> Scale 35 (Full) -> Scale 35 (Hold) -> Scale 0 (Close)
   );
   
@@ -32,7 +32,7 @@ const OpenCloseScroll = () => {
   // 3. TITLE MOVEMENT
   // Move title up slightly when description appears
   const titleY = useTransform(scrollYProgress, 
-    [0.25, 0.35], 
+    [0.25, 0.40], 
     ["0%", "-20%"]
   );
 
@@ -41,21 +41,21 @@ const OpenCloseScroll = () => {
   // It fades out at 0.70 (before circle starts closing).
   const descriptionOpacity = useTransform(scrollYProgress, 
     [0.10, 0.15, 0.40, 0.80], 
-    [0,    1,    1,    1]
+    [0,    1,    1,    0]
   );
   
   // 5. MAIN CONTENT OPACITY (Clean Exit)
   // Fades out everything right before the circle closes so text doesn't clip
   const contentOpacity = useTransform(scrollYProgress,
     [0.70, 0.80],
-    [1, 0]
+    [1, 1]
   );
 
   return (
     <div className="relative w-full">
       
       {/* --- SECTION 1: The Animation Track (700vh for smooth phases) --- */}
-      <section ref={containerRef} className="relative h-[200vh] bg-[#e0e0e0]">
+      <section ref={containerRef} className="relative h-[200vh] bg-[#e0e0e000]">
         
         {/* Sticky Container */}
         <div className="sticky top-2 h-screen overflow-hidden flex items-center justify-center">
@@ -66,7 +66,7 @@ const OpenCloseScroll = () => {
               scale,
               borderRadius
             }}
-            className="absolute w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] bg-[#1a2b3c] z-10"
+            className="absolute w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] bg-[#0b0b4e] z-10"
           />
 
           {/* CONTENT INSIDE THE CIRCLE */}
@@ -78,7 +78,7 @@ const OpenCloseScroll = () => {
             {/* TITLE */}
             <motion.h1 
               style={{ y: titleY }}
-              className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight"
+              className="text-4xl md:text-7xl font-bold text-white mb-4 leading-tight"
             >
               Alter Reality
             </motion.h1>
@@ -98,17 +98,6 @@ const OpenCloseScroll = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* --- SECTION 2: What is revealed after circle closes --- */}
-      {/* This section appears behind/after the circle shrinks to nothing */}
-      <section className="h-screen bg-black flex flex-col items-center justify-center text-white p-10">
-        <h2 className="text-4xl font-bold mb-6 text-[#caff33]">The End of the Loop.</h2>
-        <p className="text-gray-400 max-w-lg text-center">
-          You have scrolled past the circle. It has zoomed out and vanished, 
-          revealing the final footer section of the page.
-        </p>
-      </section>
-
     </div>
   );
 };
