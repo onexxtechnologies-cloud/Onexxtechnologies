@@ -21,21 +21,10 @@ export default function NeonWaveLight() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
 
   return (
-    <div className="relative w-full h-[350px] md:h-[500px] overflow-hidden bg-black">
-      {/* Thin glow behind waves */}
-      <div
-        className="absolute left-0 w-full pointer-events-none"
-        style={{
-          bottom: "100px",
-          height: "150px",
-          background: "linear-gradient(to top, rgba(0,150,255,0.55), rgba(0,150,255,0.32), transparent)",
-          mixBlendMode: "screen",
-          filter: "blur(20px)",
-        }}
-      />
-
+    // Increased container height for larger viewport
+    <div className="relative w-full h-[800px] overflow-hidden bg-black -mt-80 -mb-40">
       <svg
-        className="absolute inset-0 w-[300%] h-full"
+        className="absolute top-0 left-0 w-[300%] h-[500px] -mt-20"
         viewBox="0 0 8000 500"
         preserveAspectRatio="none"
       >
@@ -50,7 +39,7 @@ export default function NeonWaveLight() {
           const amplitude = 15 + i * 1.2;
           const baseWavelength = 600 + i * 20;
           const wavelength = isMobile ? baseWavelength * 2 : baseWavelength;
-          const verticalOffset = 100 + i * 25;
+          const verticalOffset = 100 + i * 25; // Same vertical offset
           const opacity = 0.1 + (i / WAVES) * 0.6;
 
           const path = generateWavePath(amplitude, wavelength, verticalOffset);
