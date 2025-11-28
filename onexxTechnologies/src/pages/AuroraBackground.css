@@ -39,6 +39,7 @@
 /* ------------------------- */
 
 .glow-layer2 {
+    display: inline-block;
     font-family: "Rubik Mono One", sans-serif;
     color: #ffffff;
 

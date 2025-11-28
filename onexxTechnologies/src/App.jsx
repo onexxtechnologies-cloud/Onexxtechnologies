@@ -1,3 +1,4 @@
+"use client";
 import HeroSection from "./pages/herosection.jsx";
 import Navbar from "./pages/navbar.jsx";
 import UltimateBlueHorizon from "./pages/halfmoon.jsx";
@@ -8,7 +9,8 @@ function App() {
     <>
       <Navbar />
       <HeroSection />
-      <UltimateBlueHorizon />
+      <div className="relative -mt-[80vh]">
+      <UltimateBlueHorizon /></div>
       <OnexxatronModel/>
     </>
   );

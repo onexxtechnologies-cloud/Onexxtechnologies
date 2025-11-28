@@ -245,25 +245,26 @@ export default function Navbar() {
       <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full flex justify-center py-3 md:py-4 bg-transparent pointer-events-auto">
         <div
           className={`
-            pointer-events-auto
-            px-4 md:px-8 py-3 md:py-4 h-[64px] md:h-[70px]
-            mr-[3%]
-            rounded-full flex items-center justify-between gap-4
-            transition-all duration-500
-            shadow-[0_0_25px_rgba(0,0,0,0.1)]
-            hover:shadow-[0_0_35px_rgba(0,0,0,0.15)]
-            ${isScrolled
-              ? "w-[95%] sm:w-[80%] lg:w-[70%] lg:mr-[2%]"
-              : "w-[90%] sm:w-[60%] lg:w-[45%] lg:mr-[2%]"
+      pointer-events-auto
+      px-4 md:px-8 py-3 md:py-4 h-[64px] md:h-[70px]
+      rounded-full flex items-center justify-between gap-4
+      transition-all duration-500
+      shadow-[0_0_25px_rgba(0,0,0,0.1)]
+      hover:shadow-[0_0_35px_rgba(0,0,0,0.15)]
+      ${isScrolled
+              ? "w-[90%] md:w-[90%] lg:w-[90%] mx-auto"
+              : "w-[85%] md:w-[85%] lg:w-[75%] mx-auto"
             }
-          `}
+    `}
           style={{
-            background: "linear-gradient(135deg, rgba(30,30,40,0.75) 0%, rgba(60,60,70,0.65) 50%, rgba(100,100,110,0.55) 100%)",
+            background:
+              "linear-gradient(135deg, rgba(30,30,40,0.75) 0%, rgba(60,60,70,0.65) 50%, rgba(100,100,110,0.55) 100%)",
             backdropFilter: "blur(120px) saturate(180%)",
             WebkitBackdropFilter: "blur(120px) saturate(180%)",
             border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
+
           <div className="text-white text-lg md:text-2xl font-bold tracking-[0.25em] uppercase z-50">ONEXX</div>
 
           {/* DESKTOP MENU */}
@@ -315,7 +316,7 @@ export default function Navbar() {
                 }}
               >
                 <div className="flex flex-col gap-6 items-center w-full">
-                  <div className="w-full flex justify-center items-center mr-[12%]">
+                  <div className="w-full flex justify-center text-center ml-auto items-center mr-[12%]">
                     <GooeyNav
                       items={[
                         { label: "Home", href: "#home" },
@@ -337,7 +338,7 @@ export default function Navbar() {
 
                   <button
                     onClick={handleMobileToggle}
-                    className="px-10 py-3 text-lg font-semibold rounded-full relative overflow-hidden
+                    className=" px-5 py-3 text-lg font-semibold rounded-full relative overflow-hidden
     bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
     shadow-[0_0_35px_rgba(0,102,255,0.75)]
     hover:shadow-[0_0_50px_rgba(0,140,255,1)]

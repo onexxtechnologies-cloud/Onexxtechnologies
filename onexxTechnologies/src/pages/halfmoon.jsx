@@ -5,7 +5,7 @@ import { Rocket, GaugeCircle, Handshake } from "lucide-react";
 
 const UltimateBlueHorizon = () => {
   return (
-    <div className="relative w-full h-[160vh] md:h-[220vh] bg-black overflow-hidden flex flex-col items-center font-sans pt-24 md:pt-32">
+    <div className="relative w-full h-[160vh] md:h-[220vh] bg-black overflow-hidden flex flex-col items-center font-sans pt-24 md:pt-32 -mt-80">
       {/* ================= 1. TITLE ================= */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -30,7 +30,7 @@ const UltimateBlueHorizon = () => {
       {/* MAIN PLANET CONTAINER */}
       <div
         className="
-          absolute top-[25vh]
+          absolute top-[14vh] sm:top-[27vh]
           w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw]
           bg-black rounded-[50%] overflow-hidden z-10
           shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)]
@@ -41,7 +41,7 @@ const UltimateBlueHorizon = () => {
       {/* OUTER BLUE SOFT GLOW */}
       <div
         className="
-          absolute top-[25vh]
+          absolute top-[14vh] sm:top-[27vh]
           w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw]
           rounded-[50%]
           shadow-[0_0_200px_rgba(59,130,246,0.85)]
@@ -52,7 +52,7 @@ const UltimateBlueHorizon = () => {
       {/* BRIGHT HORIZON LINE */}
       <div
         className="
-          absolute top-[25vh]
+          absolute top-[14vh] sm:top-[27vh]
           w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw]
           rounded-[50%]
           border-t-[8px] border-blue-100/90
@@ -127,7 +127,7 @@ const UltimateBlueHorizon = () => {
 
         </div>
         {/* BOTTOM TEXT & BUTTON */}
-        <div className="flex flex-col md:flex-row justify-between items-center w-full px-2">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full px-2 sm:mt-0 -mt-13">
           <p className="text-gray-400 text-sm md:text-base max-w-lg text-center md:text-center">
             We transform ideas into impactful digital solutions that empower
             your brand to rise above the ordinary.
@@ -136,7 +136,7 @@ const UltimateBlueHorizon = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mt-6 md:mt-0 flex items-center gap-3 text-white font-semibold group cursor-pointer"
+            className="sm:mt-0 -mt-1 flex items-center gap-3 text-white font-semibold group cursor-pointer"
           >
             Explore More
             <div className="w-10 h-10 rounded-full flex items-center justify-center">
