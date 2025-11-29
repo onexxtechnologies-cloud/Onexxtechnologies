@@ -5,7 +5,7 @@ import { Rocket, GaugeCircle, Handshake } from "lucide-react";
 
 const UltimateBlueHorizon = () => {
   return (
-    <div className="relative w-full h-[160vh] md:h-[120vh] bg-black overflow-hidden flex flex-col items-center font-sans pt-24 md:pt-32 -mt-80">
+    <div className="relative w-full h-[160vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center font-sans pt-24 md:pt-32 -mt-80">
       {/* ================= 1. TITLE ================= */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
