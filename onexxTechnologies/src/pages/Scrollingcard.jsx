@@ -76,7 +76,7 @@ const NeonCard = ({ card, index }) => {
     md:min-w-[330px] md:h-[380px]  /* Tablets */
     lg:min-w-[350px] lg:h-[400px]  /* Desktop */
         rounded-[50px] md:rounded-[45px]
-        bg-gradient-to-br from-[#0a1b3f] to-[#0e274c]
+        bg-gradient-to-br from-[#447efb] to-[#000000]
         border border-blue-500/20
         p-6 md:p-8
         text-white flex flex-col justify-between 
