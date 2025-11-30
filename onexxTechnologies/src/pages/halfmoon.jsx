@@ -1,11 +1,78 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import { Rocket, GaugeCircle, Handshake } from "lucide-react";
+import { ArrowDown, Rocket, GaugeCircle, Handshake } from "lucide-react";
+
+// 1. Import Particles and the Preset
+import Particles from "react-tsparticles";
+import { loadStarsPreset } from "tsparticles-preset-stars";
 
 const UltimateBlueHorizon = () => {
+  // 2. Initialize the particle engine
+  const particlesInit = useCallback(async (engine) => {
+    await loadStarsPreset(engine);
+  }, []);
+
+  // 3. Configure the look (Nebula & Static High Density Stars)
+  const particlesOptions = {
+    preset: "stars",
+    fullScreen: { enable: false },
+    background: {
+      color: {
+        value: "transparent",
+      },
+    },
+    particles: {
+      // High density
+      number: {
+        value: 250, 
+        density: {
+          enable: true,
+          area: 800,
+        },
+      },
+      // Varied sizes for depth
+      size: {
+        value: { min: 0.2, max: 2.5 }, 
+      },
+      // STATIC OPACITY (No Twinkle)
+      opacity: {
+        value: 1, // Fixed bright stars
+        animation: {
+          enable: false, // Disabled animation
+        },
+      },
+      // STATIC POSITION (No Movement)
+      move: {
+        enable: false, // Disabled movement
+      },
+    },
+  };
+
   return (
     <div className="relative w-full h-[160vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center font-sans pt-24 md:pt-32 -mt-80">
+      
+      {/* ================= BRIGHTER NEBULA BACKGROUND LAYERS ================= */}
+      {/* Increased opacity and used lighter color shades for brightness */}
+      
+      {/* 1. Bright Blue Glow (Top Center) */}
+      <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[90vw] h-[10vh]  blur-[150px] rounded-full pointer-events-none z-0 mix-blend-screen" />
+      
+      {/* 2. Bright Purple/Pink Glow (Mid-Right) */}
+      <div className="absolute top-[30%] right-[-20%] w-[60vw] h-[60vh] bg-purple-500/50 blur-[130px] rounded-full pointer-events-none z-0 mix-blend-screen" />
+      
+      {/* 3. Bright Teal/Cyan Glow (Bottom Left) */}
+      <div className="absolute top-[30%] left-[-20%] w-[50vw] h-[50vh] bg-teal-400/40 blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen" />
+
+
+      {/* ================= PARTICLES LAYER ================= */}
+      {/* Placed at z-0 so it sits on top of the nebula colors but behind the planet */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={particlesOptions}
+        className="absolute inset-0 z-0 h-full w-full"
+      />
+
       {/* ================= 1. TITLE ================= */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -13,8 +80,8 @@ const UltimateBlueHorizon = () => {
         transition={{ duration: 0.8 }}
         className="relative w-full z-30 text-center px-4 -mt-20 md:-mt-20"
       >
-        <h1 className="text-4xl md:text-7xl font-bold tracking-tight leading-tight">
-          <span className="bg-gradient-to-b from-[#D8E2FF] to-[#6A75FF] text-transparent bg-clip-text">
+        <h1 className="text-4xl md:text-7xl font-bold tracking-tight leading-tight drop-shadow-2xl">
+          <span className="bg-gradient-to-b from-[#D8E2FF] to-[#6A75FF] text-transparent bg-clip-text filter drop-shadow-lg">
             Building Brands That Shine Among the Stars
           </span>
           <br />
@@ -25,7 +92,7 @@ const UltimateBlueHorizon = () => {
           </span>
         </h1>
       </motion.div>
-      
+
       {/* ================= 2. THE MOON / HORIZON ================= */}
       {/* MAIN PLANET CONTAINER */}
       <div
@@ -75,9 +142,7 @@ const UltimateBlueHorizon = () => {
         className="relative z-30 w-[90%] max-w-6xl grid gap-6 mt-[35vh]"
       >
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 
-         divide-y sm:divide-y-0 sm:divide-x divide-white/10">
-
-
+          divide-y sm:divide-y-0 sm:divide-x divide-white/10">
 
           {/* BLOCK 1 */}
           <div className="p-10 flex flex-col items-center md:items-start text-center md:text-left gap-4 hover:bg-white/5 transition-colors duration-300">
