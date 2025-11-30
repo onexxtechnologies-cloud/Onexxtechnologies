@@ -22,22 +22,22 @@ import ExpressLogo from "../assets/Wordmark/expressword.svg";
 
 // --- STACKS ---
 const frontendStack = [
-  { logo: ReactLogo, scale: "scale-[1.15]" },
-  { logo: NextLogo, scale: "scale-[1.2]" },
-  { logo: TailwindLogo, scale: "scale-[1.1]" },
-  { logo: CssLogo, scale: "scale-100" },
-  { logo: TypeScriptLogo, scale: "scale-[0.95]" },
-  { logo: JavascriptLogo, scale: "scale-[0.9]" },
-  { logo: HTMLLogo, scale: "scale-100" },
+  { logo: ReactLogo, scale: "scale-[1.20]" },
+  { logo: NextLogo, scale: "scale-[2.5]" },
+  { logo: TailwindLogo, scale: "scale-[2.5]" },
+  { logo: CssLogo, scale: "scale-[1.5]" },
+  { logo: TypeScriptLogo, scale: "scale-[1.2]" },
+  { logo: JavascriptLogo, scale: "scale-[1.2]" },
+  { logo: HTMLLogo, scale: "scale-[1.5]" },
 ];
 
 const backendStack = [
-  { logo: NodeLogo, scale: "scale-[1.2]" },
-  { logo: PythonLogo, scale: "scale-100" },
-  { logo: SQLLogo, scale: "scale-[0.9]" },
-  { logo: MySQLLogo, scale: "scale-[0.9]" },
-  { logo: PHPLogo, scale: "scale-[1.05]" },
-  { logo: ExpressLogo, scale: "scale-[1.1]" },
+  { logo: NodeLogo, scale: "scale-[1.9]" },
+  { logo: PythonLogo, scale: "scale-[1.5]" },
+  { logo: SQLLogo, scale: "scale-[1.5]" },
+  { logo: MySQLLogo, scale: "scale-[1.5]" },
+  { logo: PHPLogo, scale: "scale-[1.7]" },
+  { logo: ExpressLogo, scale: "scale-[1.8]" },
 ];
 
 
@@ -61,7 +61,7 @@ const RippleItem = ({ tech }) => {
       onMouseEnter={() => ref.current.style.setProperty("--size", "250px")}
       onMouseLeave={() => ref.current.style.setProperty("--size", "0px")}
       className="relative overflow-hidden cursor-pointer min-w-[120px] px-6 py-3 
-      rounded-md border border-gray-300 bg-[#7e7e7e] 
+      rounded-md border border-gray-300 bg-[#8ec6fb] 
       transition-all duration-300 hover:scale-105 flex items-center justify-center"
     >
 
