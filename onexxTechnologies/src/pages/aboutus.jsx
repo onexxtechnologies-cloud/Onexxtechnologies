@@ -2,18 +2,46 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import CssLogo from "../assets/icon/css.svg";
+
+// --- IMPORT LOGOS ---
+import CssLogo from "../assets/Wordmark/cssword.svg";
+import ReactLogo from "../assets/Wordmark/reactword.svg";
+import NextLogo from "../assets/Wordmark/nextword.svg";
+import TailwindLogo from "../assets/Wordmark/Tailwindword.svg";
+import TypeScriptLogo from "../assets/Wordmark/typescriptword.svg";
+import JavascriptLogo from "../assets/Wordmark/javascriptword.svg";
+import HTMLLogo from "../assets/Wordmark/htmlword.svg";
+
+import PythonLogo from "../assets/Wordmark/pythonword.svg";
+import NodeLogo from "../assets/Wordmark/nodeword.svg";
+import SQLLogo from "../assets/Wordmark/SQLword.svg";
+import MySQLLogo from "../assets/Wordmark/MySQLword.svg";
+import PHPLogo from "../assets/Wordmark/phpword.svg";
+import ExpressLogo from "../assets/Wordmark/expressword.svg";
+
 
 // --- STACKS ---
-const frontendStack = ["React", "Next.js", "Tailwind", "CSS", "TypeScript", "HTML"];
-const backendStack = ["Node.js", "Python", "SQL", "MySQL", "PHP", "Express"];
+const frontendStack = [
+  { logo: ReactLogo, scale: "scale-[1.15]" },
+  { logo: NextLogo, scale: "scale-[1.2]" },
+  { logo: TailwindLogo, scale: "scale-[1.1]" },
+  { logo: CssLogo, scale: "scale-100" },
+  { logo: TypeScriptLogo, scale: "scale-[0.95]" },
+  { logo: JavascriptLogo, scale: "scale-[0.9]" },
+  { logo: HTMLLogo, scale: "scale-100" },
+];
 
-// --- ALL BLACK COLORS ---
-const techColors = Object.fromEntries(
-  [...frontendStack, ...backendStack].map((v) => [v, "#000"])
-);
+const backendStack = [
+  { logo: NodeLogo, scale: "scale-[1.2]" },
+  { logo: PythonLogo, scale: "scale-100" },
+  { logo: SQLLogo, scale: "scale-[0.9]" },
+  { logo: MySQLLogo, scale: "scale-[0.9]" },
+  { logo: PHPLogo, scale: "scale-[1.05]" },
+  { logo: ExpressLogo, scale: "scale-[1.1]" },
+];
 
-// --- RIPPLE COMPONENT ---
+
+// --- RIPPLE ITEM ---
 const RippleItem = ({ tech }) => {
   const ref = useRef(null);
 
@@ -22,11 +50,8 @@ const RippleItem = ({ tech }) => {
     if (!box) return;
 
     const rect = box.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    box.style.setProperty("--x", `${x}px`);
-    box.style.setProperty("--y", `${y}px`);
+    box.style.setProperty("--x", `${e.clientX - rect.left}px`);
+    box.style.setProperty("--y", `${e.clientY - rect.top}px`);
   };
 
   return (
@@ -35,30 +60,35 @@ const RippleItem = ({ tech }) => {
       onMouseMove={handleMove}
       onMouseEnter={() => ref.current.style.setProperty("--size", "250px")}
       onMouseLeave={() => ref.current.style.setProperty("--size", "0px")}
-      style={{ backgroundColor: "#000", color: "white" }}
-      className="relative overflow-hidden cursor-pointer text-sm md:text-lg 
-      font-semibold min-w-[120px] px-6 py-3 rounded-md border border-gray-700
-      transition-all duration-300 hover:scale-105 hover:shadow-lg "
+      className="relative overflow-hidden cursor-pointer min-w-[120px] px-6 py-3 
+      rounded-md border border-gray-300 bg-[#7e7e7e] 
+      transition-all duration-300 hover:scale-105 flex items-center justify-center"
     >
-      {/* ripple */}
+
+      {/* Ripple */}
       <div
-        className="pointer-events-none absolute rounded-full bg-white mix-blend-difference"
+        className="pointer-events-none absolute rounded-full bg-black/600 mix-blend-difference"
         style={{
           left: "var(--x)",
           top: "var(--y)",
           width: "var(--size)",
           height: "var(--size)",
           transform: "translate(-50%, -50%)",
-          transition: "width 0.5s ease, height .5s ease",
+          transition: "width .5s ease, height .5s ease",
         }}
       />
 
-      {tech}
+      <img
+        src={tech.logo}
+        alt="tech"
+        className={`h-6 md:h-10 w-auto object-contain ${tech.scale}`}
+      />
     </div>
   );
 };
 
-// --- MARQUEE ROW ---
+
+// --- MARQUEE ---
 const MarqueeRow = ({ items, direction }) => {
   const doubled = [...items, ...items];
 
@@ -78,10 +108,12 @@ const MarqueeRow = ({ items, direction }) => {
     </div>
   );
 };
-const isMobile = window.innerWidth <= 768;
+
+
 // --- MAIN COMPONENT ---
 const OpenCloseScroll = () => {
   const containerRef = useRef(null);
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -93,25 +125,25 @@ const OpenCloseScroll = () => {
   const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.8, 0.9], [0, 1, 1, 1, 0]);
   const descriptionY = useTransform(scrollYProgress, [0.1, 0.2], ["0%", isMobile ? "-20%" : "-40%"]);
 
+
   return (
     <div className="relative w-full">
       <section ref={containerRef} className="relative h-[180vh] bg-transparent">
         <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
 
-          {/* ANIMATED CIRCLE */}
+          {/* CIRCLE */}
           <motion.div
             style={{ scale }}
-            className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px] md:w-[550px] md:h-[550px]
-            bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e]
-
-            rounded-full z-10 mt-[-25%] sm:mt-[-2%]"
+            className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px] 
+            bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e] rounded-full z-10 mt-[-25%] sm:mt-[-2%]"
           />
 
           {/* CONTENT */}
           <motion.div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-4xl">
+
             <motion.h1
               style={{ y: titleY }}
-              className="text-3xl md:text-6xl font-bold text-white mt-[40%] leading-tight"
+              className="text-3xl md:text-6xl font-bold text-white sm:mt-[40%] mt-[80%] leading-tight"
             >
               New Horizon
             </motion.h1>
@@ -125,11 +157,12 @@ const OpenCloseScroll = () => {
                 with OneXX.
               </p>
 
-              <div className="w-full scale-[1.6] ">
+              <div className="w-full scale-[1.6]">
                 <MarqueeRow items={frontendStack} direction="left" />
                 <MarqueeRow items={backendStack} direction="right" />
               </div>
             </motion.div>
+
           </motion.div>
         </div>
       </section>
