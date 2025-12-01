@@ -6,6 +6,7 @@ import OnexxatronModel from "./pages/3dmodel.jsx";
 import OpenCloseScroll from "./pages/aboutus.jsx";
 import ScrollingCards from "./pages/Scrollingcard.jsx";
 
+
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
       <UltimateBlueHorizon /></div>
       <OpenCloseScroll />
       <ScrollingCards />
+
       <OnexxatronModel/>
     </>
   );
