@@ -1,142 +1,191 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValue,
+  useAnimationFrame,
+} from "framer-motion";
 import { DollarSign, CheckCircle2, Headphones, Cpu } from "lucide-react";
 
-const cards = [
+// ---------------------------------------------------------
+// 📦 DATA
+// ---------------------------------------------------------
+const originalCards = [
   {
     title: "Affordable Price",
-    desc: "Get premium features for a budget-friendly cost. Perfect for startups & businesses.",
+    desc: "Premium features for a budget-friendly cost.",
     icon: <DollarSign size={42} className="text-blue-300" />,
   },
   {
-    title: "Quality",
-    desc: "Top-notch performance with well-engineered, stable, and optimized solutions.",
+    title: "Quality Code",
+    desc: "Top-notch performance with optimized solutions.",
     icon: <CheckCircle2 size={42} className="text-blue-300" />,
   },
   {
-    title: "Support",
-    desc: "Dedicated expert support available 24/7 to assist you at every step.",
+    title: "Expert Support",
+    desc: "Dedicated expert support available 24/7.",
     icon: <Headphones size={42} className="text-blue-300" />,
   },
   {
-    title: "Tech Solution & Languages",
-    desc: "Modern tech stack & multilingual support for global audiences.",
+    title: "Modern Tech",
+    desc: "Modern tech stack & multilingual support.",
     icon: <Cpu size={42} className="text-blue-300" />,
   },
 ];
 
+// We double the cards to ensure the loop is smooth even on wide screens
+const cards = [...originalCards, ...originalCards];
+
+// ---------------------------------------------------------
+// 🔧 CONFIGURATION
+// ---------------------------------------------------------
+const CARD_WIDTH = 350;   // Card width (px)
+const CARD_GAP = 50;      // Gap between cards (px)
+const ITEM_SIZE = CARD_WIDTH + CARD_GAP; 
+const RADIUS = 3000;      // Curve radius (higher = flatter)
+const SPEED = 0.5;        // Speed of rotation (pixels per frame)
+
 const ScrollingBlueNeon = () => {
+  // This value drives the whole animation
+  const baseX = useMotionValue(0);
+
+  // 🚀 THE INFINITE LOOP ENGINE
+  useAnimationFrame((time, delta) => {
+    let moveBy = SPEED * (delta / 8); // normalize speed
+    // Move continuously left
+    baseX.set(baseX.get() - moveBy);
+  });
+
   return (
-    <div className="w-full py-16 md:py-24 overflow-hidden relative bg-gradient-to-b from-[#02081700] to-[#071a3c00]">
+    <div className="w-full h-[1000px] overflow-hidden relative bg-gradient-to-b from-[#000000] to-[#2c54a9] flex flex-col justify-center items-center">
+      
+      {/* Background Line */}
+      <div className="absolute top-1/2 left-0 w-full h-[1px] bg-blue-500/20 blur-[2px]" />
 
-      {/* Line */}
-      <div className="absolute top-1/2 left-0 w-full h-[2px] bg-blue-500/20 blur-[4px]" />
-
-      {/* Main Scroller */}
-      <motion.div
-        className="flex gap-6 md:gap-14"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: 12  ,
-        }}
-      >
-        {[...cards, ...cards].map((card, idx) => (
-          <NeonCard key={idx} card={card} index={idx} />
+      {/* Container */}
+      <div className="relative w-full h-[600px] flex justify-center items-center">
+        {cards.map((card, index) => (
+          <LoopingCard 
+            key={index} 
+            index={index} 
+            baseX={baseX} 
+            card={card} 
+            totalItems={cards.length} 
+          />
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
 
 export default ScrollingBlueNeon;
 
-//
-// ----------------------------
-// ✨ Neon Card Component (Mobile Optimized)
-// ----------------------------
-//
-const NeonCard = ({ card, index }) => {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+// ---------------------------------------------------------
+// 🎡 The Physics Card Component
+// ---------------------------------------------------------
+const LoopingCard = ({ index, baseX, card, totalItems }) => {
+  const x = useTransform(baseX, (v) => {
+    // 1. Calculate offset based on index
+    const offset = index * ITEM_SIZE;
+    const totalSize = totalItems * ITEM_SIZE;
+    
+    // 2. Add current scroll value
+    let position = (v + offset) % totalSize;
+
+    // 3. Wrap logic: ensure items flow smoothly around the center
+    // If position is too far left, move it to the right side
+    if (position < -totalSize / 2) {
+        position += totalSize;
+    }
+    // If position is too far right, move it to the left side
+    else if (position > totalSize / 2) {
+        position -= totalSize;
+    }
+    
+    return position;
+  });
+
+  // 📐 ARC PHYSICS
+  // Calculate Y and Rotation based on the wrapped X value
+  
+  const y = useTransform(x, (latestX) => {
+    // Parabola: y = x^2 / k
+    return (Math.pow(latestX, 2)) / RADIUS; 
+  });
+
+  const rotate = useTransform(x, (latestX) => {
+    // Tilt based on X position
+    return latestX / 25; 
+  });
+
+  const opacity = useTransform(x, (latestX) => {
+    // Fade out at the edges
+    const distance = Math.abs(latestX);
+    if (distance > 2000) return 0; // Hide if really far
+    return 1 - (distance / 3500); 
+  });
 
   return (
     <motion.div
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        setPos({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        });
+      style={{
+        x,
+        y,
+        rotate,
+        opacity,
+        position: "absolute",
+        left: "50%", 
+        marginLeft: -CARD_WIDTH / 2, // Center the card origin
       }}
+      className="will-change-transform"
+    >
+      <NeonCard card={card} />
+    </motion.div>
+  );
+};
 
+
+// ----------------------------
+// ✨ Card Design
+// ----------------------------
+const NeonCard = ({ card }) => {
+  return (
+    <div
       className="
-         min-w-[260px] h-[320px]         /* Mobile */
-    sm:min-w-[300px] sm:h-[360px]  /* Small tablets */
-    md:min-w-[330px] md:h-[380px]  /* Tablets */
-    lg:min-w-[350px] lg:h-[400px]  /* Desktop */
-        rounded-[50px] md:rounded-[45px]
-        bg-gradient-to-br from-[#447efb] to-[#000000]
+        w-[300px] h-[380px] md:w-[350px] md:h-[420px]
+        rounded-[45px]
+        bg-gradient-to-br from-[#256be5] to-[#000000]
         border border-blue-500/20
-        p-6 md:p-8
+        p-8
         text-white flex flex-col justify-between 
         backdrop-blur-xl
+        group relative overflow-hidden
         transition-all duration-300
-
-        hover:scale-[1.15]
-        hover:shadow-[0_0_35px_rgba(0,140,255,0.55)]
-
-        active:scale-[1.03]     /* mobile tap scale */
+        hover:shadow-[0_0_40px_rgba(0,140,255,0.3)]
+        hover:scale-[1.02]
       "
-      animate={{
-        y: [0, -15, 0],
-      }}
-      transition={{
-        repeat: Infinity,
-        duration: 5,
-        ease: "easeInOut",
-        delay: index * 0.3,
-      }}
     >
-      {/* Disable glow on mobile (performance) */}
-      <div
-        className="
-          hidden md:block 
-          pointer-events-none 
-          absolute w-44 h-44 rounded-full 
-          bg-blue-500/30 blur-3xl 
-          opacity-0 group-hover:opacity-100 
-          transition-all duration-300
-        "
-        style={{
-          left: pos.x - 90,
-          top: pos.y - 90,
-        }}
-      />
+      {/* Internal Glow Effect */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-500/5 to-transparent opacity-50" />
 
       {/* Icon */}
-      <div>{card.icon}</div>
+      <div className="z-10 relative bg-blue-900/20 p-4 rounded-full w-fit border border-blue-500/10">
+        {card.icon}
+      </div>
 
-      <div>
-        <h2 className="text-xl md:text-2xl font-semibold text-blue-200 mb-3">
+      <div className="z-10 relative">
+        <h2 className="text-2xl font-bold text-blue-100 mb-3 tracking-wide">
           {card.title}
         </h2>
-        <p className="text-gray-300 text-sm md:text-base leading-relaxed">
+        <p className="text-blue-300/60 text-sm leading-relaxed font-medium">
           {card.desc}
         </p>
       </div>
 
-      <div className="w-full h-[3px] bg-blue-400/30 rounded-full mt-3" />
-
-      {/* Border glow only on desktop */}
-      <div className="
-        hidden md:block 
-        absolute inset-0 rounded-[45px] 
-        border border-blue-400/40 
-        opacity-0 group-hover:opacity-100 
-        transition duration-300
-        shadow-[0_0_45px_rgba(0,160,255,0.5)]
-      "></div>
-    </motion.div>
+      {/* Bottom accent line */}
+      <div className="w-12 h-1 bg-blue-500 rounded-full mt-4 z-10" />
+    </div>
   );
 };
