@@ -122,7 +122,7 @@ const OpenCloseScroll = () => {
 
   const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.7, 1], [1, 2,3,3,3,2,1]);
   const titleY = useTransform(scrollYProgress, [0.1, 0.2, 0.9, 1], ["0%", "-170%", "-170%", "0%"]);
-  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.6, 0.7], [0, 1, 1, 0, 0]);
+  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.6, 0.7], [0, 0, 1, 1, 0]);
   const descriptionY = useTransform(scrollYProgress, [0.1, 0.2], ["0%", isMobile ? "-20%" : "-40%"]);
 
 
