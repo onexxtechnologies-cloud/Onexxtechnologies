@@ -4,50 +4,60 @@ import { ArrowDown, Rocket, GaugeCircle, Handshake } from "lucide-react";
 import Particles from "react-tsparticles";
 import { loadStarsPreset } from "tsparticles-preset-stars";
 
-const ShootingStar = () => {
-  const [trail, setTrail] = useState([]);
-  const [pos, setPos] = useState(null); // store xStart,yStart,xEnd,yEnd,angle
+// ====================== SINGLE SHOOTING STAR COMPONENT ======================
+const ShootingStar = ({ id }) => {
+  // We use a key to trigger a complete re-render (reset) of the animation
+  const [resetKey, setResetKey] = useState(0);
+  const [pos, setPos] = useState(null);
 
+  // Generate random coordinates and delay
   useEffect(() => {
-    // RANDOM START + END
     const xStart = Math.random() * 100;
     const yStart = Math.random() * 100;
-    const xEnd = Math.random() * 100;
-    const yEnd = Math.random() * 100;
+    const xEnd = xStart + (Math.random() * 20 - 10); // End slightly offset for realism
+    const yEnd = yStart + (Math.random() * 20 + 20); // Generally moving down/across
+    
+    // Calculate angle for the tail rotation
+    const angle = Math.atan2(yEnd - yStart, xEnd - xStart) * (150 / Math.PI);
 
-    // ROTATION CALC
-    const angle = Math.atan2(yEnd - yStart, xEnd - xStart) * 180 / Math.PI;
+    // Random delay between 0 and 10 seconds so they don't all start at once
+    const delay = Math.random() * 5000;
 
-    // save for use in return ⬇
-    setPos({ xStart, yStart, xEnd, yEnd, angle });
+    const timeout = setTimeout(() => {
+      setPos({ xStart, yStart, xEnd, yEnd, angle });
+    }, delay);
 
-    // TRAIL GEN
-    let frame = 0;
-    const interval = setInterval(() => {
-      frame++;
-      setTrail(t => [...t.slice(-25), frame]);
-    }, 60);
+    return () => clearTimeout(timeout);
+  }, [resetKey]);
 
-    return () => clearInterval(interval);
-  }, []);
+  // When animation completes, wait a bit then reset to spawn again
+  const handleAnimationComplete = () => {
+    setPos(null); // Hide
+    // Wait random time before respawning
+    setTimeout(() => {
+      setResetKey(prev => prev + 2);
+    }, Math.random() * 3000 + 1000);
+  };
 
-  // ⛔ Prevent render until pos exists
   if (!pos) return null;
 
   return (
     <motion.div
-      initial={{ x: `${pos.xStart}vw`, y: `${pos.yStart}vh`, opacity: 1 }}
-      animate={{ x: `${pos.xEnd}vw`, y: `${pos.yEnd}vh`, opacity: 0 }}
-      transition={{ duration: 2, ease: "easeOut" }}
+      initial={{ x: `${pos.xStart}vw`, y: `${pos.yStart}vh`, opacity: 0, scale: 0.5 }}
+      animate={{ x: `${pos.xEnd}vw`, y: `${pos.yEnd}vh`, opacity: [0, 1, 1, 0], scale: 1 }}
+      transition={{ duration: 1.5, ease: "easeOut" }}
+      onAnimationComplete={handleAnimationComplete}
       className="absolute top-0 left-0 pointer-events-none"
       style={{ rotate: `${pos.angle}deg` }}
     >
-
-      {/* ⭐ STAR HEAD */}
-      <div className="w-[7px] h-[7px] bg-white rounded-full shadow-[0_0_20px_10px_white]"></div>
-
-
-
+      <div className="relative">
+        {/* ⭐ STAR HEAD */}
+        <div className="w-1 h-1 bg-white rounded-full shadow-[0_0_10px_4px_white] z-10 relative"></div>
+        
+        {/* 🌠 "LINE LIKE SHADOW" (THE TAIL) */}
+        {/* This creates the long trailing line behind the star */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[150px] h-[2px] bg-gradient-to-r from-transparent via-blue-200 to-white origin-right -mr-[1px] blur-[1px]"></div>
+      </div>
     </motion.div>
   );
 };
@@ -58,56 +68,50 @@ const UltimateBlueHorizon = () => {
     await loadStarsPreset(engine);
   }, []);
 
-  const [shootingStarKey, setShootingStarKey] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShootingStarKey((prev) => prev + 1);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, []);
-
+  // BACKGROUND STARS CONFIGURATION
   const particlesOptions = {
     preset: "stars",
     fullScreen: { enable: false },
     background: { color: "transparent" },
     particles: {
-      number: { value: 200, density: { enable: true, area: 800 } },
-      size: { value: { min: 0.2, max: 2.5 } },
+      number: { value: 200, density: { enable: true, area: 1300 } }, // Increased count
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
       opacity: {
-        value: { min: 0.3, max: 1 },
-        animation: {
-          enable: true,
-          speed: 0.5,
-          sync: false,
-          startValue: "random",
-          minimumValue: 0.3,
-        },
+        value: { min: 0.1, max: 0.8 },
+        animation: { enable: true, speed: 1, sync: false } // Twinkle effect
       },
-      move: { enable: false },
+      size: { value: { min: 0.5, max: 3 } },
+      move: {
+        enable: true, // ✅ ENABLED MOVEMENT
+        speed: 0.9,   // ✅ SPEED OF FLOW
+        direction: "top", // ✅ FLOWS "UPSIDE"
+        straight: false,
+        outModes: { default: "top" }, // Stars disappear when leaving screen
+      },
     },
   };
 
   return (
     <div className="relative w-full h-[160vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center font-sans pt-24 md:pt-32 -mt-80">
 
-      {/* Nebula Background */}
+      {/* Nebula Background (Static Glows) */}
       <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[90vw] h-[10vh] blur-[150px] rounded-full pointer-events-none z-0 mix-blend-screen" />
-      <div className="absolute top-[30%] right-[-20%] w-[60vw] h-[60vh] bg-purple-500/50 blur-[130px] rounded-full pointer-events-none z-0 mix-blend-screen" />
-      <div className="absolute top-[30%] left-[-20%] w-[50vw] h-[50vh] bg-teal-400/40 blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute top-[30%] right-[-20%] w-[60vw] h-[60vh] blur-[130px] rounded-full pointer-events-none z-0 mix-blend-screen" />
+      <div className="absolute top-[30%] left-[-20%] w-[50vw] h-[50vh] blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen" />
 
-      {/* Particles */}
+      {/* Moving Background Particles */}
       <Particles id="tsparticles" init={particlesInit} options={particlesOptions} className="absolute inset-0 z-0 h-full w-full" />
 
-      {/* Shooting Star */}
-      <AnimatePresence>
-        <div key={shootingStarKey} className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-          <ShootingStar />
-        </div>
-      </AnimatePresence>
+      {/* Multiple Shooting Stars Layer */}
+      {/* We render 5 independent shooting stars */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        {[...Array(5)].map((_, i) => (
+          <ShootingStar key={i} id={i} />
+        ))}
+      </div>
 
-      {/* Title */}
+      {/* Main Title */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -125,8 +129,7 @@ const UltimateBlueHorizon = () => {
         </h1>
       </motion.div>
 
-      {/* Horizon Planet */}
-      
+      {/* Horizon Planet Visuals */}
       <div className="absolute top-[14vh] sm:top-[27vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] bg-black rounded-[50%] overflow-hidden z-10 shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)] border-t border-blue-500/30 mt-40" />
       <div className="absolute top-[14vh] sm:top-[27vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] shadow-[0_0_200px_rgba(59,130,246,0.85)] pointer-events-none z-10 mt-40" />
       <div className="absolute top-[14vh] sm:top-[27vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] border-t-[8px] border-blue-100/90 blur-[1.5px] shadow-[0_0_60px_rgba(96,165,250,0.95)] pointer-events-none z-20 mt-40" />

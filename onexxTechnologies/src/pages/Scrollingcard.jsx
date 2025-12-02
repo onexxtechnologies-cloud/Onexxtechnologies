@@ -156,7 +156,7 @@ const NeonCard = ({ card }) => {
       className="
         w-[300px] h-[380px] md:w-[350px] md:h-[420px]
         rounded-[45px]
-        bg-gradient-to-br from-[#256be5] to-[#000000]
+        bg-gradient-to-br from-[#046ff3] to-[#000000]
         border border-blue-500/20
         p-8
         text-white flex flex-col justify-between 

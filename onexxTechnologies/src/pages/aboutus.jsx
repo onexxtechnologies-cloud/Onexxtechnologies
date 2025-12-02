@@ -88,15 +88,22 @@ const RippleItem = ({ tech }) => {
 };
 
 
-// --- MARQUEE ---
+// --- MARQUEE (UPDATED WITH MASK) ---
 const MarqueeRow = ({ items, direction }) => {
   const doubled = [...items, ...items];
 
   return (
-    <div className="flex overflow-hidden w-screen relative py-2">
+    <div 
+      className="flex overflow-hidden w-full relative py-3"
+      // This style creates the left/right fade effect
+      style={{
+        maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+      }}
+    >
       <motion.div
         style={{ willChange: "transform", transform: "translateZ(0)" }}
-        className="flex gap-4 md:gap-8 flex-nowrap"
+        className="flex gap-5 md:gap-8 flex-nowrap"
         initial={{ translateX: direction === "left" ? "0%" : "-50%" }}
         animate={{ translateX: direction === "left" ? "-50%" : "0%" }}
         transition={{ ease: "linear", duration: 15, repeat: Infinity }}
@@ -120,9 +127,9 @@ const OpenCloseScroll = () => {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.7, 1], [1, 2,3,3,3,2,1]);
+  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.7, 1], [1, 3, 5, 10, 5, 5, 1]);
   const titleY = useTransform(scrollYProgress, [0.1, 0.2, 0.9, 1], ["0%", "-170%", "-170%", "0%"]);
-  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.6, 0.7], [0, 0, 1, 1, 0]);
+  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.8, 0.9], [0, 1, 1, 1, 0]);
   const descriptionY = useTransform(scrollYProgress, [0.1, 0.2], ["0%", isMobile ? "-20%" : "-40%"]);
 
 
