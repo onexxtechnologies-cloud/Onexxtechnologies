@@ -5,7 +5,7 @@ import UltimateBlueHorizon from "./pages/halfmoon.jsx";
 import OnexxatronModel from "./pages/3dmodel.jsx";
 import OpenCloseScroll from "./pages/aboutus.jsx";
 import ScrollingCards from "./pages/Scrollingcard.jsx";
-
+import ProcessScroll from "./pages/stickyscroll.jsx"
 
 function App() {
   return (
@@ -15,10 +15,10 @@ function App() {
       <HeroSection />
       <div className="relative -mt-[70vh]">
       <UltimateBlueHorizon /></div>
-      <div id="about">
+      <div id="about" className="sm:mt-[0] mt-[-30%]">
       <OpenCloseScroll /></div>
       <ScrollingCards />
-
+      <ProcessScroll/>
       <OnexxatronModel/>
     </>
   );

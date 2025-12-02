@@ -93,7 +93,7 @@ const MarqueeRow = ({ items, direction }) => {
   const doubled = [...items, ...items];
 
   return (
-    <div 
+    <div
       className="flex overflow-hidden w-full relative py-3"
       // This style creates the left/right fade effect
       style={{
@@ -127,9 +127,9 @@ const OpenCloseScroll = () => {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.8, 1], [1, 2,3,3,3,2,1]);
+  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.8, 1], [1, 2, 3, 3, 3, 2, 1]);
   const titleY = useTransform(scrollYProgress, [0.1, 0.2, 0.9, 1], ["0%", "-170%", "-170%", "0%"]);
-  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.6,0.65, 0.7,], [0, 1, 1, 1,0, 0]);
+  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.6, 0.65, 0.7,], [0, 1, 1, 1, 0, 0]);
   const descriptionY = useTransform(scrollYProgress, [0.1, 0.2], ["0%", isMobile ? "-20%" : "-40%"]);
 
 
@@ -152,16 +152,17 @@ const OpenCloseScroll = () => {
               style={{ y: titleY }}
               className="text-3xl md:text-6xl font-bold text-white sm:mt-[40%] mt-[80%] leading-tight"
             >
-              New Horizon
+              How We Work?
             </motion.h1>
 
             <motion.div style={{ y: descriptionY, opacity: descriptionOpacity }} className="w-full flex flex-col items-center">
               <div className="w-24 h-[1px] bg-gray-400 mx-auto my-8"></div>
 
-              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-12">
-                We invite you to experience something better <br />
-                a journey beyond the horizon <br />
-                with OneXX.
+              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-12 whitespace-nowrap">
+                At Onexx, we build with clarity, precision, and purpose — every decision is driven by performance and design excellence. <br />
+                We follow a fast, transparent workflow that keeps you involved at every stage, from concept to launch.
+                <br />
+                Our team focuses on delivering modern, seamless digital experiences that elevate your brand without compromise.
               </p>
 
               <div className="w-full scale-[1.6]">

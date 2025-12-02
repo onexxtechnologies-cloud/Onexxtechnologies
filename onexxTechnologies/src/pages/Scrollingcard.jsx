@@ -15,25 +15,26 @@ import { DollarSign, CheckCircle2, Headphones, Cpu } from "lucide-react";
 const originalCards = [
   {
     title: "Affordable Price",
-    desc: "Premium features for a budget-friendly cost.",
+    desc: "Onexx delivers premium design and development without the premium cost. You get industry-level features, modern performance, and polished UI at a budget-friendly price. Quality becomes affordable — without cutting corners.",
     icon: <DollarSign size={42} className="text-blue-300" />,
   },
   {
     title: "Quality Code",
-    desc: "Top-notch performance with optimized solutions.",
+    desc: "Every line of code is crafted for speed, stability, and long-term scalability. At Onexx, we build clean, optimized architectures that power smooth user experiences. Your website performs flawlessly — today and as your brand grows.",
     icon: <CheckCircle2 size={42} className="text-blue-300" />,
   },
   {
     title: "Expert Support",
-    desc: "Dedicated expert support available 24/7.",
+    desc: "Our support team is always available to help you, anytime you need. From quick fixes to strategic guidance, Onexx ensures you’re never stuck or waiting. We believe support isn’t a service — it’s a partnership.",
     icon: <Headphones size={42} className="text-blue-300" />,
   },
   {
     title: "Modern Tech",
-    desc: "Modern tech stack & multilingual support.",
+    desc: "Onexx uses a fresh, future-ready tech stack designed for speed, security, and flexibility. With multilingual capabilities and advanced features, your website stays modern and global. We build with innovation so your brand stays ahead of the curve.",
     icon: <Cpu size={42} className="text-blue-300" />,
   },
 ];
+
 
 // We double the cards to ensure the loop is smooth even on wide screens
 const cards = [...originalCards, ...originalCards];
@@ -43,7 +44,7 @@ const cards = [...originalCards, ...originalCards];
 // ---------------------------------------------------------
 const CARD_WIDTH = 350;   // Card width (px)
 const CARD_GAP = 50;      // Gap between cards (px)
-const ITEM_SIZE = CARD_WIDTH + CARD_GAP; 
+const ITEM_SIZE = CARD_WIDTH + CARD_GAP;
 const RADIUS = 3000;      // Curve radius (higher = flatter)
 const SPEED = 0.5;        // Speed of rotation (pixels per frame)
 
@@ -60,19 +61,19 @@ const ScrollingBlueNeon = () => {
 
   return (
     <div className="w-full h-[1000px] overflow-hidden relative bg-gradient-to-b from-[#000000] to-[#2c54a9] flex flex-col justify-center items-center">
-      
+
       {/* Background Line */}
       <div className="absolute top-1/2 left-0 w-full h-[1px] bg-blue-500/20 blur-[2px]" />
 
       {/* Container */}
       <div className="relative w-full h-[600px] flex justify-center items-center">
         {cards.map((card, index) => (
-          <LoopingCard 
-            key={index} 
-            index={index} 
-            baseX={baseX} 
-            card={card} 
-            totalItems={cards.length} 
+          <LoopingCard
+            key={index}
+            index={index}
+            baseX={baseX}
+            card={card}
+            totalItems={cards.length}
           />
         ))}
       </div>
@@ -91,41 +92,41 @@ const LoopingCard = ({ index, baseX, card, totalItems }) => {
     // 1. Calculate offset based on index
     const offset = index * ITEM_SIZE;
     const totalSize = totalItems * ITEM_SIZE;
-    
+
     // 2. Add current scroll value
     let position = (v + offset) % totalSize;
 
     // 3. Wrap logic: ensure items flow smoothly around the center
     // If position is too far left, move it to the right side
     if (position < -totalSize / 2) {
-        position += totalSize;
+      position += totalSize;
     }
     // If position is too far right, move it to the left side
     else if (position > totalSize / 2) {
-        position -= totalSize;
+      position -= totalSize;
     }
-    
+
     return position;
   });
 
   // 📐 ARC PHYSICS
   // Calculate Y and Rotation based on the wrapped X value
-  
+
   const y = useTransform(x, (latestX) => {
     // Parabola: y = x^2 / k
-    return (Math.pow(latestX, 2)) / RADIUS; 
+    return (Math.pow(latestX, 2)) / RADIUS;
   });
 
   const rotate = useTransform(x, (latestX) => {
     // Tilt based on X position
-    return latestX / 25; 
+    return latestX / 25;
   });
 
   const opacity = useTransform(x, (latestX) => {
     // Fade out at the edges
     const distance = Math.abs(latestX);
     if (distance > 2000) return 0; // Hide if really far
-    return 1 - (distance / 3500); 
+    return 1 - (distance / 3500);
   });
 
   return (
@@ -136,7 +137,7 @@ const LoopingCard = ({ index, baseX, card, totalItems }) => {
         rotate,
         opacity,
         position: "absolute",
-        left: "50%", 
+        left: "50%",
         marginLeft: -CARD_WIDTH / 2, // Center the card origin
       }}
       className="will-change-transform"
