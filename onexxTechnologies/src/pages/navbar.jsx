@@ -11,6 +11,7 @@ const GooeyNav = ({
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
   initialActiveIndex = 0,
   vertical = false, // For vertical layout
+  onItemClick, // NEW: callback when a nav item is clicked
 }) => {
   const containerRef = useRef(null);
   const navRef = useRef(null);
@@ -24,7 +25,7 @@ const GooeyNav = ({
     const angle =
       ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
     return vertical
-      ? [0, distance * Math.sin(angle)] // vertical: move along y mostly
+      ? [0, distance * Math.sin(angle)]
       : [distance * Math.cos(angle), distance * Math.sin(angle)];
   };
 
@@ -110,6 +111,11 @@ const GooeyNav = ({
 
     if (filterRef.current) {
       makeParticles(filterRef.current);
+    }
+
+    // NEW: call parent callback (used for mobile close & scroll)
+    if (onItemClick) {
+      onItemClick(index);
     }
   };
 
@@ -227,6 +233,17 @@ export default function Navbar() {
     }
   };
 
+  // NEW: handle item click (scroll + close mobile menu)
+  const handleNavItemClick = (index) => {
+    const section = document.querySelector(items[index].href);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+    if (isMobileMenuOpen) {
+      handleMobileToggle();
+    }
+  };
+
   return (
     <>
       <style>
@@ -269,7 +286,17 @@ export default function Navbar() {
 
           {/* DESKTOP MENU */}
           <div className="desktop-only flex-1 justify-center w-full">
-            <GooeyNav items={items} particleCount={15} particleDistances={[90, 10]} particleR={100} initialActiveIndex={0} animationTime={600} timeVariance={300} colors={[1, 2, 3, 1, 2, 3, 1, 4]} />
+            <GooeyNav
+              items={items}
+              particleCount={15}
+              particleDistances={[90, 10]}
+              particleR={100}
+              initialActiveIndex={0}
+              animationTime={600}
+              timeVariance={300}
+              colors={[1, 2, 3, 1, 2, 3, 1, 4]}
+              onItemClick={handleNavItemClick} // NEW
+            />
           </div>
 
           {/* DESKTOP BUTTON */}
@@ -318,12 +345,7 @@ export default function Navbar() {
                 <div className="flex flex-col gap-6 items-center w-full">
                   <div className="w-full flex justify-center text-center ml-auto items-center mr-[12%]">
                     <GooeyNav
-                      items={[
-                        { label: "Home", href: "#home" },
-                        { label: "About Us", href: "#about" },
-                        { label: "Services", href: "#services" },
-                        { label: "Work", href: "#work" },
-                      ]}
+                      items={items}
                       vertical={true}
                       particleCount={15}
                       particleDistances={[90, 10]}
@@ -332,8 +354,20 @@ export default function Navbar() {
                       timeVariance={300}
                       colors={[1, 2, 3, 1, 2, 3, 1, 4]}
                       initialActiveIndex={0}
+                      onItemClick={handleNavItemClick} // added click handler
                       style={{ margin: "0 auto", display: "flex", justifyContent: "center" }}
                     />
+
+                    <style>
+                      {`
+    li.active {
+      color: black; /* text color */
+      background: white; /* keeps white background */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* optional highlight */
+    }
+  `}
+                    </style>
+
                   </div>
 
                   <button

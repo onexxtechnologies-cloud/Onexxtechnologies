@@ -10,11 +10,13 @@ import ScrollingCards from "./pages/Scrollingcard.jsx";
 function App() {
   return (
     <>
-      <Navbar />
+    <div id="home">
+      <Navbar /></div>
       <HeroSection />
       <div className="relative -mt-[70vh]">
       <UltimateBlueHorizon /></div>
-      <OpenCloseScroll />
+      <div id="about">
+      <OpenCloseScroll /></div>
       <ScrollingCards />
 
       <OnexxatronModel/>
