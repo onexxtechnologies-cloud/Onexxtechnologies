@@ -6,6 +6,7 @@ import OnexxatronModel from "./pages/3dmodel.jsx";
 import OpenCloseScroll from "./pages/aboutus.jsx";
 import ScrollingCards from "./pages/Scrollingcard.jsx";
 import ProcessScroll from "./pages/stickyscroll.jsx"
+import ServicesSection from "./pages/servicesection.jsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <OpenCloseScroll /></div>
       <ScrollingCards />
       <ProcessScroll/>
+      <ServicesSection />
       <OnexxatronModel/>
     </>
   );

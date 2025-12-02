@@ -18,7 +18,7 @@ function cn(...inputs) {
 // Content data
 const content = [
   {
-    title: "Discovery & Strategic Planning",
+    title: "Web Development & Technology Services",
     description:
       "We collaborate with you to understand your vision, business goals, technical requirements, and target audience. This step lays a strong strategic foundation for long-term success.",
     color: "from-[#046ff3] to-[#000000]",
@@ -63,7 +63,9 @@ const Card = ({ item, index, progress, range, targetScale }) => {
         <div
           className={cn(
             "group relative w-full max-w-2xl h-[300px] overflow-hidden rounded-3xl border border-white/10 backdrop-blur-xl transition-all duration-500",
-            `bg-gradient-to-br ${item.color} opacity-100 grayscale-[50%]`
+            
+            // ⭐ FIXED BACKGROUND (No Gradient Change)
+            "bg-white/5"
           )}
         >
           {/* Watermark */}
@@ -92,6 +94,7 @@ const Card = ({ item, index, progress, range, targetScale }) => {
     </div>
   );
 };
+
 
 export default function ProcessScroll() {
   const container = useRef(null);
