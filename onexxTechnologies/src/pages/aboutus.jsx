@@ -93,7 +93,7 @@ const MarqueeRow = ({ items, direction }) => {
   const doubled = [...items, ...items];
 
   return (
-    <div
+    <div 
       className="flex overflow-hidden w-full relative py-3"
       // This style creates the left/right fade effect
       style={{
@@ -127,9 +127,9 @@ const OpenCloseScroll = () => {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.8, 1], [1, 2, 3, 3, 3, 2, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.7, 1], [1, 3, 5, 10, 5, 5, 1]);
   const titleY = useTransform(scrollYProgress, [0.1, 0.2, 0.9, 1], ["0%", "-170%", "-170%", "0%"]);
-  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.6, 0.65, 0.7,], [0, 1, 1, 1, 0, 0]);
+  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.8, 0.9], [0, 1, 1, 1, 0]);
   const descriptionY = useTransform(scrollYProgress, [0.1, 0.2], ["0%", isMobile ? "-20%" : "-40%"]);
 
 
@@ -163,19 +163,19 @@ const OpenCloseScroll = () => {
                 We follow a fast, transparent workflow that keeps you involved at every stage, from concept to launch.
                 <br />
                 Our team focuses on delivering modern, seamless digital experiences that elevate your brand without compromise.
-              </p>
+                </p>
 
-              <div className="w-full scale-[1.6]">
-                <MarqueeRow items={frontendStack} direction="left" />
-                <MarqueeRow items={backendStack} direction="right" />
+                        <div className="w-full scale-[1.6]">
+                          <MarqueeRow items={frontendStack} direction="left" />
+                          <MarqueeRow items={backendStack} direction="right" />
+                        </div>
+                      </motion.div>
+          
+                    </motion.div>
+                  </div>
+                </section>
               </div>
-            </motion.div>
-
-          </motion.div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-export default OpenCloseScroll;
+            );
+          };
+          
+          export default OpenCloseScroll;

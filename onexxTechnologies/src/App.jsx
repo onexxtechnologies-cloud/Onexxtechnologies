@@ -8,7 +8,9 @@ import ScrollingCards from "./pages/Scrollingcard.jsx";
 import ProcessScroll from "./pages/stickyscroll.jsx"
 import ServicesSection from "./pages/servicesection.jsx";
 import FAQs from "./pages/faq.jsx";
+import CloseHalfMoon from "./pages/closehalfmoon.jsx";
 import CenteredEnquiryForm from "./pages/enquiryform.jsx";
+
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
       <ProcessScroll/>
       <ServicesSection />
             <FAQs />
+      <CloseHalfMoon />
             <CenteredEnquiryForm />
     </>
   );
