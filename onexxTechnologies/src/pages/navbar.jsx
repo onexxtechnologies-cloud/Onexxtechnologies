@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from "react";
+import OnexxLogo from "../assets/ONEXX.png";
+
 
 // --- GOOEY NAV COMPONENT ---
 const GooeyNav = ({
@@ -280,10 +282,10 @@ export default function Navbar() {
             WebkitBackdropFilter: "blur(120px) saturate(180%)",
             border: "1px solid rgba(255,255,255,0.1)",
           }}
-        >
-
-          <div className="text-white text-lg md:text-2xl font-bold tracking-[0.25em] uppercase z-50">ONEXX</div>
-
+        > <a href="#home" className="flex flex-row">
+            <img src={OnexxLogo} className="h-10 w-10 translate-y-[-8%]" alt="Onexx Home" title="Onexx Home" />
+            <div className="text-white text-lg md:text-2xl font-bold tracking-[0.25em] uppercase z-50 mt-1 sm:mt-0">ONEXX</div>
+          </a>
           {/* DESKTOP MENU */}
           <div className="desktop-only flex-1 justify-center w-full">
             <GooeyNav

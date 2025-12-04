@@ -20,14 +20,17 @@ function App() {
       <HeroSection />
       <div className="relative -mt-[70vh]">
       <UltimateBlueHorizon /></div>
-      <div id="about" className="sm:mt-[0] mt-[-30%]">
+      <div id="about" className="sm:mt-[0] mt-[-50%]">
       <OpenCloseScroll /></div>
+      
       <ScrollingCards />
       <ProcessScroll/>
       <ServicesSection />
-            <FAQs />
+      <div className="mt-[100]">
+            <FAQs /></div>
       <CloseHalfMoon />
-            <CenteredEnquiryForm />
+      <div className="mt-[-60%] sm:mt-[-15%] ">
+            <CenteredEnquiryForm /></div>
     </>
   );
 }

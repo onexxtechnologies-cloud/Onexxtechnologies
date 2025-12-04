@@ -3,15 +3,12 @@ import { Rocket } from 'lucide-react';
 
 const LandingPage = () => {
   return (
-    <div className="relative min-h-screen w-full bg-[#03030b] overflow-hidden flex flex-col items-center justify-center font-sans text-white">
-      
+    <div className="relative h-[135vh] w-full bg-[#03030b] overflow-hidden flex flex-col items-center justify-center font-sans text-white">
+
       {/* --- Ambient Background Glows --- */}
-      {/* Deep blue haze in the center background */}
-      <div className="absolute top-[60%] left-1/2 -translate-x-1/2 w-[600px] h-[500px] bg-blue-900/20 rounded-full blur-[100px] pointer-events-none" />
-
-
+      
       {/* --- Main Content --- */}
-      <div className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 -mt-20">
+      <div className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 -mt-[35vh]">
         
         {/* Logo Icon */}
         <div className="mb-8 relative group">
@@ -43,34 +40,45 @@ const LandingPage = () => {
       </div>
 
 
-      {/* --- THE FLIP MOON / SMILE CURVE EFFECT --- */}
-      <div className="absolute bottom-5 left-0 w-full h-[300px] md:h-[500px] overflow-hidden pointer-events-none z-10">
-        
-        {/* Logic:
-           1. We create a MASSIVE circle positioned WAY above the screen.
-           2. We only see the very bottom edge of it (border-bottom).
-           3. This creates a concave "Smile" curve.
-           4. We use box-shadow with a positive Y value to push the light DOWN into the void.
-        */}
-        
+      {/* 🌍 --- INVERTED HORIZON / SYSTEM FLIPPED VERTICALLY --- */}
+      <div className="absolute inset-0 scale-y-[-1]">
+
+        {/* Layer 1 */}
         <div className="absolute 
-            left-[-50%] 
-            w-[200%]
-            sm:w-[200%]
-            h-[2000px] 
-            sm:h-[4000px]
-            rounded-[50%] 
-            bg-[#03030b]
-            bottom-[20px] md:bottom-[20px] 
-            border-b-[1px] border-blue-600/90 
-            shadow-[0_20px_60px_10px_rgba(37,99,235,0.5)]">
-            
-            {/* Inner Glow (Optional: Adds a second layer of depth on the line itself) */}
-            <div className="absolute inset-0 rounded-[50%] border-b border-blue-300/20 shadow-[0_10px_30px_rgba(59,130,246,0.2)]"></div>
-        </div>
-        
-        {/* Additional bottom glow to fill the corners if needed */}
-        <div className="absolute bottom-0 w-full h-[100px] bg-gradient-to-t from-blue-900/20 to-transparent"></div>
+          bottom-[-176vh] md:bottom-[-144vw]
+          left-1/2 -translate-x-1/2
+          w-[2000px] md:w-[185vw]
+          h-[2000px] md:h-[185vw]
+          rounded-full
+          bg-black
+          shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)]
+          border-t border-blue-500/30
+        " />
+
+        {/* Layer 2 */}
+        <div className="absolute 
+          bottom-[-176vh] md:bottom-[-144vw]
+          left-1/2 -translate-x-1/2
+          w-[2000px] md:w-[185vw]
+          h-[2000px] md:h-[185vw]
+          rounded-full
+          shadow-[0_0_200px_rgba(59,130,246,0.85)]
+          pointer-events-none
+        " />
+
+        {/* Layer 3 */}
+        <div className="absolute 
+          bottom-[-176vh] md:bottom-[-144vw]
+          left-1/2 -translate-x-1/2
+          w-[2000px] md:w-[185vw]
+          h-[2000px] md:h-[185vw]
+          rounded-full
+          border-t-[8px] border-blue-100/90
+          blur-[1.5px]
+          shadow-[0_0_60px_rgba(96,165,250,0.95)]
+          pointer-events-none
+        " />
+
       </div>
 
     </div>

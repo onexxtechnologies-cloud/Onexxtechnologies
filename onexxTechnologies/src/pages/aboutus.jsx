@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useLayoutEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 // --- IMPORT LOGOS ---
@@ -64,8 +64,6 @@ const RippleItem = ({ tech }) => {
       rounded-md border border-gray-300 bg-[#8ec6fb] 
       transition-all duration-300 hover:scale-105 flex items-center justify-center"
     >
-
-      {/* Ripple */}
       <div
         className="pointer-events-none absolute rounded-full bg-black/600 mix-blend-difference"
         style={{
@@ -88,17 +86,18 @@ const RippleItem = ({ tech }) => {
 };
 
 
-// --- MARQUEE (UPDATED WITH MASK) ---
+// --- MARQUEE ---
 const MarqueeRow = ({ items, direction }) => {
   const doubled = [...items, ...items];
 
   return (
-    <div 
+    <div
       className="flex overflow-hidden w-full relative py-3"
-      // This style creates the left/right fade effect
       style={{
-        maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-        WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+        maskImage:
+          "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
       }}
     >
       <motion.div
@@ -120,62 +119,118 @@ const MarqueeRow = ({ items, direction }) => {
 // --- MAIN COMPONENT ---
 const OpenCloseScroll = () => {
   const containerRef = useRef(null);
+  const circleRef = useRef(null);
+  const [maxScale, setMaxScale] = useState(1);
+
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+
+  // ✅ TRUE FULLSCREEN DIAGONAL SCALE (FIXED)
+  useLayoutEffect(() => {
+    const updateScale = () => {
+      if (!circleRef.current) return;
+
+      const rect = circleRef.current.getBoundingClientRect();
+      const circleDiameter = rect.width;
+
+      const screenDiagonal = Math.sqrt(
+        window.innerWidth ** 2 + window.innerHeight ** 2
+      );
+
+      setMaxScale(screenDiagonal / circleDiameter);
+    };
+
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.1, 0.2, 0.5, 0.6, 0.7, 1], [1, 3, 5, 10, 5, 5, 1]);
-  const titleY = useTransform(scrollYProgress, [0.1, 0.2, 0.9, 1], ["0%", "-170%", "-170%", "0%"]);
-  const descriptionOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.5, 0.8, 0.9], [0, 1, 1, 1, 0]);
-  const descriptionY = useTransform(scrollYProgress, [0.1, 0.2], ["0%", isMobile ? "-20%" : "-40%"]);
+  // ✅ PERFECT FULLSCREEN SCALE ANIMATION
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.25, 0.6, 0.85,0.9, 1],
+    [1, maxScale, maxScale, maxScale,maxScale*0.5, 1]
+  );
 
+  const titleY = useTransform(
+    scrollYProgress,
+    [0.1, 0.2, 0.9, 1],
+    ["0%", "-170%", "-170%", "0%"]
+  );
+
+  const descriptionOpacity = useTransform(
+    scrollYProgress,
+    [0.1,0.25, 0.3, 0.5, 0.6, 0.7, 0.8],
+    [0,0, 1, 1, 1, 1, 0]
+  );
+
+  const descriptionY = useTransform(
+    scrollYProgress,
+    [0.1, 0.2],
+    ["0%", isMobile ? "-20%" : "-40%"]
+  );
 
   return (
     <div className="relative w-full">
       <section ref={containerRef} className="relative h-[180vh] bg-transparent">
         <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
 
-          {/* CIRCLE */}
+          {/* ✅ PERFECTLY CENTERED FULLSCREEN CIRCLE */}
           <motion.div
-            style={{ scale }}
-            className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px] 
-            bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e] rounded-full z-10 mt-[-25%] sm:mt-[-2%]"
+            ref={circleRef}
+            style={{
+              scale,
+              left: "50%",
+              top: "50%",
+              translateX: "-50%",
+              translateY: "-50%",
+            }}
+            className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px]
+            bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e]
+            rounded-full z-10"
           />
 
           {/* CONTENT */}
           <motion.div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-4xl">
-
             <motion.h1
               style={{ y: titleY }}
-              className="text-3xl md:text-6xl font-bold text-white sm:mt-[40%] mt-[80%] leading-tight"
+              className="
+    text-3xl md:text-6xl font-bold text-white leading-tight
+    mt-[55vh] md:mt-[60vh]
+    text-center
+  "
             >
               How We Work?
             </motion.h1>
 
-            <motion.div style={{ y: descriptionY, opacity: descriptionOpacity }} className="w-full flex flex-col items-center">
+
+            <motion.div
+              style={{ y: descriptionY, opacity: descriptionOpacity }}
+              className="w-full flex flex-col items-center"
+            >
               <div className="w-24 h-[1px] bg-gray-400 mx-auto my-8"></div>
 
-              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-12 whitespace-nowrap">
-                At Onexx, we build with clarity, precision, and purpose — every decision is driven by performance and design excellence. <br />
-                We follow a fast, transparent workflow that keeps you involved at every stage, from concept to launch.
-                <br />
-                Our team focuses on delivering modern, seamless digital experiences that elevate your brand without compromise.
-                </p>
+              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-12 sm:whitespace-nowrap">
+                At Onexx, we build with clarity, precision, and purpose — every
+                decision is driven by performance and design excellence. <br />
+                We follow a fast, transparent workflow that keeps you involved
+                at every stage.
+              </p>
 
-                        <div className="w-full scale-[1.6]">
-                          <MarqueeRow items={frontendStack} direction="left" />
-                          <MarqueeRow items={backendStack} direction="right" />
-                        </div>
-                      </motion.div>
-          
-                    </motion.div>
-                  </div>
-                </section>
+              <div className="w-full scale-[1.6]">
+                <MarqueeRow items={frontendStack} direction="left" />
+                <MarqueeRow items={backendStack} direction="right" />
               </div>
-            );
-          };
-          
-          export default OpenCloseScroll;
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default OpenCloseScroll;

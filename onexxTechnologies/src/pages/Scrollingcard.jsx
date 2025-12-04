@@ -60,7 +60,7 @@ const ScrollingBlueNeon = () => {
   });
 
   return (
-    <div className="w-full h-[1000px] overflow-hidden relative bg-gradient-to-b from-[#000000] to-[#2c54a9] flex flex-col justify-center items-center">
+    <div className="w-full h-[400px] sm:h-[700px] overflow-hidden relative bg-gradient-to-b from-[#000000] to-[#2c54a9] flex flex-col justify-center items-center">
 
       {/* Background Line */}
       <div className="absolute top-1/2 left-0 w-full h-[1px] bg-blue-500/20 blur-[2px]" />

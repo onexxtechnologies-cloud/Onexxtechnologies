@@ -90,7 +90,7 @@ const UltimateBlueHorizon = () => {
   };
 
   return (
-    <div className="relative w-full h-[160vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center pt-24 md:pt-32 -mt-80">
+    <div className="relative w-full h-[180vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center pt-24 md:pt-32 -mt-80">
 
       {/* Static nebula glows */}
       <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[90vw] h-[10vh] blur-[150px] rounded-full mix-blend-screen" />
@@ -174,17 +174,22 @@ const UltimateBlueHorizon = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full px-2">
+        <div className="relative z-[999] flex flex-col sm:flex-row justify-between items-center w-full px-2 sm:mt-0 mt-[-10%]">
+
           <p className="text-gray-400 text-sm md:text-base max-w-lg text-center">
             We transform ideas into impactful digital solutions that empower your brand to rise above the ordinary.
           </p>
-
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="mt-3 sm:mt-0 flex items-center gap-3 text-white font-semibold">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-[-5%%] sm:mt-0 flex items-center gap-3 text-white font-semibold relative z-[999]"
+          >
             Explore More
             <div className="w-10 h-10 rounded-full flex items-center justify-center">
               <ArrowDown size={20} />
             </div>
           </motion.button>
+
         </div>
       </motion.div>
     </div>

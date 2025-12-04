@@ -154,7 +154,7 @@ export default function ProcessScroll() {
           </div>
 
           {/* RIGHT SIDE CARDS */}
-          <div className="lg:w-1/2 w-full">
+          <div className="lg:w-1/2 w-full sm:mt-0 mt-[-40%] mb-[-50%] sm:mb-0">
             {content.map((item, index) => {
               const targetScale = 1 - (content.length - index) * 0.05;
               return (
