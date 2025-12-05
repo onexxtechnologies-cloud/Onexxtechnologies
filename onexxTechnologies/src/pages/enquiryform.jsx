@@ -98,10 +98,10 @@ export default function CenteredEnquiryForm() {
         // 'justify-center' for mobile (default)
         // 'md:justify-end' for laptop (pushes form to right)
         // 'md:pr-24' adds spacing from the right edge on laptop
-        <div className="min-h-screen flex items-center justify-center md:justify-end p-4 md:pr-24 bg-#03030b">
+        <div className="min-h-screen flex w-[100%] sm:w-[50%] items-center justify-center md:justify-end p-4 md:pr-24 bg-#03030b mt-[-5%]">
 
             <div className="relative w-full max-w-lg rounded-2xl p-6 md:p-8 
-                bg-gradient-to-br from-gray-900 to-black
+                bg-#03030b
                 backdrop-blur-xl transition-all duration-100 border border-white/10 
                 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] overflow-hidden">
 

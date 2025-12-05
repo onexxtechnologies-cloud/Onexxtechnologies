@@ -90,7 +90,7 @@ const UltimateBlueHorizon = () => {
   };
 
   return (
-    <div className="relative w-full h-[180vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center pt-24 md:pt-32 -mt-80">
+    <div className="relative w-full h-[180vh] md:h-[150vh] bg-black overflow-hidden flex flex-col items-center pt-24 md:pt-20 sm:mt-0 mt-[-40vh]">
 
       {/* Static nebula glows */}
       <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[90vw] h-[10vh] blur-[150px] rounded-full mix-blend-screen" />

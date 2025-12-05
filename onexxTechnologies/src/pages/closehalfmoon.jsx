@@ -3,7 +3,7 @@ import { Rocket } from 'lucide-react';
 
 const LandingPage = () => {
   return (
-    <div className="relative h-[135vh] w-full bg-[#03030b] overflow-hidden flex flex-col items-center justify-center font-sans text-white">
+    <div className="relative h-[135vh] w-full bg-black overflow-hidden flex flex-col items-center justify-center font-sans text-white">
 
       {/* --- Ambient Background Glows --- */}
       
@@ -13,7 +13,7 @@ const LandingPage = () => {
         {/* Logo Icon */}
         <div className="mb-8 relative group">
           <div className="absolute inset-0 bg-blue-600 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-          <div className="relative bg-[#151525] p-5 rounded-full border border-blue-500/30 shadow-inner shadow-blue-500/20">
+          <div className="relative bg-[#03030b] p-5 rounded-full border border-blue-500/30 shadow-inner shadow-blue-500/20">
             <Rocket className="w-8 h-8 text-white fill-white transform -rotate-45" />
           </div>
         </div>
@@ -41,7 +41,7 @@ const LandingPage = () => {
 
 
       {/* 🌍 --- INVERTED HORIZON / SYSTEM FLIPPED VERTICALLY --- */}
-      <div className="absolute inset-0 scale-y-[-1]">
+      <div className="absolute inset-0 scale-y-[-1] bg-#03030b">
 
         {/* Layer 1 */}
         <div className="absolute 
@@ -50,7 +50,7 @@ const LandingPage = () => {
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
           rounded-full
-          bg-black
+          bg-#03030b
           shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)]
           border-t border-blue-500/30
         " />
