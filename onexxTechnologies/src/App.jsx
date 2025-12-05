@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import HeroSection from "./pages/herosection.jsx";
 import Navbar from "./pages/navbar.jsx";
 import UltimateBlueHorizon from "./pages/halfmoon.jsx";
-import AnimatedProductCard from "./pages/3dmodelAnimation.jsx";
 import OpenCloseScroll from "./pages/aboutus.jsx";
 import ScrollingCards from "./pages/Scrollingcard.jsx";
 import ProcessScroll from "./pages/stickyscroll.jsx";
@@ -95,7 +94,7 @@ function AppContent() {
       {/* CONTACT SECTION */}
       <div id="contact" className="sm:mt-0 mt-[-50%] flex flex-col sm:flex-row justify-centre">
         <CenteredEnquiryForm />
-        <AnimatedProductCard />
+        
       </div>
 
       <Footer />

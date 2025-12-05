@@ -1,7 +1,15 @@
-import React from 'react';
+// src/components/ServicesSection.jsx (or wherever your file is located)
+import React, { useState } from 'react';
 import bgImage from "../assets/servicebackground.jpg"; // <-- your background image
+import PortfolioModal from './PortfolioModal'; // <-- IMPORT THE MODAL COMPONENT
 
 const ServicesSection = () => {
+  // 1. STATE TO MANAGE MODAL VISIBILITY
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
   const services = [
     {
       id: "01",
@@ -78,11 +86,21 @@ const ServicesSection = () => {
 
         {/* Bottom Button */}
         <div className="mt-24 flex justify-center">
-          <button className="px-8 py-3 text-base font-bold uppercase tracking-widest border border-white bg-white text-black rounded-sm hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 transform hover:-translate-y-1">
+          {/* 3. ATTACH ONCLICK HANDLER TO BUTTON */}
+          <button 
+            onClick={handleOpenModal}
+            className="px-8 py-3 text-base font-bold uppercase tracking-widest border border-white bg-white text-black rounded-sm hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 transform hover:-translate-y-1"
+          >
             Show My Work
           </button>
         </div>
       </div>
+
+      {/* 2. RENDER THE MODAL COMPONENT */}
+      <PortfolioModal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+      />
     </div>
   );
 };

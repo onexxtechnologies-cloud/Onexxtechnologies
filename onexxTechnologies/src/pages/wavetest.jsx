@@ -22,7 +22,7 @@ export default function NeonWaveLight() {
 
   return (
     // Increased container height for larger viewport
-    <div className="relative w-full h-[800px] overflow-hidden bg-black -mt-80 -mb-80">
+    <div className="relative w-full h-[860px] overflow-hidden bg-black -mt-80 -mb-80">
       <svg
         className="absolute top-0 left-0 w-[300%] h-[500px] -mt-20"
         viewBox="0 0 8000 500"

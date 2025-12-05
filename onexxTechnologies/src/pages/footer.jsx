@@ -13,40 +13,53 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-black text-white overflow-hidden py-12 ">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+      <div className="max-w-9xl mx-auto px-6 flex flex-col items-center">
 
-        <div className="relative w-full flex justify-center items-center">
-          {/* Glow layer 1 */}
+        {/* Title container set to w-1/2 (half width) and centered with mx-auto */}
+        <div className="relative w-1/2 mx-auto flex justify-center items-center">
+          
+          {/* Main text layer with black fill (text-black) to mask the internal glow, positioned highest (z-20) */}
           <h1
-            className="absolute text-[12vw] md:text-[15vw] font-black tracking-[0.05em] text-transparent select-none"
+            className="relative text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-black select-none z-15"
             style={{
-              WebkitTextStroke: '4px rgba(0,180,255,1)',
-              filter: 'blur(12px)',
+              // text-black class ensures the fill is black, "cutting out" the glow layers
             }}
           >
             ONEXX
           </h1>
-
-          {/* Glow layer 2 */}
+          
+          {/* Glow layer 2 (largest blur) - Absolute position, z-10 */}
           <h1
-            className="absolute text-[12vw] md:text-[15vw] font-black tracking-[0.05em] text-transparent select-none"
+            className="absolute text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-transparent select-none z-10"
             style={{
-              WebkitTextStroke: '6px rgba(0,180,255,1)',
+              WebkitTextStroke: '6px rgba(0,20,255,1)',
               filter: 'blur(24px)',
             }}
           >
             ONEXX
           </h1>
 
-          {/* Main stroke layer */}
+          {/* Glow layer 1 (medium blur) - Absolute position, z-10 */}
           <h1
-            className="relative text-[12vw] md:text-[15vw] font-black tracking-[0.05em] text-transparent select-none"
+            className="absolute text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-transparent select-none z-10"
+            style={{
+              WebkitTextStroke: '4px rgba(0,60,255,1)',
+              filter: 'blur(12px)',
+            }}
+          >
+            ONEXX
+          </h1>
+
+          {/* Main stroke layer (crisp edge) - Absolute position, z-10 */}
+          <h1
+            className="absolute text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-transparent select-none z-12"
             style={{
               WebkitTextStroke: '2px rgba(0,180,255,1)',
             }}
           >
             ONEXX
           </h1>
+
         </div>
         {/* --- Instagram Icon --- */}
         <div className="mb-12">

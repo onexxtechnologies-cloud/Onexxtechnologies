@@ -199,8 +199,8 @@ const OpenCloseScroll = () => {
             <motion.h1
               style={{ y: titleY }}
               className="
-    text-3xl md:text-6xl font-bold text-white leading-tight
-    mt-[55vh] md:mt-[60vh]
+    text-4xl md:text-6xl font-bold text-white leading-tight
+    mt-[40vh] md:mt-[60vh]
     text-center
   "
             >

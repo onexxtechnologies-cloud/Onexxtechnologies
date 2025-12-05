@@ -45,7 +45,7 @@ const LandingPage = () => {
 
         {/* Layer 1 */}
         <div className="absolute 
-          bottom-[-176vh] md:bottom-[-144vw]
+          bottom-[-156vh] md:bottom-[-144vw]
           left-1/2 -translate-x-1/2
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
@@ -57,7 +57,7 @@ const LandingPage = () => {
 
         {/* Layer 2 */}
         <div className="absolute 
-          bottom-[-176vh] md:bottom-[-144vw]
+          bottom-[-156vh] md:bottom-[-144vw]
           left-1/2 -translate-x-1/2
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
@@ -68,7 +68,7 @@ const LandingPage = () => {
 
         {/* Layer 3 */}
         <div className="absolute 
-          bottom-[-176vh] md:bottom-[-144vw]
+          bottom-[-156vh] md:bottom-[-144vw]
           left-1/2 -translate-x-1/2
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
