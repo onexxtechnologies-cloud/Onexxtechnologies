@@ -16,40 +16,55 @@ import CloseHalfMoon from "./pages/closehalfmoon.jsx";
 import CenteredEnquiryForm from "./pages/enquiryform.jsx";
 import Footer from "./pages/footer.jsx";
 
-// 🔥 Improved Scroll Handler
+
+// --------------------------------------------------
+// 🔥 Improved Scroll + Refresh Handler
 function ScrollToHash() {
   const { hash, pathname } = useLocation();
 
+  // Disable browser auto scroll restore
   useEffect(() => {
-    // 1. Handle standard Hash (#about)
-    if (hash) {
-      const id = hash.replace("#", "");
-      const element = document.getElementById(id);
-      if (element) {
-        const navbarHeight = 80; // slightly larger than nav height for breathing room
-        const y = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  // Force reset URL + scroll top on refresh
+  useEffect(() => {
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      window.history.replaceState({}, "", "/");
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }, 50);
+    }
+  }, []);
+
+  // Handle hash or pathname scroll behavior
+  useEffect(() => {
+    let id = hash ? hash.replace("#", "") : pathname.replace("/", "");
+
+    if (!id || id === "") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const element = document.getElementById(id);
+    if (element) {
+      const navbarHeight = 80;
+      const y = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
+      setTimeout(() => {
         window.scrollTo({ top: y, behavior: "smooth" });
-      }
-    } 
-    // 2. Handle Pathname masquerading as hash (/about -> scroll to #about)
-    else if (pathname !== "/" && pathname !== "") {
-       const id = pathname.replace("/", "");
-       const element = document.getElementById(id);
-       if (element) {
-         const navbarHeight = 80;
-         const y = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
-         window.scrollTo({ top: y, behavior: "smooth" });
-       } else {
-         window.scrollTo(0, 0);
-       }
-    } else {
-      window.scrollTo(0, 0);
+      }, 100);
     }
   }, [hash, pathname]);
 
   return null;
 }
 
+
+// --------------------------------------------------
+// 👉 Main Content
+// --------------------------------------------------
 function AppContent() {
   return (
     <>
@@ -70,7 +85,7 @@ function AppContent() {
         <OpenCloseScroll />
       </div>
 
-      {/* WORK SECTION (Added ID here) */}
+      {/* WORK SECTION */}
       <div className="pt-0">
         <ScrollingCards />
       </div>
@@ -81,7 +96,7 @@ function AppContent() {
         <ServicesSection />
       </div>
 
-      {/* FAQ SECTION */}
+      {/* FAQ */}
       <div id="faq" className="pt-0">
         <FAQs />
       </div>
@@ -91,10 +106,9 @@ function AppContent() {
         <CloseHalfMoon />
       </div>
 
-      {/* CONTACT SECTION */}
-      <div id="contact" className="sm:mt-0 mt-[-50%] flex flex-col sm:flex-row justify-centre">
+      {/* CONTACT */}
+      <div id="contact" className="sm:mt-[-10%] mt-[-50%] flex flex-col sm:flex-row justify-centre">
         <CenteredEnquiryForm />
-        
       </div>
 
       <Footer />
@@ -102,12 +116,15 @@ function AppContent() {
   );
 }
 
+
+// --------------------------------------------------
+// 🧠 Router Setup
+// --------------------------------------------------
 export default function App() {
   return (
     <Router>
       <ScrollToHash />
       <Routes>
-        {/* All routes render AppContent because it's a Single Page App */}
         <Route path="/*" element={<AppContent />} />
       </Routes>
     </Router>

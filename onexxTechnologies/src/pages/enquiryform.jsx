@@ -115,7 +115,7 @@ export default function CombinedEnquiry3D() {
 
   // ============ LAYOUT ============
   return (
-    <div className="flex flex-col w-full md:flex-row justify-between items-between min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0a192f] via-[#03030b] to-[#000000] px-4 md:px-10 gap-8 py-10 overflow-x-hidden sm:mt-[-20%] mt-[10%]">
+    <div className="flex flex-col w-full md:flex-row justify-between items-between min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0a192f] via-[#03030b] to-[#000000] px-4 md:px-10 gap-8 py-10 overflow-x-hidden sm:mt-[-2%] mt-[10%]">
       
       {/* ================== LEFT COLUMN (ANCHOR) ================== */}
       <div className="relative w-full md:w-[350px] h-[350px] md:h-[600px] flex items-center sm:items-left justify-center sm:justify-left z-20">
