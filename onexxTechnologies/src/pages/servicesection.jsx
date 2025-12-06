@@ -37,7 +37,7 @@ const ServicesSection = () => {
     },
     {
       id: "05",
-      title: "Software Dev",
+      title: "Application Dev",
       description:
         "Custom software solutions tailored to your specific business needs, optimizing workflows and technical infrastructure.",
     },
