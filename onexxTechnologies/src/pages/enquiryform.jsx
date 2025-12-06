@@ -11,7 +11,7 @@ export default function CombinedEnquiry3D() {
   const [status, setStatus] = useState({ ok: null, msg: "" });
 
   const dropdownRef = useRef(null);
-  const products = ["Website Development", "3D Model", "Software Development"];
+  const products = ["Website Development", "3D Model",  "Applicaion Development","Others"];
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -127,7 +127,7 @@ export default function CombinedEnquiry3D() {
           onMouseLeave={() => !isMobile && setActive(false)}
           className={`
             absolute top-1/2 -translate-y-1/2 left-0
-            rounded-[20px] cursor-pointer 
+            rounded-[50px] cursor-pointer 
             transition-all duration-700 ease-in-out flex justify-center items-center 
             ${
               // Logic: When active, it has a background. When inactive, it's transparent (the button provides the visuals)
