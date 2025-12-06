@@ -64,7 +64,7 @@ const Footer = () => {
         {/* --- Instagram Icon --- */}
         <div className="mb-6">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/onexx_technologies?igsh=MTZwemlqcTJyMjdtYg=="
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-center w-12 h-12 rounded-full border border-gray-700 bg-gray-900/50 hover:bg-white hover:text-black transition-all duration-300"
