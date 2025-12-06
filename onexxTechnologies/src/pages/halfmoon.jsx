@@ -180,6 +180,10 @@ const UltimateBlueHorizon = () => {
             We transform ideas into impactful digital solutions that empower your brand to rise above the ordinary.
           </p>
           <motion.button
+          onClick={() => {
+                const el = document.getElementById("services");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="mt-[-5%%] sm:mt-0 flex items-center gap-3 text-white font-semibold relative z-[999]"

@@ -63,7 +63,7 @@ const Card = ({ item, index, progress, range, targetScale }) => {
         <div
           className={cn(
             "group relative w-full max-w-2xl h-[300px] overflow-hidden rounded-3xl border border-white/10 backdrop-blur-xl transition-all duration-500",
-            
+
             // ⭐ FIXED BACKGROUND (No Gradient Change)
             "bg-white/5"
           )}
@@ -148,9 +148,16 @@ export default function ProcessScroll() {
               </p>
             </div>
 
-            <button className="w-fit px-8 py-4 bg-blue-600 hover:bg-blue-700 transition-colors rounded-full font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.5)]">
+            <button
+              onClick={() => {
+                const el = document.getElementById("contact");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="w-fit px-8 py-4 bg-blue-600 hover:bg-blue-700 transition-colors rounded-full font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.5)]"
+            >
               Schedule a Consultation
             </button>
+
           </div>
 
           {/* RIGHT SIDE CARDS */}

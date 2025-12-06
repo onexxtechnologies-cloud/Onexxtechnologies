@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rocket } from 'lucide-react';
+ 
 
 const LandingPage = () => {
   return (
@@ -33,10 +34,6 @@ const LandingPage = () => {
           light-years ahead of the competition.
         </p>
 
-        {/* CTA Button */}
-        <button className="px-8 py-3 rounded-full bg-blue-700 hover:bg-blue-600 text-white font-medium transition-all duration-300 shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.7)] hover:-translate-y-1">
-          Get Started
-        </button>
       </div>
 
 
