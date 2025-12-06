@@ -177,7 +177,7 @@ const OpenCloseScroll = () => {
   return (
     <div className="relative w-full">
       <section ref={containerRef} className="relative h-[180vh] bg-transparent">
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+        <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center will-change-transform">
 
           {/* ✅ PERFECTLY CENTERED FULLSCREEN CIRCLE */}
           <motion.div
@@ -186,8 +186,9 @@ const OpenCloseScroll = () => {
               scale,
               left: "50%",
               top: "50%",
-              translateX: "-50%",
-              translateY: "-50%",
+              transform: "translate(-50%, -50%)",
+WebkitTransform: "translate(-50%, -50%)",
+
             }}
             className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px]
             bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e]
