@@ -114,7 +114,7 @@ export default function CombinedEnquiry3D() {
 
   // ============ LAYOUT ============
   return (
-    <div className="flex flex-col w-full md:flex-row justify-between items-between min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0a192f] via-[#03030b] to-[#000000] px-4 md:px-10 gap-8 py-10 overflow-x-hidden sm:mt-[-2%] mt-[10%]">
+    <div className="flex flex-col w-full md:flex-row  min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0a192f] via-[#03030b] to-[#000000] px-4 md:px-10 gap-8 py-10 overflow-x-hidden sm:mt-[-2%] mt-[10%]">
 
       {/* ================== LEFT COLUMN (ANCHOR) ================== */}
       <div className="relative w-full md:w-[350px] h-[350px] md:h-[600px] flex items-center sm:items-left justify-center sm:justify-left z-20">
@@ -248,11 +248,11 @@ export default function CombinedEnquiry3D() {
       </div>
 
       {/* ================== RIGHT ENQUIRY FORM ================== */}
-      <div className="relative w-full max-w-lg z-10 sm:mt-10 mt-10 ">
+      <div className="relative w-full max-w-lg z-10 sm:mt-17 mt-10 ">
 
 
 
-        <div className="relative rounded-xl p-6 bg-black backdrop-blur-md shadow-2xl mt-10 items-end justify-end ml-[-10vw]">
+        <div className="relative rounded-xl p-7 bg-black backdrop-blur-md shadow-2xl mt-10 items-center justify-center sm:ml-[20vw] sm:mr-[-30vw]">
 
           <div className="absolute top-0 left-0 right-0 flex flex-col items-center pointer-events-none">
 
