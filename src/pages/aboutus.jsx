@@ -201,7 +201,7 @@ const OpenCloseScroll = () => {
               style={{ y: titleY }}
               className="
     text-4xl md:text-6xl font-bold text-white leading-tight
-    mt-[100%] md:mt-[40%]
+    mt-[125%] md:mt-[40%]
     text-center
   "
             >
