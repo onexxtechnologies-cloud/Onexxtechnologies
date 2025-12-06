@@ -186,11 +186,8 @@ const OpenCloseScroll = () => {
               scale,
               left: "50%",
               top: "50%",
-              translateX: "-50%",
-              translateY: "-50%",
-
             }}
-            className="absolute w-[90vw] h-[90vw] max-w-[390px] max-h-[390px] sm:w-[550px] sm:h-[550px] sm:max-w-none sm:max-h-none
+            className="absolute -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] max-w-[390px] max-h-[390px] sm:w-[550px] sm:h-[550px] sm:max-w-none sm:max-h-none
             bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e]
             rounded-full z-10"
           />
