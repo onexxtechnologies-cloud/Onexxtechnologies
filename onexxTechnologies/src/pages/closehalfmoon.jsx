@@ -19,18 +19,18 @@ const LandingPage = () => {
         </div>
 
         {/* Headline */}
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 leading-tight">
-          Let’s Launch Your Business
+        <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 leading-tight">
+          Your Business Grows. Our Technology Makes It Possible.
+
           <br />
           <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 bg-clip-text text-transparent">
-            Into a New Orbit
+            Our Technology Makes It Possible.
           </span>
         </h1>
 
         {/* Subtext */}
         <p className="text-slate-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
-          Partner with us to build futuristic strategies, unlock growth, and take your business
-          light-years ahead of the competition.
+          Partner with us to build futuristic strategies,Reliable, scalable, and designed for real-world impact.
         </p>
 
         {/* CTA Button */}
@@ -45,7 +45,7 @@ const LandingPage = () => {
 
         {/* Layer 1 */}
         <div className="absolute 
-          bottom-[-156vh] md:bottom-[-144vw]
+          bottom-[-156vh] md:bottom-[-135vw]
           left-1/2 -translate-x-1/2
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
@@ -57,7 +57,7 @@ const LandingPage = () => {
 
         {/* Layer 2 */}
         <div className="absolute 
-          bottom-[-156vh] md:bottom-[-144vw]
+          bottom-[-156vh] md:bottom-[-135vw]
           left-1/2 -translate-x-1/2
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
@@ -68,7 +68,7 @@ const LandingPage = () => {
 
         {/* Layer 3 */}
         <div className="absolute 
-          bottom-[-156vh] md:bottom-[-144vw]
+          bottom-[-156vh] md:bottom-[-135vw]
           left-1/2 -translate-x-1/2
           w-[2000px] md:w-[185vw]
           h-[2000px] md:h-[185vw]
