@@ -8,7 +8,7 @@ const LandingPage = () => {
       {/* --- Ambient Background Glows --- */}
       
       {/* --- Main Content --- */}
-      <div className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 -mt-[35vh]">
+      <div className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 -mt-[15%]">
         
         {/* Logo Icon */}
         <div className="mb-8 relative group">

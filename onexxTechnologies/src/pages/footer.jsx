@@ -12,7 +12,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-black text-white overflow-hidden py-12 ">
+    <footer className="w-full bg-black text-white overflow-hidden py-1 ">
       <div className="max-w-9xl mx-auto px-6 flex flex-col items-center">
 
         {/* Title container set to w-1/2 (half width) and centered with mx-auto */}
@@ -32,7 +32,7 @@ const Footer = () => {
           <h1
             className="absolute text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-transparent select-none z-10"
             style={{
-              WebkitTextStroke: '6px rgba(0,20,255,1)',
+              WebkitTextStroke: '9px rgba(0,20,255,1)',
               filter: 'blur(24px)',
             }}
           >
@@ -62,7 +62,7 @@ const Footer = () => {
 
         </div>
         {/* --- Instagram Icon --- */}
-        <div className="mb-12">
+        <div className="mb-6">
           <a
             href="https://instagram.com"
             target="_blank"
