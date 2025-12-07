@@ -7,7 +7,7 @@ function OnexxatronModel() {
   const group = useRef();
   const glowLight = useRef();
 
-  const { scene: glbScene, animations } = useGLTF("/public/2robo.glb");
+  const { scene: glbScene, animations } = useGLTF("/2robo_optimized.glb");
   const model = React.useMemo(() => glbScene.clone(true), [glbScene]);
 
   const { actions } = useAnimations(animations, model);
@@ -58,7 +58,7 @@ function OnexxatronModel() {
 useEffect(() => {
   if (!model) return;
 
-  const light = new THREE.SpotLight("#016396", 100, 5, Math.PI / 5.5, 0.5, 2);
+  const light = new THREE.SpotLight("#016396", 10, 5, Math.PI / 5.5, 0.5, 2);
   light.position.set(0, 0.2, 3);        // position of spotlight
   
 
