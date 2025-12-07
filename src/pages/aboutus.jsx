@@ -19,7 +19,6 @@ import MySQLLogo from "../assets/Wordmark/MySQLword.svg";
 import PHPLogo from "../assets/Wordmark/phpword.svg";
 import ExpressLogo from "../assets/Wordmark/expressword.svg";
 
-
 // --- STACKS ---
 const frontendStack = [
   { logo: ReactLogo, scale: "scale-[1.20]" },
@@ -40,7 +39,6 @@ const backendStack = [
   { logo: ExpressLogo, scale: "scale-[1.8]" },
 ];
 
-
 // --- RIPPLE ITEM ---
 const RippleItem = ({ tech }) => {
   const ref = useRef(null);
@@ -58,10 +56,17 @@ const RippleItem = ({ tech }) => {
     <div
       ref={ref}
       onMouseMove={handleMove}
-      onMouseEnter={() => ref.current.style.setProperty("--size", "250px")}
-      onMouseLeave={() => ref.current.style.setProperty("--size", "0px")}
-      className="relative overflow-hidden cursor-pointer min-w-[120px] px-6 py-3 
-      rounded-md border border-gray-300 bg-[#8ec6fb] 
+      onMouseEnter={() => ref.current.style.setProperty("--size", "15vw")}
+      onMouseLeave={() => ref.current.style.setProperty("--size", "0")}
+      // FIXED: Moved clamps to inline styles to prevent build panic
+      style={{
+        width: "clamp(100px, 15vw, 150px)",
+        paddingLeft: "clamp(0.5rem, 2vw, 1.5rem)",
+        paddingRight: "clamp(0.5rem, 2vw, 1.5rem)",
+        paddingTop: "clamp(0.5rem, 1.5vh, 1rem)",
+        paddingBottom: "clamp(0.5rem, 1.5vh, 1rem)",
+      }}
+      className="relative overflow-hidden cursor-pointer rounded-md border border-gray-300 bg-[#8ec6fb] 
       transition-all duration-300 hover:scale-105 flex items-center justify-center"
     >
       <div
@@ -85,15 +90,17 @@ const RippleItem = ({ tech }) => {
   );
 };
 
-
 // --- MARQUEE ---
 const MarqueeRow = ({ items, direction }) => {
   const doubled = [...items, ...items];
 
   return (
     <div
-      className="flex overflow-hidden w-full relative py-3"
+      className="flex overflow-hidden w-full relative"
+      // FIXED: Merged maskImage with padding clamps to prevent build panic
       style={{
+        paddingTop: "clamp(0.5rem, 1.5vh, 1rem)",
+        paddingBottom: "clamp(0.5rem, 1.5vh, 1rem)",
         maskImage:
           "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
         WebkitMaskImage:
@@ -101,8 +108,13 @@ const MarqueeRow = ({ items, direction }) => {
       }}
     >
       <motion.div
-        style={{ willChange: "transform", transform: "translateZ(0)" }}
-        className="flex gap-5 md:gap-8 flex-nowrap"
+        // FIXED: Added gap clamp here
+        style={{ 
+            willChange: "transform", 
+            transform: "translateZ(0)",
+            gap: "clamp(1rem, 2vw, 2rem)" 
+        }}
+        className="flex flex-nowrap"
         initial={{ translateX: direction === "left" ? "0%" : "-50%" }}
         animate={{ translateX: direction === "left" ? "-50%" : "0%" }}
         transition={{ ease: "linear", duration: 15, repeat: Infinity }}
@@ -115,14 +127,20 @@ const MarqueeRow = ({ items, direction }) => {
   );
 };
 
-
 // --- MAIN COMPONENT ---
 const OpenCloseScroll = () => {
   const containerRef = useRef(null);
   const circleRef = useRef(null);
-  const [maxScale, setMaxScale] = useState(1);
+  const [maxScale, setMaxScale] = useState(6);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  // ✅ ROBUST MOBILE DETECTION
+  useLayoutEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // ✅ TRUE FULLSCREEN DIAGONAL SCALE (FIXED)
   useLayoutEffect(() => {
@@ -131,17 +149,25 @@ const OpenCloseScroll = () => {
 
       const rect = circleRef.current.getBoundingClientRect();
       const circleDiameter = rect.width;
-
+      if (circleDiameter === 0) return; // Prevent divide by zero
       const screenDiagonal = Math.sqrt(
         window.innerWidth ** 2 + window.innerHeight ** 2
       );
 
-      setMaxScale(screenDiagonal / circleDiameter);
+      const calculatedScale = screenDiagonal / circleDiameter;
+      // Ensure we never scale down below a safe cover threshold
+      // Mobile needs about 2.5x-3x to cover corners. We use 3.5 to be absolutely safe.
+      setMaxScale(Math.max(calculatedScale, 3.5));
     };
 
     updateScale();
+    // Safety check after a delay to ensure correct dimensions after layout shifts
+    const timer = setTimeout(updateScale, 500);
     window.addEventListener("resize", updateScale);
-    return () => window.removeEventListener("resize", updateScale);
+    return () => {
+      window.removeEventListener("resize", updateScale);
+      clearTimeout(timer);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -152,32 +178,32 @@ const OpenCloseScroll = () => {
   // ✅ PERFECT FULLSCREEN SCALE ANIMATION
   const scale = useTransform(
     scrollYProgress,
-    [0, 0.25, 0.6, 0.85,0.9, 1],
-    [1, maxScale, maxScale, maxScale,maxScale*0.5, 1]
+    [0, 0.25, 0.6, 0.85, 0.9, 1],
+    [1, maxScale, maxScale, maxScale, maxScale * 0.5, 1]
   );
 
   const titleY = useTransform(
     scrollYProgress,
-    [0.1, 0.2, 0.9, 1],
-    ["0%",isMobile ? "-280%": "-170%", isMobile ? "-280%": "-170%", "0%"]
+    [0, 0.2, 0.4, 0.9, 1],
+    ["0vh", "0vh", isMobile ? "-25vh" : "-35vh", isMobile ? "-25vh" : "-35vh", "0vh"]
   );
 
   const descriptionOpacity = useTransform(
     scrollYProgress,
-    [0.1,0.25, 0.3, 0.5, 0.6, 0.7, 0.8],
-    [0,0, 1, 1, 1, 1, 0]
+    [0, 0.35, 0.45, 0.5, 0.6, 0.7, 0.8],
+    [0, 0, 1, 1, 1, 1, 0]
   );
 
   const descriptionY = useTransform(
     scrollYProgress,
-    [0.1, 0.2],
-    ["0%", isMobile ? "-30%" : "-40%"]
+    [0, 0.35, 0.45],
+    ["10vh", "10vh", isMobile ? "5vh" : "0vh"]
   );
 
   return (
-    <div className="relative w-full">
-      <section ref={containerRef} className="relative h-[180vh] bg-transparent">
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+    <div className="relative w-full pt-[5vh] md:pt-[10vh]">
+      <section ref={containerRef} className="relative h-[250vh] bg-transparent">
+        <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center justify-center">
 
           {/* ✅ PERFECTLY CENTERED FULLSCREEN CIRCLE */}
           <motion.div
@@ -186,42 +212,61 @@ const OpenCloseScroll = () => {
               scale,
               left: "50%",
               top: "50%",
-              translateX: "-50%",
-              translateY: "-50%",
             }}
-            className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px]
+            className="absolute -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] max-w-[390px] max-h-[390px] sm:w-[550px] sm:h-[550px] sm:max-w-none sm:max-h-none
             bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e]
             rounded-full z-10"
           />
 
-          {/* CONTENT */}
-          <motion.div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-4xl">
+          {/* ABSOLUTELY CENTERED TITLE */}
+          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
             <motion.h1
               style={{ y: titleY }}
-              className="
-    text-4xl md:text-6xl font-bold text-white leading-tight
-    mt-[100%] md:mt-[40%]
-    text-center
-  "
+              className="text-4xl md:text-6xl font-bold text-white leading-tight text-center"
             >
               How We Work?
             </motion.h1>
+          </div>
 
-
+          {/* CONTENT (Description & Marquee) */}
+          <motion.div 
+            className="relative z-20 flex flex-col items-center text-center w-full max-w-4xl"
+            // FIXED: Moved padding clamp to inline style
+            style={{ paddingLeft: "clamp(1rem, 5vw, 1.5rem)", paddingRight: "clamp(1rem, 5vw, 1.5rem)" }}
+          >
             <motion.div
               style={{ y: descriptionY, opacity: descriptionOpacity }}
-              className="w-full flex flex-col items-center"
+              className="w-full flex flex-col items-center mt-[10vh]"
             >
-              <div className="w-24 h-[1px] bg-gray-400 mx-auto my-8"></div>
+              <div 
+                className="h-[1px] bg-gray-400 mx-auto"
+                // FIXED: Moved width and margin clamps to inline style
+                style={{ 
+                    width: "clamp(4rem, 10vw, 6rem)", 
+                    marginTop: "clamp(1rem, 3vh, 2rem)", 
+                    marginBottom: "clamp(1rem, 3vh, 2rem)" 
+                }}
+              ></div>
 
-              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-12 sm:whitespace-nowrap">
+              <p 
+                className="text-gray-300 leading-relaxed font-light sm:whitespace-nowrap"
+                // FIXED: Moved fontSize and margin clamps to inline style
+                style={{ 
+                    fontSize: "clamp(1rem, 4vw, 1.5rem)", 
+                    marginBottom: "clamp(2rem, 5vh, 3rem)" 
+                }}
+              >
                 At Onexx, we build with clarity, precision, and purpose — every
                 decision is driven by performance and design excellence. <br />
                 We follow a fast, transparent workflow that keeps you involved
                 at every stage.
               </p>
 
-              <div className="w-full scale-[1.6]">
+              <div 
+                className="w-full"
+                // FIXED: Moved scale clamp to standard transform style
+                style={{ transform: "scale(clamp(1.2, 1.6, 1.8))" }}
+              >
                 <MarqueeRow items={frontendStack} direction="left" />
                 <MarqueeRow items={backendStack} direction="right" />
               </div>
