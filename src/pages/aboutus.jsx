@@ -58,9 +58,9 @@ const RippleItem = ({ tech }) => {
     <div
       ref={ref}
       onMouseMove={handleMove}
-      onMouseEnter={() => ref.current.style.setProperty("--size", "250px")}
-      onMouseLeave={() => ref.current.style.setProperty("--size", "0px")}
-      className="relative overflow-hidden cursor-pointer min-w-[120px] px-6 py-3 
+      onMouseEnter={() => ref.current.style.setProperty("--size", "15vw")}
+      onMouseLeave={() => ref.current.style.setProperty("--size", "0")}
+      className="relative overflow-hidden cursor-pointer w-[clamp(100px,15vw,150px)] px-[clamp(0.5rem,2vw,1.5rem)] py-[clamp(0.5rem,1.5vh,1rem)] 
       rounded-md border border-gray-300 bg-[#8ec6fb] 
       transition-all duration-300 hover:scale-105 flex items-center justify-center"
     >
@@ -92,7 +92,7 @@ const MarqueeRow = ({ items, direction }) => {
 
   return (
     <div
-      className="flex overflow-hidden w-full relative py-3"
+      className="flex overflow-hidden w-full relative py-[clamp(0.5rem,1.5vh,1rem)]"
       style={{
         maskImage:
           "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
@@ -102,7 +102,7 @@ const MarqueeRow = ({ items, direction }) => {
     >
       <motion.div
         style={{ willChange: "transform", transform: "translateZ(0)" }}
-        className="flex gap-5 md:gap-8 flex-nowrap"
+        className="flex gap-[clamp(1rem,2vw,2rem)] flex-nowrap"
         initial={{ translateX: direction === "left" ? "0%" : "-50%" }}
         animate={{ translateX: direction === "left" ? "-50%" : "0%" }}
         transition={{ ease: "linear", duration: 15, repeat: Infinity }}
@@ -120,28 +120,46 @@ const MarqueeRow = ({ items, direction }) => {
 const OpenCloseScroll = () => {
   const containerRef = useRef(null);
   const circleRef = useRef(null);
-  const [maxScale, setMaxScale] = useState(1);
+  // ✅ Default to a large scale (e.g., 6) so it's always covering screen even if calc is delayed
+  const [maxScale, setMaxScale] = useState(6);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  // ✅ ROBUST MOBILE DETECTION
+  useLayoutEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-  // ✅ TRUE FULLSCREEN DIAGONAL SCALE (FIXED)
+  // ✅ TRUE FULLSCREEN DIAGONAL SCALE
   useLayoutEffect(() => {
     const updateScale = () => {
       if (!circleRef.current) return;
 
       const rect = circleRef.current.getBoundingClientRect();
       const circleDiameter = rect.width;
+      if (circleDiameter === 0) return; // Prevent divide by zero
 
       const screenDiagonal = Math.sqrt(
         window.innerWidth ** 2 + window.innerHeight ** 2
       );
 
-      setMaxScale(screenDiagonal / circleDiameter);
+      const calculatedScale = screenDiagonal / circleDiameter;
+      // Ensure we never scale down below a safe cover threshold
+      // Mobile needs about 2.5x-3x to cover corners. We use 3.5 to be absolutely safe.
+      setMaxScale(Math.max(calculatedScale, 3.5));
     };
 
     updateScale();
+    // Safety check after a delay to ensure correct dimensions after layout shifts
+    const timer = setTimeout(updateScale, 500);
+
     window.addEventListener("resize", updateScale);
-    return () => window.removeEventListener("resize", updateScale);
+    return () => {
+      window.removeEventListener("resize", updateScale);
+      clearTimeout(timer);
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -158,25 +176,25 @@ const OpenCloseScroll = () => {
 
   const titleY = useTransform(
     scrollYProgress,
-    [0.1, 0.2, 0.9, 1],
-    ["0%", isMobile ? "-280%" : "-170%", isMobile ? "-280%" : "-170%", "0%"]
+    [0, 0.2, 0.4, 0.9, 1],
+    ["0vh", "0vh", isMobile ? "-25vh" : "-35vh", isMobile ? "-25vh" : "-35vh", "0vh"]
   );
 
   const descriptionOpacity = useTransform(
     scrollYProgress,
-    [0.1, 0.25, 0.3, 0.5, 0.6, 0.7, 0.8],
+    [0, 0.35, 0.45, 0.5, 0.6, 0.7, 0.8],
     [0, 0, 1, 1, 1, 1, 0]
   );
 
   const descriptionY = useTransform(
     scrollYProgress,
-    [0.1, 0.2],
-    ["0%", isMobile ? "-30%" : "-40%"]
+    [0, 0.35, 0.45],
+    ["10vh", "10vh", isMobile ? "5vh" : "0vh"]
   );
 
   return (
-    <div className="relative w-full">
-      <section ref={containerRef} className="relative h-[180vh] bg-transparent">
+    <div className="relative w-full pt-[5vh] md:pt-[10vh]">
+      <section ref={containerRef} className="relative h-[250vh] bg-transparent">
         <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center justify-center">
 
           {/* ✅ PERFECTLY CENTERED FULLSCREEN CIRCLE */}
@@ -192,34 +210,32 @@ const OpenCloseScroll = () => {
             rounded-full z-10"
           />
 
-          {/* CONTENT */}
-          <motion.div className="relative z-20 flex flex-col items-center text-center px-6 w-full max-w-4xl">
+          {/* ABSOLUTELY CENTERED TITLE */}
+          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
             <motion.h1
               style={{ y: titleY }}
-              className="
-    text-4xl md:text-6xl font-bold text-white leading-tight
-    mt-[125%] md:mt-[40%]
-    text-center
-  "
+              className="text-4xl md:text-6xl font-bold text-white leading-tight text-center"
             >
               How We Work?
             </motion.h1>
+          </div>
 
-
+          {/* CONTENT (Description & Marquee) */}
+          <motion.div className="relative z-20 flex flex-col items-center text-center px-[clamp(1rem,5vw,1.5rem)] w-full max-w-4xl">
             <motion.div
               style={{ y: descriptionY, opacity: descriptionOpacity }}
-              className="w-full flex flex-col items-center"
+              className="w-full flex flex-col items-center mt-[10vh]"
             >
-              <div className="w-24 h-[1px] bg-gray-400 mx-auto my-8"></div>
+              <div className="w-[clamp(4rem,10vw,6rem)] h-[1px] bg-gray-400 mx-auto my-[clamp(1rem,3vh,2rem)]"></div>
 
-              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light mb-12 sm:whitespace-nowrap">
+              <p className="text-[clamp(1rem,4vw,1.5rem)] md:text-2xl text-gray-300 leading-relaxed font-light mb-[clamp(2rem,5vh,3rem)] sm:whitespace-nowrap">
                 At Onexx, we build with clarity, precision, and purpose — every
                 decision is driven by performance and design excellence. <br />
                 We follow a fast, transparent workflow that keeps you involved
                 at every stage.
               </p>
 
-              <div className="w-full scale-[1.6]">
+              <div className="w-full scale-[clamp(1.2,1.6,1.8)]">
                 <MarqueeRow items={frontendStack} direction="left" />
                 <MarqueeRow items={backendStack} direction="right" />
               </div>
