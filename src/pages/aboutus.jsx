@@ -120,7 +120,6 @@ const MarqueeRow = ({ items, direction }) => {
 const OpenCloseScroll = () => {
   const containerRef = useRef(null);
   const circleRef = useRef(null);
-  // ✅ Default to a large scale (e.g., 6) so it's always covering screen even if calc is delayed
   const [maxScale, setMaxScale] = useState(6);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -139,8 +138,7 @@ const OpenCloseScroll = () => {
 
       const rect = circleRef.current.getBoundingClientRect();
       const circleDiameter = rect.width;
-      if (circleDiameter === 0) return; // Prevent divide by zero
-
+    if (circleDiameter === 0) return; // Prevent divide by zero
       const screenDiagonal = Math.sqrt(
         window.innerWidth ** 2 + window.innerHeight ** 2
       );
@@ -152,9 +150,8 @@ const OpenCloseScroll = () => {
     };
 
     updateScale();
-    // Safety check after a delay to ensure correct dimensions after layout shifts
+     // Safety check after a delay to ensure correct dimensions after layout shifts
     const timer = setTimeout(updateScale, 500);
-
     window.addEventListener("resize", updateScale);
     return () => {
       window.removeEventListener("resize", updateScale);
@@ -196,6 +193,7 @@ const OpenCloseScroll = () => {
     <div className="relative w-full pt-[5vh] md:pt-[10vh]">
       <section ref={containerRef} className="relative h-[250vh] bg-transparent">
         <div className="sticky top-0 h-[100dvh] overflow-hidden flex items-center justify-center">
+
 
           {/* ✅ PERFECTLY CENTERED FULLSCREEN CIRCLE */}
           <motion.div

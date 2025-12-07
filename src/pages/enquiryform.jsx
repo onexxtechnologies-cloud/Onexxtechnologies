@@ -70,7 +70,7 @@ export default function CombinedEnquiry3D() {
     try {
       setLoading(true);
       // Adjust path to your API
-      const res = await fetch("/api/sendemail.js", {
+      const res = await fetch("../../api/sendemail.js", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
