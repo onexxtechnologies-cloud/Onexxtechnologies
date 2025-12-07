@@ -18,8 +18,8 @@
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.554.0",
     "ogl": "^1.0.11",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-router-dom": "^7.10.1",
     "react-tsparticles": "^2.12.2",
     "resend": "^6.5.2",
@@ -44,6 +44,7 @@
     "vite": "^7.2.6"
   },
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
   "keywords": [],
   "author": "",
   "license": "ISC"
