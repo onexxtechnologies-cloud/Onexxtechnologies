@@ -3,11 +3,17 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    minify: "terser",
-    cssMinify: false,
-  },
   css: {
-    lightningcss: false,
+    lightningcss: {
+      drafts: {
+        nesting: false,
+      },
+    },
+    postcss: {
+      plugins: [],
+    },
+  },
+  build: {
+    cssMinify: "esbuild",
   },
 });
