@@ -131,7 +131,7 @@ const OpenCloseScroll = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // ✅ TRUE FULLSCREEN DIAGONAL SCALE
+  // ✅ TRUE FULLSCREEN DIAGONAL SCALE (FIXED)
   useLayoutEffect(() => {
     const updateScale = () => {
       if (!circleRef.current) return;
