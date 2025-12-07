@@ -21,7 +21,7 @@ const LandingPage = () => {
 
         {/* Headline */}
         <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 leading-tight">
-          Your Business Grows. Our Technology Makes It Possible.
+          Your Business Grows,
 
           <br />
           <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 bg-clip-text text-transparent">

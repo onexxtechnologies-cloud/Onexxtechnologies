@@ -81,7 +81,7 @@ function AppContent() {
       </div>
 
       {/* ABOUT SECTION */}
-      <div id="about" >
+      <div id="about" className="mt-[-60%] sm:mt-[-60%]">
         <OpenCloseScroll />
       </div>
 
