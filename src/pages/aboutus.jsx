@@ -152,20 +152,20 @@ const OpenCloseScroll = () => {
   // ✅ PERFECT FULLSCREEN SCALE ANIMATION
   const scale = useTransform(
     scrollYProgress,
-    [0, 0.25, 0.6, 0.85, 0.9, 1],
-    [1, maxScale, maxScale, maxScale, maxScale * 0.5, 1]
+    [0, 0.25, 0.6, 0.85,0.9, 1],
+    [1, maxScale, maxScale, maxScale,maxScale*0.5, 1]
   );
 
   const titleY = useTransform(
     scrollYProgress,
     [0.1, 0.2, 0.9, 1],
-    ["0%", isMobile ? "-280%" : "-170%", isMobile ? "-280%" : "-170%", "0%"]
+    ["0%",isMobile ? "-280%": "-170%", isMobile ? "-280%": "-170%", "0%"]
   );
 
   const descriptionOpacity = useTransform(
     scrollYProgress,
-    [0.1, 0.25, 0.3, 0.5, 0.6, 0.7, 0.8],
-    [0, 0, 1, 1, 1, 1, 0]
+    [0.1,0.25, 0.3, 0.5, 0.6, 0.7, 0.8],
+    [0,0, 1, 1, 1, 1, 0]
   );
 
   const descriptionY = useTransform(
@@ -186,8 +186,10 @@ const OpenCloseScroll = () => {
               scale,
               left: "50%",
               top: "50%",
+              translateX: "-50%",
+              translateY: "-50%",
             }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] max-w-[390px] max-h-[390px] sm:w-[550px] sm:h-[550px] sm:max-w-none sm:max-h-none
+            className="absolute w-[390px] h-[390px] sm:w-[550px] sm:h-[550px]
             bg-gradient-to-r from-[#4AB3FF] via-[#1b2566] to-[#0b0b4e]
             rounded-full z-10"
           />
@@ -198,7 +200,7 @@ const OpenCloseScroll = () => {
               style={{ y: titleY }}
               className="
     text-4xl md:text-6xl font-bold text-white leading-tight
-    mt-[125%] md:mt-[40%]
+    mt-[100%] md:mt-[40%]
     text-center
   "
             >
