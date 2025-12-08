@@ -4,7 +4,7 @@ import { Rocket } from 'lucide-react';
 
 const LandingPage = () => {
   return (
-    <div className="relative h-[135vh] w-full bg-black overflow-hidden flex flex-col items-center justify-center font-sans text-white">
+    <div className="relative h-[150vh] w-full bg-black overflow-hidden flex flex-col items-center justify-center font-sans text-white">
 
       {/* --- Ambient Background Glows --- */}
       

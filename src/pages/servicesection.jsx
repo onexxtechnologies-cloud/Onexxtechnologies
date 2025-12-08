@@ -11,6 +11,7 @@ const ServicesSection = () => {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const services = [
+
     {
       id: "01",
       title: "UI/UX Design",
@@ -56,38 +57,47 @@ const ServicesSection = () => {
         {/* Top Separator */}
         <div className="mb-10 border-t border-zinc-800"></div>
 
-        {/* Services List */}
-        <div className="flex flex-col">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="group flex flex-col md:flex-row md:items-center justify-between py-12 border-b border-zinc-800 hover:bg-white/5 transition-colors duration-300"
-            >
-              {/* Left Side: Number & Title */}
-              <div className="flex items-center mb-6 md:mb-0">
-                <span className="text-6xl md:text-8xl font-bold text-zinc-600 group-hover:text-blue-400 transition duration-300 mr-8 select-none">
-                  {service.id}
-                </span>
+        {/* Services Section */}
+        <div className="flex flex-col items-center">
+          {/* Centered H1 */}
+          <h1 className="text-6xl md:text-8xl font-black text-gray-100 uppercase mb-12 text-center">
+            SERVICES
+          </h1>
 
-                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-gray-200">
-                  {service.title}
-                </h2>
-              </div>
+          {/* Services List */}
+          <div className="flex flex-col w-full">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                className="group flex flex-col md:flex-row md:items-center justify-between py-12 border-b border-zinc-800 hover:bg-white/5 transition-colors duration-300"
+              >
+                {/* Left Side: Number & Title */}
+                <div className="flex items-center mb-6 md:mb-0">
+                  <span className="text-6xl md:text-8xl font-bold text-zinc-600 group-hover:text-blue-400 transition duration-300 mr-8 select-none">
+                    {service.id}
+                  </span>
 
-              {/* Right Side */}
-              <div className="md:w-1/3 flex flex-col items-start md:items-end md:text-right">
-                <p className="text-zinc-400 group-hover:text-blue-300 transition-colors duration-300 mr-8 select-none text-lg leading-relaxed">
-                  {service.description}
-                </p>
+                  <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-gray-200">
+                    {service.title}
+                  </h2>
+                </div>
+
+                {/* Right Side */}
+                <div className="md:w-1/3 flex flex-col items-start md:items-end md:text-right">
+                  <p className="text-zinc-400 group-hover:text-blue-300 transition-colors duration-300 mr-8 select-none text-lg leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
 
         {/* Bottom Button */}
         <div className="mt-24 flex justify-center">
           {/* 3. ATTACH ONCLICK HANDLER TO BUTTON */}
-          <button 
+          <button
             onClick={handleOpenModal}
             className="px-8 py-3 text-base font-bold uppercase tracking-widest border border-white bg-white text-black rounded-sm hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 transform hover:-translate-y-1"
           >
@@ -97,9 +107,9 @@ const ServicesSection = () => {
       </div>
 
       {/* 2. RENDER THE MODAL COMPONENT */}
-      <PortfolioModal 
-        isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
+      <PortfolioModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
       />
     </div>
   );

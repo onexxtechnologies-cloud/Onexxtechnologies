@@ -107,7 +107,7 @@ function AppContent() {
       </div>
 
       {/* CONTACT */}
-      <div id="contact" className="sm:mt-[-10%] mt-[-20%] flex flex-col sm:flex-row justify-centre">
+      <div id="contact" className="sm:mt-[10%] mt-[-20%] flex flex-col sm:flex-row justify-centre">
         <CenteredEnquiryForm />
       </div>
 
