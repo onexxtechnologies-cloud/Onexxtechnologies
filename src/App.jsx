@@ -2,6 +2,8 @@
 
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
+
 
 // ---- Existing Imports ----
 import HeroSection from "./pages/herosection.jsx";
@@ -67,7 +69,20 @@ function ScrollToHash() {
 // --------------------------------------------------
 function AppContent() {
   return (
-    <>
+    <><Helmet>
+      <title>Onexx-Technologies Custom Website, App & 3D Model Development</title>
+
+      <meta
+        name="description"
+        content="We provide professional website development, custom web apps, mobile app development, and high-quality 3D model creation."
+      />
+
+      <meta
+        name="keywords"
+        content="website development, app development, 3D model design, UI UX, custom software"
+      />
+    </Helmet>
+
       <Navbar />
 
       {/* HOME SECTION */}
