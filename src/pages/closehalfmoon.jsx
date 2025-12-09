@@ -4,12 +4,12 @@ import { Rocket } from 'lucide-react';
 
 const LandingPage = () => {
   return (
-    <div className="relative h-[150vh] w-full bg-black overflow-hidden flex flex-col items-center justify-center font-sans text-white">
+    <div className="relative h-[135vh] w-full bg-black overflow-hidden flex flex-col items-center justify-center font-sans text-white">
 
       {/* --- Ambient Background Glows --- */}
       
       {/* --- Main Content --- */}
-      <div className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 -mt-[15%]">
+      <div className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 sm:-mt-[15%] mt-[-80%]">
         
         {/* Logo Icon */}
         <div className="mb-8 relative group">
@@ -38,7 +38,7 @@ const LandingPage = () => {
 
 
       {/* 🌍 --- INVERTED HORIZON / SYSTEM FLIPPED VERTICALLY --- */}
-      <div className="absolute inset-0 scale-y-[-1] bg-#03030b">
+      <div className="absolute inset-0 scale-y-[-1] bg-#03030b sm:mt-0 mt-[-20%]">
 
         {/* Layer 1 */}
         <div className="absolute 

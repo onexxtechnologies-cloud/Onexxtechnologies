@@ -27,7 +27,7 @@ const GooeyNav = ({
   const textRef = useRef(null);
 
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
-  
+
 
 
   // Sync state when parent changes active index
@@ -108,6 +108,8 @@ const GooeyNav = ({
     }
   };
 
+  // ... inside GooeyNav component
+
   const updateEffectPosition = (element) => {
     if (!containerRef.current || !filterRef.current || !textRef.current) return;
     const containerRect = containerRef.current.getBoundingClientRect();
@@ -123,11 +125,19 @@ const GooeyNav = ({
     Object.assign(filterRef.current.style, styles);
     Object.assign(textRef.current.style, styles);
 
-    textRef.current.innerText = element.innerText;
+    // 👇 REMOVE OR COMMENT OUT THIS LINE 👇
+    // textRef.current.innerText = element.innerText;
+
+    // Instead, clear the text so the pill is just a visual background shape
+    textRef.current.innerText = "";
+
+    // Keep these just in case, though they won't affect empty text
     textRef.current.style.display = "flex";
     textRef.current.style.alignItems = "center";
     textRef.current.style.justifyContent = "center";
   };
+
+  // ... rest of component
 
   const handleClick = (e, index) => {
     e.preventDefault();

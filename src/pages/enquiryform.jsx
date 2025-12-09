@@ -85,7 +85,7 @@ export default function CombinedEnquiry3D() {
 
   return (
     // ✅ ONLY CHANGE IS HERE: px-0
-    <div className="relative flex flex-col w-full items-center justify-center md:flex-row min-h-screen px-0 gap-8 py-10 overflow-hidden bg-black sm:mt-[-15%]">
+    <div className="relative flex flex-col w-full items-center justify-center md:flex-row min-h-screen px-0 gap-8 py-10 overflow-hidden bg-black ">
 
       {/* ✅ RIPPLE BACKGROUND (LAPTOP ONLY) */}
       <div className="absolute inset-0 hidden md:flex z-0 overflow-hidden flex-wrap gap-[2px]">

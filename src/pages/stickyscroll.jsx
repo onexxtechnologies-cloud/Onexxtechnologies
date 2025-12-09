@@ -125,7 +125,9 @@ export default function ProcessScroll() {
         <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row p-4 md:p-10">
 
           {/* LEFT SIDE STATIC TEXT */}
-          <div className="lg:w-1/2 flex flex-col justify-center lg:h-screen lg:sticky lg:top-0 py-10 lg:py-0 translate-y-10">
+          {/* LEFT SIDE STATIC TEXT */}
+          {/* ⭐ ADDED 'relative z-20' HERE */}
+          <div className="lg:w-1/2 flex flex-col justify-center lg:h-screen lg:sticky lg:top-0 py-10 lg:py-0 translate-y-10 relative z-20">
             <div className="bg-white/10 w-fit px-3 py-1 rounded text-xs font-medium tracking-wide uppercase mb-6 backdrop-blur-md border border-white/10">
               Our Process
             </div>
@@ -137,27 +139,17 @@ export default function ProcessScroll() {
               </span>
             </h2>
 
-            <p className="text-slate-400 text-lg md:text-xl max-w-md mb-8 leading-relaxed">
-              Delivering scalable websites & software for every stage of growth.
-            </p>
-
-            <div className="border-l-2 border-blue-500/30 pl-6 mb-10">
-              <p className="text-slate-300 italic">
-                "From early-stage startups to large enterprises and individual founders,
-                we follow a structured, results-driven process."
-              </p>
-            </div>
+            {/* ... rest of your text content ... */}
 
             <button
               onClick={() => {
                 const el = document.getElementById("contact");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-fit px-8 py-4 bg-blue-600 hover:bg-blue-700 transition-colors rounded-full font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.5)]"
+              className="w-fit px-8 py-4 bg-blue-600 hover:bg-blue-700 transition-colors rounded-full font-semibold text-white shadow-[0_0_20px_rgba(37,99,235,0.5)] cursor-pointer" // Added cursor-pointer just in case
             >
               Schedule a Consultation
             </button>
-
           </div>
 
           {/* RIGHT SIDE CARDS */}
