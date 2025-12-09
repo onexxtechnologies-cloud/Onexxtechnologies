@@ -70,7 +70,7 @@ function ScrollToHash() {
 function AppContent() {
   return (
     <><Helmet>
-      <title>Onexx-Technologies Custom Website, App & 3D Model Development</title>
+      <title>Onexx Technologies Custom Website, App & 3D Model Development</title>
 
       <meta
         name="description"
@@ -79,7 +79,7 @@ function AppContent() {
 
       <meta
         name="keywords"
-        content="website development, app development, 3D model design, UI UX, custom software"
+        content="onexx, website development, app development, 3D model design, UI UX, custom software"
       />
     </Helmet>
 
