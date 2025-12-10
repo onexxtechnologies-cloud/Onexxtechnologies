@@ -81,6 +81,65 @@ function AppContent() {
         name="keywords"
         content="onexx, website development, app development, 3D model design, UI UX, custom software"
       />
+      <script type="application/ld+json">
+        {`
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Onexx Technologies",
+  "url": "https://onexxtechnologies.com",
+  "logo": "https://onexxtechnologies.com/ONEXX.png",
+  "description": "We provide professional website development, custom web apps, mobile app development, and high-quality 3D model creation.",
+  "foundingDate": "2025",
+  "founder": {
+    "@type": "Person",
+    "name": "Onexx Technologies Team"
+  },
+  "sameAs": [
+    "https://www.instagram.com/onexx_technologies",
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "onexxtechnologies@gmail.com",
+    "contactType": "customer support",
+    "areaServed": "IN",
+    "availableLanguage": ["English", "Hindi"]
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  },
+  "service": [
+    {
+      "@type": "Service",
+      "name": "Website Development",
+      "description": "Custom website design and development services with modern UI/UX."
+    },
+    {
+      "@type": "Service",
+      "name": "Web App Development",
+      "description": "Professional custom web application development."
+    },
+    {
+      "@type": "Service",
+      "name": "Mobile App Development",
+      "description": "High-quality Android and iOS app development."
+    },
+    {
+      "@type": "Service",
+      "name": "3D Model Creation",
+      "description": "High-quality 3D product and character models."
+    },
+    {
+      "@type": "Service",
+      "name": "UI/UX Design",
+      "description": "Modern UI/UX design for websites and applications."
+    }
+  ]
+}
+`}
+      </script>
+
     </Helmet>
 
       <Navbar />
