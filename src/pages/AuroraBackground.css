@@ -4,15 +4,18 @@
 /* ------------------------- */
 /*   GLOW TEXT (Headline)    */
 /* ------------------------- */
-
 .glow-layer {
     display: inline-block;
     font-family: "Rubik Mono One", sans-serif;
 
+    /* Base color fallback (still white for non-gradient browsers) */
+    color: #ffffff;
+
+    /* Gradient text (modern browsers) — replace #ffffff with #fefefe */
     background: linear-gradient(
         90deg,
-        #ffffff 0%,
-        #ffffff 50%,
+        #fefefe 0%,      /* almost white */
+        #fefefe 50%,     /* almost white */
         #4f7bff 75%,
         #1a3cff 100%
     );
@@ -26,11 +29,18 @@
     transform: translateY(-60vh);
     will-change: background-position, transform;
 }
-
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 
@@ -56,7 +66,15 @@
 }
 
 @keyframes glowSoft {
-    0%   { opacity: 0.9; }
-    50%  { opacity: 1; }
-    100% { opacity: 0.9; }
+    0% {
+        opacity: 0.9;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.9;
+    }
 }

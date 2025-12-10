@@ -466,11 +466,38 @@ export default function Navbar() {
                       }, 350);
                     }
                   }}
-                  className="px-8 py-3 text-lg font-semibold rounded-full relative overflow-hidden bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF] shadow-[0_0_20px_rgba(0,102,255,0.5)] active:scale-95 transition-transform duration-200"
+                  className="
+  px-8 py-3 text-lg font-semibold rounded-full relative overflow-hidden
+
+  /* 1 — solid fallback (always works) */
+  bg-[#4AB3FF]
+
+  /* 2 — browser-safe gradient (most browsers can handle this) */
+  bg-[linear-gradient(90deg,#4AB3FF,#2D99FF)]
+
+  /* 3 — your main vibrant gradient (Chrome quality) */
+  bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
+
+  shadow-[0_0_20px_rgba(0,102,255,0.5)]
+  active:scale-95 transition-transform duration-200
+"
+
                 >
                   <span className="relative z-10">Let’s Connect</span>
-                  <span className="absolute inset-0 bg-white/30 animate-[lightSweep_3s_linear_infinite]" />
+
+                  {/* Light sweep fallback-safe */}
+                  <span
+                    className="
+      absolute inset-0 bg-white/30 
+      animate-[lightSweep_3s_linear_infinite]
+
+      /* Disable transparency animation if browser cannot handle it */
+      supports-not-[backdrop-filter]:bg-white/10
+      supports-not-[animation]:hidden
+    "
+                  />
                 </button>
+
 
               </div>
             </div>

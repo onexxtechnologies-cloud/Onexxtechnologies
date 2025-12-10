@@ -3,12 +3,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------- */
+/* Universal browser-safe fix for glow/gradient text */
+/* ------------------------- */
+.browser-safe-glow {
+  filter: brightness(1.05) saturate(1.1);
+  -webkit-filter: brightness(1.05) saturate(1.1);
+}
+
+.glow-text {
+  color: #00baff;
+  /* fallback (IMPORTANT) */
+  background: linear-gradient(90deg, #00baff, #0a5fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* FIX FOR COLOR DIFFERENCE ACROSS BROWSERS */
+  color-scheme: light !important;
+  forced-color-adjust: none !important;
+
   color: rgba(255, 255, 255, 0.87);
   background-color: #000000;
 
@@ -17,14 +36,60 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .custom-scroll::-webkit-scrollbar {
   width: 6px;
 }
+
 .custom-scroll::-webkit-scrollbar-thumb {
   background: #00aeff;
   border-radius: 10px;
 }
+
 .custom-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
+/* Normalize text behavior across all browsers */
+html, body {
+  color-scheme: light !important;       /* modern browsers */
+  background-color: #000000 !important; /* your background */
+  color: #ffffff !important;            /* readable text */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  forced-color-adjust: none !important; /* disables forced OS colors */
+}
+
+/* Safari / iOS specific dark mode override */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    color-scheme: light !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    forced-color-adjust: none !important;
+  }
+}
+
+
+/* Make fonts look the same on Samsung, Chrome, Safari */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fix gradient + filtered text issues */
+.support-effects {
+  -webkit-text-fill-color: inherit;
+  -webkit-backdrop-filter: none;
+  -webkit-filter: none;
+}
+
+/* Force light mode everywhere using a wrapper class */
+.force-light, .force-light * {
+  background-color: #000000 !important; /* your page background */
+  color: #ffffff !important;           /* text color */
+  -webkit-text-fill-color: inherit !important; /* fixes gradient text */
+  forced-color-adjust: none !important;        /* disables forced OS colors */
+}
