@@ -1,9 +1,8 @@
 "use client";
 
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-
 
 // ---- Existing Imports ----
 import HeroSection from "./pages/herosection.jsx";
@@ -18,20 +17,17 @@ import CloseHalfMoon from "./pages/closehalfmoon.jsx";
 import CenteredEnquiryForm from "./pages/enquiryform.jsx";
 import Footer from "./pages/footer.jsx";
 
-
 // --------------------------------------------------
 // 🔥 Improved Scroll + Refresh Handler
 function ScrollToHash() {
   const { hash, pathname } = useLocation();
 
-  // Disable browser auto scroll restore
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
   }, []);
 
-  // Force reset URL + scroll top on refresh
   useEffect(() => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
       window.history.replaceState({}, "", "/");
@@ -41,7 +37,6 @@ function ScrollToHash() {
     }
   }, []);
 
-  // Handle hash or pathname scroll behavior
   useEffect(() => {
     let id = hash ? hash.replace("#", "") : pathname.replace("/", "");
 
@@ -63,26 +58,27 @@ function ScrollToHash() {
   return null;
 }
 
-
 // --------------------------------------------------
 // 👉 Main Content
 // --------------------------------------------------
-function AppContent() {
+function AppContent({ forceDesktopView }) {
   return (
-    <><Helmet>
-      <title>Onexx Technologies Custom Website, App & 3D Model Development</title>
+    <>
+      <Helmet>
+        <title>Onexx Technologies Custom Website, App & 3D Model Development</title>
 
-      <meta
-        name="description"
-        content="We provide professional website development, custom web apps, mobile app development, and high-quality 3D model creation."
-      />
+        <meta
+          name="description"
+          content="We provide professional website development, custom web apps, mobile app development, and high-quality 3D model creation."
+        />
 
-      <meta
-        name="keywords"
-        content="onexx, website development, app development, 3D model design, UI UX, custom software"
-      />
-      <script type="application/ld+json">
-        {`
+        <meta
+          name="keywords"
+          content="onexx, website development, app development, 3D model design, UI UX, custom software"
+        />
+
+        <script type="application/ld+json">
+          {`
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -96,7 +92,7 @@ function AppContent() {
     "name": "Onexx Technologies Team"
   },
   "sameAs": [
-    "https://www.instagram.com/onexx_technologies",
+    "https://www.instagram.com/onexx_technologies"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -138,50 +134,48 @@ function AppContent() {
   ]
 }
 `}
-      </script>
-
-    </Helmet>
+        </script>
+      </Helmet>
 
       <Navbar />
 
-      {/* HOME SECTION */}
-      <div id="home" className="pt-0">
+      <div id="home" className={forceDesktopView ? "pt-0 mt-1" : "pt-0"}>
         <HeroSection />
       </div>
 
-      {/* HALF MOON */}
-      <div className="relative sm:mt-[-35%] mt-[-150%]">
+      <div className={forceDesktopView ? "relative mt-2" : "relative sm:mt-[-35%] mt-[-150%]"}>
         <UltimateBlueHorizon />
       </div>
 
-      {/* ABOUT SECTION */}
-      <div id="about" className="mt-[-60%] sm:mt-[-60%]">
+      <div id="about" className={forceDesktopView ? "mt-2" : "mt-[-60%] sm:mt-[-60%]"}>
         <OpenCloseScroll />
       </div>
 
-      {/* WORK SECTION */}
-      <div className="pt-0">
+      <div className={forceDesktopView ? "mt-2" : ""}>
         <ScrollingCards />
       </div>
 
-      {/* SERVICES SECTION */}
-      <div id="services" className="pt-0">
+      <div id="services" className={forceDesktopView ? "mt-2" : ""}>
         <ProcessScroll />
         <ServicesSection />
       </div>
 
-      {/* FAQ */}
-      <div id="faq" className="pt-0">
+      <div id="faq" className={forceDesktopView ? "mt-2" : ""}>
         <FAQs />
       </div>
 
-      {/* CLOSE HALF MOON */}
-      <div className="pt-0">
+      <div className={forceDesktopView ? "mt-2" : ""}>
         <CloseHalfMoon />
       </div>
 
-      {/* CONTACT */}
-      <div id="contact" className="sm:mt-[-5%] mt-[-20%] flex flex-col sm:flex-row justify-centre">
+      <div
+        id="contact"
+        className={
+          forceDesktopView
+            ? "mt-2 flex flex-col"
+            : "sm:mt-[-5%] mt-[-20%] flex flex-col sm:flex-row justify-centre"
+        }
+      >
         <CenteredEnquiryForm />
       </div>
 
@@ -190,17 +184,39 @@ function AppContent() {
   );
 }
 
-
 // --------------------------------------------------
-// 🧠 Router Setup
+// 🧠 Router + Mobile Desktop Site Detection
 // --------------------------------------------------
 export default function App() {
+  const [forceDesktopView, setForceDesktopView] = useState(false);
+
+  useEffect(() => {
+    const checkDesktopSite = () => {
+      const isMobile = window.screen.width <= 500;
+      const isDesktopSite = window.innerWidth > 500;
+      setForceDesktopView(isMobile && isDesktopSite);
+    };
+
+    checkDesktopSite();
+    window.addEventListener("resize", checkDesktopSite);
+
+    return () => window.removeEventListener("resize", checkDesktopSite);
+  }, []);
+
   return (
-    <Router>
-      <ScrollToHash />
-      <Routes>
-        <Route path="/*" element={<AppContent />} />
-      </Routes>
-    </Router>
+    <div
+      className={
+        forceDesktopView
+          ? "max-w-full px-4 sm:px-6 mx-auto overflow-x-hidden"
+          : "w-full"
+      }
+    >
+      <Router>
+        <ScrollToHash />
+        <Routes>
+          <Route path="/*" element={<AppContent forceDesktopView={forceDesktopView} />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }

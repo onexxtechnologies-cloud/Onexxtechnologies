@@ -35,7 +35,6 @@ const originalCards = [
   },
 ];
 
-
 // We double the cards to ensure the loop is smooth even on wide screens
 const cards = [...originalCards, ...originalCards];
 
@@ -52,12 +51,39 @@ const ScrollingBlueNeon = () => {
   // This value drives the whole animation
   const baseX = useMotionValue(0);
 
+  // ⏸️ PAUSE LOGIC
+  const isPaused = useRef(false);
+  const timerRef = useRef(null);
+
   // 🚀 THE INFINITE LOOP ENGINE
   useAnimationFrame((time, delta) => {
-    let moveBy = SPEED * (delta / 8); // normalize speed
-    // Move continuously left
-    baseX.set(baseX.get() - moveBy);
+    // Only move if NOT paused
+    if (!isPaused.current) {
+      let moveBy = SPEED * (delta / 8); // normalize speed
+      baseX.set(baseX.get() - moveBy);
+    }
   });
+
+  // 🖱️ INTERACTION HANDLERS
+  const stopAnimation = () => {
+    isPaused.current = true;
+    if (timerRef.current) clearTimeout(timerRef.current);
+  };
+
+  const startAnimationAfterDelay = () => {
+    // Clear any existing timer to prevent overlapping
+    if (timerRef.current) clearTimeout(timerRef.current);
+
+    // Wait 1 second (1000ms) before restarting
+    timerRef.current = setTimeout(() => {
+      isPaused.current = false;
+    }, 500);
+  };
+
+  // Handle Swipe/Drag logic (Manual movement)
+  const handlePan = (_, info) => {
+    baseX.set(baseX.get() + info.delta.x);
+  };
 
   return (
     <div className="w-full h-[500px] sm:h-[800px] overflow-hidden relative bg-gradient-to-b from-[#000000] to-[#2c54a9] flex flex-col justify-center items-center">
@@ -65,8 +91,22 @@ const ScrollingBlueNeon = () => {
       {/* Background Line */}
       <div className="absolute top-1/2 left-0 w-full h-[1px] bg-blue-500/20 blur-[2px]" />
 
-      {/* Container */}
-      <div className="relative w-full h-[600px] flex justify-center items-center">
+      {/* Container - Handles Taps, Drags, and Holds */}
+      <motion.div
+        className="relative w-full h-[600px] flex justify-center items-center cursor-grab active:cursor-grabbing touch-pan-y"
+
+        // 1. Stop immediately on touch/click/drag start
+        onPointerDown={stopAnimation}
+        onPanStart={stopAnimation}
+
+        // 2. Restart after 1s delay on release
+        onPointerUp={startAnimationAfterDelay}
+        onPointerLeave={startAnimationAfterDelay}
+        onPanEnd={startAnimationAfterDelay}
+
+        // 3. Allow manual dragging
+        onPan={handlePan}
+      >
         {cards.map((card, index) => (
           <LoopingCard
             key={index}
@@ -76,7 +116,7 @@ const ScrollingBlueNeon = () => {
             totalItems={cards.length}
           />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
@@ -166,6 +206,7 @@ const NeonCard = ({ card }) => {
         transition-all duration-300
         hover:shadow-[0_0_40px_rgba(0,140,255,0.3)]
         hover:scale-[1.02]
+        select-none pointer-events-none md:pointer-events-auto
       "
     >
       {/* Internal Glow Effect */}
