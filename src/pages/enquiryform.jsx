@@ -6,17 +6,31 @@ export default function CombinedEnquiry3D() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ ok: null, msg: "" });
+  
+  // ✅ NEW: State to track screen size for box sizing
+  const [isMobile, setIsMobile] = useState(false);
+
   const dropdownRef = useRef(null);
-  const products = ["Website Development", "3D Model", "Applicaion Development", "Others"];
+  const products = ["Website Development", "3D Model", "Application Development", "Others"];
 
   useEffect(() => {
+    // Check if mobile on mount and resize
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); // Initial check
+    
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
       }
     };
+
+    window.addEventListener("resize", checkMobile);
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const baseFieldStyle =
@@ -28,10 +42,11 @@ export default function CombinedEnquiry3D() {
   const getFieldStyle = (fieldName) => {
     const isFocused = focusedField === fieldName;
     const isDropdownAndOpen = fieldName === "product" && dropdownOpen;
-    return `${baseFieldStyle} ${isFocused || isDropdownAndOpen
-      ? "bg-white/20 border-cyan-400/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
-      : "bg-white/5"
-      }`;
+    return `${baseFieldStyle} ${
+      isFocused || isDropdownAndOpen
+        ? "bg-white/20 border-cyan-400/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+        : "bg-white/5"
+    }`;
   };
 
   async function handleSubmit(e) {
@@ -83,13 +98,21 @@ export default function CombinedEnquiry3D() {
     }
   }
 
+  // ✅ CONFIG: Box Sizing Logic
+  // Mobile: 5 columns (approx 20% width) -> Bigger Boxes
+  // Desktop: 16 columns (approx 6.25% width) -> Smaller Boxes
+  const columns = isMobile ? 5 : 16; 
+  const boxWidth = `calc(100% / ${columns} - 2px)`;
+  const boxHeight = isMobile ? "calc(20vw - 2px)" : "calc(6.25vw - 2px)"; 
+
   return (
-    <div className="relative flex flex-col w-full items-center justify-center md:flex-row min-h-screen px-0 gap-8 py-10 overflow-hidden bg-black ">
+    <div className="relative flex flex-col w-full items-center justify-center min-h-screen px-4 gap-8 py-10 overflow-hidden bg-black">
 
-      {/* ✅ MODIFIED: Removed 'hidden md:flex' so it shows on mobile too. Changed to just 'flex'. */}
-      <div className="sm:absolute sm:inset-0 flex z-0 overflow-hidden sm:flex-wrap gap-[2px]">
+      {/* ✅ MODIFIED: Changed 'sm:absolute' to 'absolute'. 
+          This forces the grid to be a background on Mobile too, fixing the centering issue. */}
+      <div className="absolute inset-0 flex z-0 overflow-hidden flex-wrap gap-[2px]">
 
-        {/* The Flowing Blue Light Animation (Always Visible) */}
+        {/* The Flowing Blue Light Animation */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-[#00aaff] to-black animate-[rippleWave_6s_linear_infinite]" />
 
         {Array.from({ length: 260 }).map((_, i) => (
@@ -97,21 +120,19 @@ export default function CombinedEnquiry3D() {
             key={i}
             className="block transition-all duration-[1500ms]"
             style={{
-              width: "calc(100% / 16 - 2px)",
-              height: "calc(6.25vw - 2px)", // Keeps squares proportional
+              width: boxWidth, // ✅ Using dynamic width based on screen size
+              height: boxHeight,
               background: "#0a0a0a",
               zIndex: 1,
             }}
             onMouseEnter={(e) => {
-              // ✅ MODIFIED: Only trigger hover animation if screen is wider than 768px (Desktop/Tablet)
-              if (window.innerWidth > 768) {
+              if (!isMobile) {
                 e.currentTarget.style.background = "#00aaff";
                 e.currentTarget.style.boxShadow = "0 0 15px #00aaff, 0 0 30px #00aaff";
                 e.currentTarget.style.transition = "0s";
               }
             }}
             onMouseLeave={(e) => {
-              // Reset style naturally
               e.currentTarget.style.background = "#0a0a0a";
               e.currentTarget.style.boxShadow = "none";
               e.currentTarget.style.transition = "1.5s";
@@ -127,9 +148,9 @@ export default function CombinedEnquiry3D() {
         }
       `}</style>
 
-      {/* ✅ FORM */}
-      <div className="relative w-full max-w-lg z-10 sm:mt-0 mt-[-10%] ">
-        <div className="relative rounded-xl p-7 bg-black backdrop-blur-md shadow-2xl">
+      {/* ✅ FORM: Removed 'mt-[-10%]' to allow perfect centering via flexbox */}
+      <div className="relative w-full max-w-lg z-10">
+        <div className="relative rounded-xl p-7 bg-black/80 backdrop-blur-md shadow-2xl border border-white/5">
 
           <div className="absolute top-0 left-0 right-0 flex flex-col items-center pointer-events-none ">
             <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent"></div>
@@ -184,7 +205,7 @@ export default function CombinedEnquiry3D() {
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className={getFieldStyle("product")}
+                className={getFieldStyle("product") + " text-left"} // Added text-left for better alignment
               >
                 {selected || "Select Product"}
               </button>
@@ -220,11 +241,12 @@ export default function CombinedEnquiry3D() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-sm"
+              className="w-full py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-sm hover:opacity-90 transition-opacity"
             >
               {loading ? "Sending..." : "Submit Enquiry"}
             </button>
           </form>
+          
           <div className="absolute left-0 right-0 flex flex-col items-center justify-center opacity-90 mt-4">
             <div className="absolute bottom-[-2px] w-1/2 h-[4px] bg-[#4AB3FF] blur-[10px] rounded-full"></div>
             <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#4AB3FF] to-transparent"></div>
@@ -234,7 +256,7 @@ export default function CombinedEnquiry3D() {
 
       {status.msg && (
         <div className="fixed inset-0 flex justify-center items-center bg-black/80 z-[100]">
-          <div className="bg-[#0a192f] p-6 rounded-xl text-center">
+          <div className="bg-[#0a192f] p-6 rounded-xl text-center border border-white/10 mx-4">
             <p className={status.ok ? "text-cyan-400" : "text-red-400"}>{status.msg}</p>
             <button onClick={() => setStatus({ ok: null, msg: "" })} className="mt-4 px-6 py-2 bg-cyan-700 text-white rounded-lg">
               Close
