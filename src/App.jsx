@@ -74,7 +74,7 @@ function AppContent({ forceDesktopView }) {
 
         <meta
           name="keywords"
-          content="onexx, website development, app development, 3D model design, UI UX, custom software"
+          content="onexx,onexx technologies, website development, app development, 3D model design, UI UX, custom software"
         />
 
         <script type="application/ld+json">

@@ -379,9 +379,12 @@ export default function Navbar() {
             border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
-          <a href="#home" className="flex flex-row items-center gap-2">
-            <img src={OnexxLogo} className="h-10 w-10 object-contain" alt="Onexx Home" />
-            <div className="text-white text-lg md:text-2xl font-bold tracking-[0.25em] uppercase">ONEXX</div>
+          <a href="#home" className="flex items-center ">
+            <img src={OnexxLogo} className="h-10 w-10 sm:mb-0 mb-[5%] object-contain" alt="Onexx Home" />
+            <div className="text-white text-lg sm:mt-0 mt-[2%] md:text-2xl font-bold tracking-[0.15em] uppercase leading-tight">
+              ONEXX
+            </div>
+
           </a>
 
           {/* DESKTOP MENU */}

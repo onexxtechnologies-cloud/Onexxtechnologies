@@ -6,7 +6,7 @@ export default function CombinedEnquiry3D() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ ok: null, msg: "" });
-  
+
   // ✅ NEW: State to track screen size for box sizing
   const [isMobile, setIsMobile] = useState(false);
 
@@ -17,7 +17,7 @@ export default function CombinedEnquiry3D() {
     // Check if mobile on mount and resize
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile(); // Initial check
-    
+
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
@@ -26,7 +26,7 @@ export default function CombinedEnquiry3D() {
 
     window.addEventListener("resize", checkMobile);
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     return () => {
       window.removeEventListener("resize", checkMobile);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -42,11 +42,10 @@ export default function CombinedEnquiry3D() {
   const getFieldStyle = (fieldName) => {
     const isFocused = focusedField === fieldName;
     const isDropdownAndOpen = fieldName === "product" && dropdownOpen;
-    return `${baseFieldStyle} ${
-      isFocused || isDropdownAndOpen
-        ? "bg-white/20 border-cyan-400/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
-        : "bg-white/5"
-    }`;
+    return `${baseFieldStyle} ${isFocused || isDropdownAndOpen
+      ? "bg-white/20 border-cyan-400/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+      : "bg-white/5"
+      }`;
   };
 
   async function handleSubmit(e) {
@@ -69,6 +68,7 @@ export default function CombinedEnquiry3D() {
       name: form.get("name"),
       email: form.get("email"),
       phone,
+      bussinessname: form.get("bussinessname"),
       city: form.get("city"),
       product: selected,
       message: form.get("message"),
@@ -101,9 +101,9 @@ export default function CombinedEnquiry3D() {
   // ✅ CONFIG: Box Sizing Logic
   // Mobile: 5 columns (approx 20% width) -> Bigger Boxes
   // Desktop: 16 columns (approx 6.25% width) -> Smaller Boxes
-  const columns = isMobile ? 5 : 16; 
+  const columns = isMobile ? 5 : 16;
   const boxWidth = `calc(100% / ${columns} - 2px)`;
-  const boxHeight = isMobile ? "calc(20vw - 2px)" : "calc(6.25vw - 2px)"; 
+  const boxHeight = isMobile ? "calc(20vw - 2px)" : "calc(6.25vw - 2px)";
 
   return (
     <div className="relative flex flex-col w-full items-center justify-center min-h-screen px-4 gap-8 py-10 overflow-hidden bg-black">
@@ -201,6 +201,15 @@ export default function CombinedEnquiry3D() {
               required
             />
 
+            <input
+              name="bussinessname"
+              placeholder="Your Bussiness Type"
+              className={getFieldStyle("bussinessname")}
+              onFocus={() => handleFocus("bussinessname")}
+              onBlur={handleBlur}
+              required
+            />
+
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
@@ -246,7 +255,7 @@ export default function CombinedEnquiry3D() {
               {loading ? "Sending..." : "Submit Enquiry"}
             </button>
           </form>
-          
+
           <div className="absolute left-0 right-0 flex flex-col items-center justify-center opacity-90 mt-4">
             <div className="absolute bottom-[-2px] w-1/2 h-[4px] bg-[#4AB3FF] blur-[10px] rounded-full"></div>
             <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#4AB3FF] to-transparent"></div>
