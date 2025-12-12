@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
 
 const Footer = () => {
   // Navigation items configuration
@@ -10,6 +11,16 @@ const Footer = () => {
     { name: 'Contact', id: 'contact' },
     { name: 'FAQ', id: 'faq' },
   ];
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [policyText, setPolicyText] = useState("");
+
+  useEffect(() => {
+    if (showPrivacy) {
+      fetch("/privacy_policy.txt")
+        .then((res) => res.text())
+        .then((txt) => setPolicyText(txt));
+    }
+  }, [showPrivacy]);
 
   return (
     <footer className="w-full bg-black text-white overflow-hidden py-1 ">
@@ -17,7 +28,7 @@ const Footer = () => {
 
         {/* Title container set to w-1/2 (half width) and centered with mx-auto */}
         <div className="relative w-1/2 mx-auto flex justify-center items-center">
-          
+
           {/* Main text layer with black fill (text-black) to mask the internal glow, positioned highest (z-20) */}
           <h1
             className="relative text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-black select-none z-15"
@@ -27,7 +38,7 @@ const Footer = () => {
           >
             ONEXX
           </h1>
-          
+
           {/* Glow layer 2 (largest blur) - Absolute position, z-10 */}
           <h1
             className="absolute text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-transparent select-none z-10"
@@ -111,12 +122,40 @@ const Footer = () => {
           </p>
 
           <div className="flex space-x-6">
-            <Link to="/terms" className="hover:text-gray-300 transition-colors">
-              Term of Service
-            </Link>
-            <Link to="/privacy" className="hover:text-gray-300 transition-colors">
+            <button
+              onClick={() => setShowPrivacy(true)}
+              className="hover:text-gray-300 transition-colors"
+            >
               Privacy Policy
-            </Link>
+            </button>
+
+            {/* Popup Modal */}
+            {showPrivacy && (
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg shadow-xl overflow-y-auto max-h-[80vh]">
+
+                  {/* Header Row */}
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold">Privacy Policy</h2>
+
+                    <button
+                      onClick={() => setShowPrivacy(false)}
+                      className="bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800"
+                    >
+                      Close
+                    </button>
+                  </div>
+
+                  {/* Content */}
+                  <pre className="whitespace-pre-wrap text-gray-800 mb-6">
+                    {policyText}
+                  </pre>
+
+                </div>
+              </div>
+
+            )}
+
           </div>
         </div>
 
