@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         Email: ${email}
         Phone: ${phone}
         City: ${city}
-        Bussiness Name: ${bussinessname}
+        Bussiness Type: ${bussinessname}
         Product Interested: ${product}
         Message: ${message}
       `,
