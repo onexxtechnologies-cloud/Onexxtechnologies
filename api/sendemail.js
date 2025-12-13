@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const { name, email, phone, city, product, bussinessname, message } = req.body;
+  const { name, email, phone, city, product, bussinessname, message, privacyPolicy } = req.body;
 
   try {
     await resend.emails.send({
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
         Bussiness Type: ${bussinessname}
         Product Interested: ${product}
         Message: ${message}
+        Privacy Policy: ${privacyPolicy}
       `,
     });
 

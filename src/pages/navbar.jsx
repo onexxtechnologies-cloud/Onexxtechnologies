@@ -414,9 +414,29 @@ export default function Navbar() {
 
 
           {/* MOBILE HAMBURGER */}
-          <div className="mobile-only flex items-center ml-auto">
+          <div className="mobile-only flex items-center ml-auto gap-3">
             <button
-              className="text-white p-2 focus:outline-none bg-transparent"
+              onClick={() => {
+                const el = document.getElementById("contact");
+                if (el) {
+                  const navbarHeight = 70;
+                  const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                  window.scrollTo({ top: y, behavior: "smooth" });
+                }
+              }}
+              className="
+                px-4 py-2 items-center rounded-full font-semibold text-white text-xs
+                bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
+                shadow-[0_0_15px_rgba(0,102,255,0.35)]
+                active:scale-95 transition-transform duration-200
+                whitespace-nowrap overflow-hidden relative group translate-y-[-25%]
+              "
+            >
+              <span className="relative z-10">Let’s Connect</span>
+              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:animate-[lightSweep_1s_ease-in-out_infinite]" />
+            </button>
+            <button
+              className="text-white p-2 focus:outline-none bg-transparent translate-y-[5%]"
               onClick={handleMobileToggle}
               aria-label="Toggle menu"
             >
@@ -449,57 +469,6 @@ export default function Navbar() {
                     animationTime={500}
                   />
                 </div>
-
-                <button
-                  onClick={() => {
-                    // Scroll to contact section
-                    const el = document.getElementById("contact");
-                    if (el) {
-                      const navbarHeight = 70;
-                      const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
-                      window.scrollTo({ top: y, behavior: "smooth" });
-                    }
-
-                    // Close mobile menu
-                    if (isMobileMenuOpen) {
-                      setIsClosing(true);
-                      setTimeout(() => {
-                        setIsMobileMenuOpen(false);
-                        setIsClosing(false);
-                      }, 350);
-                    }
-                  }}
-                  className="
-  px-8 py-3 text-lg font-semibold rounded-full relative overflow-hidden
-
-  /* 1 — solid fallback (always works) */
-  bg-[#4AB3FF]
-
-  /* 2 — browser-safe gradient (most browsers can handle this) */
-  bg-[linear-gradient(90deg,#4AB3FF,#2D99FF)]
-
-  /* 3 — your main vibrant gradient (Chrome quality) */
-  bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
-
-  shadow-[0_0_20px_rgba(0,102,255,0.5)]
-  active:scale-95 transition-transform duration-200
-"
-
-                >
-                  <span className="relative z-10">Let’s Connect</span>
-
-                  {/* Light sweep fallback-safe */}
-                  <span
-                    className="
-      absolute inset-0 bg-white/30 
-      animate-[lightSweep_3s_linear_infinite]
-
-      /* Disable transparency animation if browser cannot handle it */
-      supports-not-[backdrop-filter]:bg-white/10
-      supports-not-[animation]:hidden
-    "
-                  />
-                </button>
 
 
               </div>

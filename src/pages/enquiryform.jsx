@@ -6,7 +6,21 @@ export default function CombinedEnquiry3D() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ ok: null, msg: "" });
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [policyText, setPolicyText] = useState("");
+  const [checked, setChecked] = useState(false);
 
+  useEffect(() => {
+    if (showPrivacy) {
+      fetch("/privacy_policy.txt")
+        .then((res) => res.text())
+        .then((txt) => setPolicyText(txt));
+    }
+  }, [showPrivacy]);
+
+  const handleCheckboxChange = (e) => {
+    setChecked(e.target.checked);
+  };
   // ✅ NEW: State to track screen size for box sizing
   const [isMobile, setIsMobile] = useState(false);
 
@@ -71,6 +85,7 @@ export default function CombinedEnquiry3D() {
       bussinessname: form.get("bussinessname"),
       city: form.get("city"),
       product: selected,
+      privacyPolicy: checked ? "User has agreed" : "User has not agreed",
       message: form.get("message"),
     };
 
@@ -246,6 +261,36 @@ export default function CombinedEnquiry3D() {
               onBlur={handleBlur}
               required
             />
+            <div className="flex justify-center items-center">
+              <input type="checkbox" name="Privacy Policy" onClick={handleCheckboxChange} required />
+              <label htmlFor="Privacy Policy" className="ml-[1%] ">I agree to the <button type="button" onClick={() => setShowPrivacy(true)} className="hover:cursor-pointer hover:text-gray-400 text-underline">Privacy Policy</button></label>
+            </div>
+
+            {showPrivacy && (
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg shadow-xl overflow-y-auto max-h-[80vh]">
+
+                  {/* Header Row */}
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold">Privacy Policy</h2>
+
+                    <button
+                      onClick={() => setShowPrivacy(false)}
+                      className="fixed top z-10 sm:ml-[65%] ml-[60%] bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800"
+                    >
+                      Close
+                    </button>
+                  </div>
+
+                  {/* Content */}
+                  <pre className="whitespace-pre-wrap text-gray-800 mb-6">
+                    {policyText}
+                  </pre>
+
+                </div>
+              </div>
+
+            )}
 
             <button
               type="submit"
