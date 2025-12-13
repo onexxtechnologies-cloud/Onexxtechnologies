@@ -21,16 +21,15 @@ export default function CombinedEnquiry3D() {
   const handleCheckboxChange = (e) => {
     setChecked(e.target.checked);
   };
-  // ✅ NEW: State to track screen size for box sizing
+
   const [isMobile, setIsMobile] = useState(false);
 
   const dropdownRef = useRef(null);
   const products = ["Website Development", "3D Model", "Application Development", "Others"];
 
   useEffect(() => {
-    // Check if mobile on mount and resize
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile(); // Initial check
+    checkMobile();
 
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -113,9 +112,6 @@ export default function CombinedEnquiry3D() {
     }
   }
 
-  // ✅ CONFIG: Box Sizing Logic
-  // Mobile: 5 columns (approx 20% width) -> Bigger Boxes
-  // Desktop: 16 columns (approx 6.25% width) -> Smaller Boxes
   const columns = isMobile ? 5 : 16;
   const boxWidth = `calc(100% / ${columns} - 2px)`;
   const boxHeight = isMobile ? "calc(20vw - 2px)" : "calc(6.25vw - 2px)";
@@ -123,11 +119,7 @@ export default function CombinedEnquiry3D() {
   return (
     <div className="relative flex flex-col w-full items-center justify-center min-h-screen px-4 gap-8 py-10 overflow-hidden bg-black">
 
-      {/* ✅ MODIFIED: Changed 'sm:absolute' to 'absolute'. 
-          This forces the grid to be a background on Mobile too, fixing the centering issue. */}
       <div className="absolute inset-0 flex z-0 overflow-hidden flex-wrap gap-[2px]">
-
-        {/* The Flowing Blue Light Animation */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-[#00aaff] to-black animate-[rippleWave_6s_linear_infinite]" />
 
         {Array.from({ length: 260 }).map((_, i) => (
@@ -135,7 +127,7 @@ export default function CombinedEnquiry3D() {
             key={i}
             className="block transition-all duration-[1500ms]"
             style={{
-              width: boxWidth, // ✅ Using dynamic width based on screen size
+              width: boxWidth,
               height: boxHeight,
               background: "#0a0a0a",
               zIndex: 1,
@@ -163,7 +155,6 @@ export default function CombinedEnquiry3D() {
         }
       `}</style>
 
-      {/* ✅ FORM: Removed 'mt-[-10%]' to allow perfect centering via flexbox */}
       <div className="relative w-full max-w-lg z-10">
         <div className="relative rounded-xl p-7 bg-black/80 backdrop-blur-md shadow-2xl border border-white/5">
 
@@ -229,7 +220,7 @@ export default function CombinedEnquiry3D() {
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className={getFieldStyle("product") + " text-left"} // Added text-left for better alignment
+                className={getFieldStyle("product") + " text-left"}
               >
                 {selected || "Select Product"}
               </button>
@@ -261,35 +252,42 @@ export default function CombinedEnquiry3D() {
               onBlur={handleBlur}
               required
             />
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center text-white">
               <input type="checkbox" name="Privacy Policy" onClick={handleCheckboxChange} required />
               <label htmlFor="Privacy Policy" className="ml-[1%] ">I agree to the <button type="button" onClick={() => setShowPrivacy(true)} className="hover:cursor-pointer hover:text-gray-400 text-underline">Privacy Policy</button></label>
             </div>
 
             {showPrivacy && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg shadow-xl overflow-y-auto max-h-[80vh]">
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"><div className="bg-black/90 backdrop-blur-xl border border-white/20 p-6 rounded-xl w-[90%] max-w-lg shadow-2xl overflow-y-auto max-h-[80vh] text-white">
 
-                  {/* Header Row */}
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold">Privacy Policy</h2>
+                {/* Header Row */}
 
-                    <button
-                      onClick={() => setShowPrivacy(false)}
-                      className="fixed top z-10 sm:ml-[65%] ml-[60%] bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800"
-                    >
-                      Close
-                    </button>
-                  </div>
+                <div className="flex justify-between items-center mb-4">
 
-                  {/* Content */}
-                  <pre className="whitespace-pre-wrap text-gray-800 mb-6">
-                    {policyText}
-                  </pre>
+                  <h2 className="text-2xl font-bold">Privacy Policy</h2>
+
+
+
+                  <button
+
+                    onClick={() => setShowPrivacy(false)}
+
+                    className="fixed top z-10 sm:ml-[65%] ml-[60%] bg-white text-black px-3 py-1 rounded-md hover:bg-gray-300"
+
+                  >
+
+                    Close
+
+                  </button>
 
                 </div>
-              </div>
 
+                <pre className="whitespace-pre-wrap text-gray-300 mb-6 font-sans text-sm leading-relaxed">
+                  {policyText}
+                </pre>
+
+              </div>
+              </div>
             )}
 
             <button

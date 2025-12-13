@@ -131,29 +131,36 @@ const Footer = () => {
 
             {/* Popup Modal */}
             {showPrivacy && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg shadow-xl overflow-y-auto max-h-[80vh]">
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"><div className="bg-black/90 backdrop-blur-xl border border-white/20 p-6 rounded-xl w-[90%] max-w-lg shadow-2xl overflow-y-auto max-h-[80vh] text-white">
 
-                  {/* Header Row */}
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold">Privacy Policy</h2>
+                {/* Header Row */}
 
-                    <button
-                      onClick={() => setShowPrivacy(false)}
-                      className="bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800"
-                    >
-                      Close
-                    </button>
-                  </div>
+                <div className="flex justify-between items-center mb-4">
 
-                  {/* Content */}
-                  <pre className="whitespace-pre-wrap text-gray-800 mb-6">
-                    {policyText}
-                  </pre>
+                  <h2 className="text-2xl font-bold">Privacy Policy</h2>
+
+
+
+                  <button
+
+                    onClick={() => setShowPrivacy(false)}
+
+                    className="fixed top z-10 sm:ml-[65%] ml-[60%] bg-white text-black px-3 py-1 rounded-md hover:bg-gray-300"
+
+                  >
+
+                    Close
+
+                  </button>
 
                 </div>
-              </div>
 
+                <pre className="whitespace-pre-wrap text-gray-300 mb-6 font-sans text-sm leading-relaxed">
+                  {policyText}
+                </pre>
+
+              </div>
+              </div>
             )}
 
           </div>
