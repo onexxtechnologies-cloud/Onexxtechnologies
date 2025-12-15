@@ -16,6 +16,7 @@ import FAQs from "./pages/faq.jsx";
 import CloseHalfMoon from "./pages/closehalfmoon.jsx";
 import CenteredEnquiryForm from "./pages/enquiryform.jsx";
 import Footer from "./pages/footer.jsx";
+import Overview from "./pages/overview.jsx";
 
 // --------------------------------------------------
 // 🔥 Improved Scroll + Refresh Handler
@@ -146,8 +147,9 @@ function AppContent({ forceDesktopView }) {
       <div className={forceDesktopView ? "relative mt-2" : "relative sm:mt-[-35%] mt-[-150%]"}>
         <UltimateBlueHorizon />
       </div>
+      <div className="mt-[-40%] "><Overview /></div>
 
-      <div id="about" className={forceDesktopView ? "mt-2" : "mt-[-60%] sm:mt-[-60%]"}>
+      <div id="about" className="mt-[-20%] sm:mt-[-0%]">
         <OpenCloseScroll />
       </div>
 
