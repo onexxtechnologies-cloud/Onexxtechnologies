@@ -8,6 +8,7 @@ import {
   useAnimationFrame,
 } from "framer-motion";
 import { DollarSign, CheckCircle2, Headphones, Cpu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // ---------------------------------------------------------
 // 📦 DATA
@@ -48,6 +49,7 @@ const RADIUS = 3000;      // Curve radius (higher = flatter)
 const SPEED = 0.5;        // Speed of rotation (pixels per frame)
 
 const ScrollingBlueNeon = () => {
+  const navigate = useNavigate();
   // This value drives the whole animation
   const baseX = useMotionValue(0);
 
@@ -114,6 +116,7 @@ const ScrollingBlueNeon = () => {
             baseX={baseX}
             card={card}
             totalItems={cards.length}
+            onShowWork={() => navigate('/portfolio')}
           />
         ))}
       </motion.div>
@@ -127,7 +130,7 @@ export default ScrollingBlueNeon;
 // ---------------------------------------------------------
 // 🎡 The Physics Card Component
 // ---------------------------------------------------------
-const LoopingCard = ({ index, baseX, card, totalItems }) => {
+const LoopingCard = ({ index, baseX, card, totalItems, onShowWork }) => {
   const x = useTransform(baseX, (v) => {
     // 1. Calculate offset based on index
     const offset = index * ITEM_SIZE;
@@ -182,7 +185,7 @@ const LoopingCard = ({ index, baseX, card, totalItems }) => {
       }}
       className="will-change-transform"
     >
-      <NeonCard card={card} />
+      <NeonCard card={card} onShowWork={onShowWork} />
     </motion.div>
   );
 };
@@ -191,7 +194,7 @@ const LoopingCard = ({ index, baseX, card, totalItems }) => {
 // ----------------------------
 // ✨ Card Design
 // ----------------------------
-const NeonCard = ({ card }) => {
+const NeonCard = ({ card, onShowWork }) => {
   return (
     <div
       className="
@@ -227,7 +230,19 @@ const NeonCard = ({ card }) => {
       </div>
 
       {/* Bottom accent line */}
-      <div className="w-12 h-1 bg-blue-500 rounded-full mt-4 z-10" />
+      <div className="flex items-center justify-between mt-4 z-10">
+        <div className="w-12 h-1 bg-blue-500 rounded-full" />
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onShowWork();
+          }}
+          className="text-xs font-bold uppercase tracking-widest text-blue-400 hover:text-white transition-colors flex items-center gap-1 relative group overflow-hidden px-2 py-1"
+        >
+          <span className="relative z-10">Show My Work →</span>
+          <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:animate-[lightSweep_1s_ease-in-out_infinite]" />
+        </button>
+      </div>
     </div>
   );
 };

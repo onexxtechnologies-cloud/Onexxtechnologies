@@ -109,7 +109,7 @@ void main() {
 }
 `;
 
-export default function AuroraBackground({ colorStops = ['#3A29FF', '#FF94B4', '#FF3232'], amplitude = 1.0, blend = 0.5, speed = 0.5, children }) {
+export default function AuroraBackground({ colorStops = ['#3A29FF', '#FF94B4', '#FF3232'], amplitude = 1.0, blend = 0.5, speed = 0.5, height = '80vh', children }) {
   const containerRef = useRef(null);
   const propsRef = useRef({ colorStops, amplitude, blend, speed });
   propsRef.current = { colorStops, amplitude, blend, speed };
@@ -183,7 +183,7 @@ export default function AuroraBackground({ colorStops = ['#3A29FF', '#FF94B4', '
   }, [amplitude, blend, colorStops, speed]);
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '80vh', overflow: 'hidden' }}>
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: height, overflow: 'hidden' }}>
       {children && <div style={{ position: 'relative', zIndex: 10 }}>{children}</div>}
       {/* Wavy bottom overlay */}
       <div style={{

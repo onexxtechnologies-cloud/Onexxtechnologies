@@ -3,10 +3,11 @@ import OnexxLogo from "../assets/ONEXX.png";
 
 // Shared items array
 const DEFAULT_ITEMS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "FaQs", href: "#faq" },
+  { label: "Home", href: "/#home" },
+  { label: "About", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Showcase", href: "/portfolio" },
+  { label: "FaQs", href: "/#faq" },
 ];
 
 const GooeyNav = ({
@@ -263,12 +264,23 @@ const GooeyNav = ({
 };
 
 // MAIN NAVBAR COMPONENT
+import { useNavigate, useLocation } from "react-router-dom";
+
 export default function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [activeNavIndex, setActiveNavIndex] = useState(0);
   const items = DEFAULT_ITEMS;
+
+  // Track active index based on route
+  useEffect(() => {
+    if (location.pathname === "/portfolio") {
+      setActiveNavIndex(3); // Index of Showcase
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScrollFlag = () => setIsScrolled(window.scrollY > 40);
@@ -309,20 +321,26 @@ export default function Navbar() {
     });
 
     return () => observer.disconnect();
-  }, [items]);
+  }, [items, location.pathname]);
 
   const handleNavItemClick = (index) => {
-    setActiveNavIndex(index);
     const targetHref = items[index].href;
 
-    // Smooth scroll logic
-    if (targetHref) {
-      const id = targetHref.replace("#", "");
-      const el = document.getElementById(id);
-      if (el) {
-        const navbarHeight = 70;
-        const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
-        window.scrollTo({ top: y, behavior: "smooth" });
+    if (targetHref.startsWith("/") && !targetHref.includes("#")) {
+      setActiveNavIndex(index);
+      navigate(targetHref);
+    } else {
+      const id = targetHref.split("#")[1];
+
+      if (location.pathname !== "/") {
+        navigate(targetHref);
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          const navbarHeight = 70;
+          const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
       }
     }
 
