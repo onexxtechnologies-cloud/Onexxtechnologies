@@ -17,6 +17,7 @@ import CloseHalfMoon from "./pages/closehalfmoon.jsx";
 import CenteredEnquiryForm from "./pages/enquiryform.jsx";
 import Footer from "./pages/footer.jsx";
 import Overview from "./pages/overview.jsx";
+import Portfolio from "./pages/Portfolio.jsx";
 
 // --------------------------------------------------
 // 🔥 Improved Scroll + Refresh Handler
@@ -138,18 +139,19 @@ function AppContent({ forceDesktopView }) {
         </script>
       </Helmet>
 
-      <Navbar />
-
-      <div id="home" className={forceDesktopView ? "pt-0 mt-1" : "pt-0"}>
+      <div id="home">
         <HeroSection />
       </div>
 
-      <div className={forceDesktopView ? "relative mt-2" : "relative sm:mt-[-35%] mt-[-150%]"}>
+      <div className="relative -mt-32 md:-mt-48 z-10">
         <UltimateBlueHorizon />
       </div>
-      <div className="mt-[-40%] "><Overview /></div>
 
-      <div id="about" className="mt-[-20%] sm:mt-[-0%]">
+      <div className="-mt-16 md:-mt-24 relative z-20">
+        <Overview />
+      </div>
+
+      <div id="about" className="relative z-30">
         <OpenCloseScroll />
       </div>
 
@@ -180,8 +182,6 @@ function AppContent({ forceDesktopView }) {
       >
         <CenteredEnquiryForm />
       </div>
-
-      <Footer />
     </>
   );
 }
@@ -215,9 +215,12 @@ export default function App() {
     >
       <Router>
         <ScrollToHash />
+        <Navbar />
         <Routes>
+          <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/*" element={<AppContent forceDesktopView={forceDesktopView} />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

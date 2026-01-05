@@ -148,50 +148,47 @@ const AiVoiceAssistant = () => {
             <div className="relative z-10 flex min-h-screen w-full items-center justify-center px-4 md:px-8 py-12">
                 <div className="max-w-6xl w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-14 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start">
-
-                        <div className="md:col-span-4">
-                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-                                Company<br />Overview
-                            </h2>
-                        </div>
-
-                        <div className="md:col-span-8 flex flex-col gap-5 md:gap-6">
-                            <p className="text-base md:text-xl text-white/80 leading-relaxed">
-                                Onexx Technologies is an innovative tech startup delivering modern digital solutions.
-                                We specialize in building high-performance websites, custom software, mobile applications,
-                                and immersive 3D models tailored to business needs.
-                            </p>
-
-                            <p className="text-base md:text-xl text-white/80 leading-relaxed">
-                                Our focus is on combining clean design with scalable technology to help brands grow digitally.
-                                We enhance efficiency, creativity, and user experience across all our projects, ensuring
-                                future-ready and reliable solutions from concept to deployment.
-                            </p>
-
-                            <p className="text-base md:text-xl text-white/80 leading-relaxed">
-                                Our portfolio includes real-world projects like New Ganesh Seeds, showcased in our
-                                <span className="font-medium text-white"> Show My Work </span> section.
-                                At Onexx Technologies, innovation meets execution — we build exactly what clients need and want.
-                            </p>
-
-                            <div className="mt-4">
-                                <a href="#services">
-                                    <button className="
-                                        px-6 py-3 md:px-8 md:py-4
-                                        bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
-                                        hover:from-[#1E6BFF] hover:to-[#4AB3FF]
-                                        rounded-xl font-semibold text-base md:text-lg
-                                        transition-all duration-300 ease-out
-                                        shadow-lg shadow-blue-600/30
-                                    ">
-                                        Learn More
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-
+                    <div className="text-center mb-10 md:mb-16">
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+                            Company Overview
+                        </h2>
                     </div>
+
+                    <div className="flex flex-col gap-5 md:gap-6 max-w-4xl mx-auto">
+                        <p className="text-base md:text-xl text-white/80 leading-relaxed text-center md:text-left">
+                            Onexx Technologies is an innovative tech startup delivering modern digital solutions.
+                            We specialize in building high-performance websites, custom software, mobile applications,
+                            and immersive 3D models tailored to business needs.
+                        </p>
+
+                        <p className="text-base md:text-xl text-white/80 leading-relaxed text-center md:text-left">
+                            Our focus is on combining clean design with scalable technology to help brands grow digitally.
+                            We enhance efficiency, creativity, and user experience across all our projects, ensuring
+                            future-ready and reliable solutions from concept to deployment.
+                        </p>
+
+                        <p className="text-base md:text-xl text-white/80 leading-relaxed text-center md:text-left">
+                            Our portfolio includes real-world projects like New Ganesh Seeds and Shiv Enterprises, showcased in our
+                            <span className="font-medium text-white"> Show My Work </span> section.
+                            At Onexx Technologies, innovation meets execution — we build exactly what clients need and want.
+                        </p>
+
+                        <div className="mt-6 flex justify-center">
+                            <a href="#services">
+                                <button className="
+                                    px-6 py-3 md:px-8 md:py-4
+                                    bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
+                                    hover:from-[#1E6BFF] hover:to-[#4AB3FF]
+                                    rounded-xl font-semibold text-base md:text-lg
+                                    transition-all duration-300 ease-out
+                                    shadow-lg shadow-blue-600/30
+                                ">
+                                    Learn More
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

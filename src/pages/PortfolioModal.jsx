@@ -32,6 +32,13 @@ const PortfolioModal = ({ isOpen, onClose }) => {
         "A comprehensive agriculture business website built with modern UI and intuitive navigation.",
       tags: ["Web Design", "React", "Live Project"],
     },
+    {
+      title: "Shiv Enterprises",
+      url: "https://shiventerprises.org.in",
+      description:
+        "A professional business platform designed for Shiv Enterprises, featuring high-performance design and seamless navigation.",
+      tags: ["Web Design", "React", "Live Project"],
+    },
   ];
 
   // 3D Model Data

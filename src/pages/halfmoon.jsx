@@ -90,7 +90,7 @@ const UltimateBlueHorizon = () => {
   };
 
   return (
-    <div className="relative w-full h-[180vh] md:h-[250vh] bg-black overflow-hidden flex flex-col items-center pt-24 md:pt-20 sm:mt-0 mt-[-40vh]">
+    <div className="relative w-full min-h-screen md:h-[130vh] bg-black overflow-hidden flex flex-col items-center pt-24 md:pt-20">
 
       {/* Static nebula glows */}
       <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[90vw] h-[10vh] blur-[150px] rounded-full mix-blend-screen" />
@@ -126,16 +126,16 @@ const UltimateBlueHorizon = () => {
       </motion.div>
 
       {/* Planet horizon */}
-      <div className="absolute top-[14vh] sm:top-[27vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] bg-black shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)] border-t border-blue-500/30 mt-40" />
-      <div className="absolute top-[14vh] sm:top-[27vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] shadow-[0_0_200px_rgba(59,130,246,0.85)] pointer-events-none mt-40" />
-      <div className="absolute top-[14vh] sm:top-[27vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] border-t-[8px] border-blue-100/90 blur-[1.5px] shadow-[0_0_60px_rgba(96,165,250,0.95)] pointer-events-none mt-40" />
+      <div className="absolute top-[35vh] sm:top-[40vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] bg-black shadow-[inset_0_80px_400px_rgba(59,130,246,0.85)] border-t border-blue-500/30" />
+      <div className="absolute top-[35vh] sm:top-[40vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] shadow-[0_0_200px_rgba(59,130,246,0.85)] pointer-events-none" />
+      <div className="absolute top-[35vh] sm:top-[40vh] w-[2000px] md:w-[185vw] h-[2000px] md:h-[185vw] rounded-[50%] border-t-[8px] border-blue-100/90 blur-[1.5px] shadow-[0_0_60px_rgba(96,165,250,0.95)] pointer-events-none" />
 
       {/* Feature cards */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0, y: 50 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 50 }}
-        className="relative z-30 w-[90%] max-w-6xl grid gap-6 mt-[35vh]"
+        className="relative z-30 w-[90%] max-w-6xl grid gap-6 mt-[25vh] md:mt-[30vh]"
       >
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
 
@@ -180,10 +180,10 @@ const UltimateBlueHorizon = () => {
             We transform ideas into impactful digital solutions that empower your brand to rise above the ordinary.
           </p>
           <motion.button
-          onClick={() => {
-                const el = document.getElementById("services");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-              }}
+            onClick={() => {
+              const el = document.getElementById("services");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="mt-[-5%%] sm:mt-0 flex items-center gap-3 text-white font-semibold relative z-[999]"

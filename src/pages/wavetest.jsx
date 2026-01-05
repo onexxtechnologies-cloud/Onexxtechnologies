@@ -17,14 +17,18 @@ function generateWavePath(amplitude, wavelength, heightOffset) {
   return path;
 }
 
-export default function NeonWaveLight() {
+export default function NeonWaveLight({ bgTransparent = false, noMargin = false, height = "860px", svgTop = "-100px" }) {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
 
   return (
     // Increased container height for larger viewport
-    <div className="relative w-full h-[860px] overflow-hidden bg-black -mt-80 -mb-80">
+    <div
+      className={`relative w-full overflow-hidden ${bgTransparent ? 'bg-transparent' : 'bg-black'} ${noMargin ? '' : '-mt-80 -mb-80'}`}
+      style={{ height }}
+    >
       <svg
-        className="absolute top-0 left-0 w-[300%] h-[500px] -mt-20"
+        className="absolute left-0 w-[300%] h-[500px]"
+        style={{ top: svgTop }}
         viewBox="0 0 8000 500"
         preserveAspectRatio="none"
       >
