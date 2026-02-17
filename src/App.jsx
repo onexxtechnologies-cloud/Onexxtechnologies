@@ -18,6 +18,7 @@ import CenteredEnquiryForm from "./pages/enquiryform.jsx";
 import Footer from "./pages/footer.jsx";
 import Overview from "./pages/overview.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
+import ContactPage from "./pages/ContactPage.jsx";
 
 // --------------------------------------------------
 // 🔥 Improved Scroll + Refresh Handler
@@ -172,16 +173,7 @@ function AppContent({ forceDesktopView }) {
         <CloseHalfMoon />
       </div>
 
-      <div
-        id="contact"
-        className={
-          forceDesktopView
-            ? "mt-2 flex flex-col"
-            : "sm:mt-[-5%] mt-[-20%] flex flex-col sm:flex-row justify-centre"
-        }
-      >
-        <CenteredEnquiryForm />
-      </div>
+
     </>
   );
 }
@@ -218,6 +210,7 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/*" element={<AppContent forceDesktopView={forceDesktopView} />} />
         </Routes>
         <Footer />

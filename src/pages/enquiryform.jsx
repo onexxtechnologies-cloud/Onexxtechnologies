@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 
 export default function CombinedEnquiry3D() {
@@ -22,42 +23,29 @@ export default function CombinedEnquiry3D() {
     setChecked(e.target.checked);
   };
 
-  const [isMobile, setIsMobile] = useState(false);
-
   const dropdownRef = useRef(null);
   const products = ["Website Development", "3D Model", "Application Development", "Others"];
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false);
       }
     };
-
-    window.addEventListener("resize", checkMobile);
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Premium Field Style
   const baseFieldStyle =
-    "w-full rounded-lg px-3 py-2 text-sm transition-colors duration-200 focus:outline-none text-white placeholder:text-gray-500 border border-white/10";
-
-  const handleFocus = (fieldName) => setFocusedField(fieldName);
-  const handleBlur = () => setFocusedField(null);
+    "w-full rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 outline-none text-white placeholder:text-gray-500 border border-white/10 bg-white/5 hover:bg-white/10 [&:not(:placeholder-shown)]:bg-white [&:not(:placeholder-shown)]:text-black [&:not(:placeholder-shown)]:border-white";
 
   const getFieldStyle = (fieldName) => {
     const isFocused = focusedField === fieldName;
     const isDropdownAndOpen = fieldName === "product" && dropdownOpen;
     return `${baseFieldStyle} ${isFocused || isDropdownAndOpen
-      ? "bg-white/20 border-cyan-400/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
-      : "bg-white/5"
+      ? "bg-white/10 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.15)] translate-y-[-1px] text-white"
+      : ""
       }`;
   };
 
@@ -102,6 +90,7 @@ export default function CombinedEnquiry3D() {
         setStatus({ ok: true, msg: "Enquiry sent successfully!" });
         e.target.reset();
         setSelected("");
+        setChecked(false);
       } else {
         setStatus({ ok: false, msg: "Failed. Try again later." });
       }
@@ -112,205 +101,220 @@ export default function CombinedEnquiry3D() {
     }
   }
 
-  const columns = isMobile ? 5 : 16;
-  const boxWidth = `calc(100% / ${columns} - 2px)`;
-  const boxHeight = isMobile ? "calc(20vw - 2px)" : "calc(6.25vw - 2px)";
-
   return (
-    <div className="relative flex flex-col w-full items-center justify-center min-h-screen px-4 gap-8 py-10 overflow-hidden bg-black">
+    <div className="w-full h-full flex justify-center items-center p-2 sm:p-4">
+      <div className="relative w-full max-w-2xl z-10">
+        {/* Glass Container */}
+        <div className="relative rounded-2xl p-6 sm:p-10 bg-[#0a0a0a]/60 backdrop-blur-xl border border-white/10 shadow-2xl">
 
-      <div className="absolute inset-0 flex z-0 overflow-hidden flex-wrap gap-[2px]">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-[#00aaff] to-black animate-[rippleWave_6s_linear_infinite]" />
-
-        {Array.from({ length: 260 }).map((_, i) => (
-          <span
-            key={i}
-            className="block transition-all duration-[1500ms]"
-            style={{
-              width: boxWidth,
-              height: boxHeight,
-              background: "#0a0a0a",
-              zIndex: 1,
-            }}
-            onMouseEnter={(e) => {
-              if (!isMobile) {
-                e.currentTarget.style.background = "#00aaff";
-                e.currentTarget.style.boxShadow = "0 0 15px #00aaff, 0 0 30px #00aaff";
-                e.currentTarget.style.transition = "0s";
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#0a0a0a";
-              e.currentTarget.style.boxShadow = "none";
-              e.currentTarget.style.transition = "1.5s";
-            }}
-          />
-        ))}
-      </div>
-
-      <style>{`
-        @keyframes rippleWave {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100%); }
-        }
-      `}</style>
-
-      <div className="relative w-full max-w-lg z-10">
-        <div className="relative rounded-xl p-7 bg-black/80 backdrop-blur-md shadow-2xl border border-white/5">
-
-          <div className="absolute top-0 left-0 right-0 flex flex-col items-center pointer-events-none ">
-            <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent"></div>
-            <div className="absolute top-[2px] w-[60%] h-[14px] bg-[#3B82F6] blur-[23px] rounded-full"></div>
-            <div className="w-[100%] h-[380px] bg-gradient-to-b from-[#3B82F6]/60 to-transparent blur-[80px] mt-6 transition-all duration-700"></div>
+          {/* Header */}
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-gray-400 mb-2">
+              Start Project
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Fill out the form below and we will get back to you shortly.
+            </p>
           </div>
 
-          <h2 className="text-2xl font-bold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400">
-            Enquiry Form
-          </h2>
-
-          <form className="space-y-3" onSubmit={handleSubmit} autoComplete="off">
+          <form className="space-y-5" onSubmit={handleSubmit} autoComplete="off">
             <input name="website" type="text" className="hidden" />
 
-            <input
-              name="name"
-              placeholder="Name"
-              className={getFieldStyle("name")}
-              onFocus={() => handleFocus("name")}
-              onBlur={handleBlur}
-              required
-            />
+            {/* Row 1: Name & Phone */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="relative group">
+                <input
+                  name="name"
+                  placeholder="Name"
+                  className={getFieldStyle("name")}
+                  onFocus={() => setFocusedField("name")}
+                  onBlur={() => setFocusedField(null)}
+                  required
+                />
+              </div>
+              <div className="relative group">
+                <input
+                  name="phone"
+                  placeholder="Mobile Number"
+                  className={getFieldStyle("phone")}
+                  onFocus={() => setFocusedField("phone")}
+                  onBlur={() => setFocusedField(null)}
+                  required
+                />
+              </div>
+            </div>
 
-            <input
-              name="phone"
-              placeholder="Mobile"
-              className={getFieldStyle("phone")}
-              onFocus={() => handleFocus("phone")}
-              onBlur={handleBlur}
-              required
-            />
+            {/* Row 2: Email & City */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="relative group">
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
+                  className={getFieldStyle("email")}
+                  onFocus={() => setFocusedField("email")}
+                  onBlur={() => setFocusedField(null)}
+                  required
+                />
+              </div>
+              <div className="relative group">
+                <input
+                  name="city"
+                  placeholder="City"
+                  className={getFieldStyle("city")}
+                  onFocus={() => setFocusedField("city")}
+                  onBlur={() => setFocusedField(null)}
+                  required
+                />
+              </div>
+            </div>
 
-            <input
-              name="email"
-              placeholder="Email"
-              className={getFieldStyle("email")}
-              onFocus={() => handleFocus("email")}
-              onBlur={handleBlur}
-              required
-            />
-
-            <input
-              name="city"
-              placeholder="City"
-              className={getFieldStyle("city")}
-              onFocus={() => handleFocus("city")}
-              onBlur={handleBlur}
-              required
-            />
-
+            {/* Business Name */}
             <input
               name="bussinessname"
-              placeholder="Your Bussiness Type"
+              placeholder="Business Name / Company"
               className={getFieldStyle("bussinessname")}
-              onFocus={() => handleFocus("bussinessname")}
-              onBlur={handleBlur}
+              onFocus={() => setFocusedField("bussinessname")}
+              onBlur={() => setFocusedField(null)}
               required
             />
 
+            {/* Product Selection */}
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className={getFieldStyle("product") + " text-left"}
+                className={`${getFieldStyle("product")} text-left flex justify-between items-center ${selected && !dropdownOpen ? "bg-white text-black border-white" : ""
+                  }`}
               >
-                {selected || "Select Product"}
+                <span className={selected && !dropdownOpen ? "text-black" : selected ? "text-white" : "text-gray-500"}>
+                  {selected || "Select Service"}
+                </span>
+                <svg
+                  className={`w-4 h-4 transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-cyan-400" : selected ? "text-black" : "text-gray-400"}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
 
               {dropdownOpen && (
-                <ul className="absolute w-full mt-1 bg-[#0a192f] text-white border border-cyan-500/30 rounded-lg shadow-xl z-50">
+                <div className="absolute w-full mt-2 bg-[#1a1a20] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
                   {products.map((p, idx) => (
-                    <li
+                    <div
                       key={idx}
                       onClick={() => {
                         setSelected(p);
                         setDropdownOpen(false);
                       }}
-                      className="px-4 py-2 hover:bg-cyan-900/50 cursor-pointer text-xs"
+                      className="px-4 py-3 hover:bg-cyan-500/10 hover:text-cyan-400 cursor-pointer text-sm transition-colors border-b border-white/5 last:border-0"
                     >
                       {p}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
 
+            {/* Message Area */}
             <textarea
               name="message"
-              rows="2"
-              placeholder="Message"
+              rows="3"
+              placeholder="Tell us about your project..."
               className={getFieldStyle("message")}
-              onFocus={() => handleFocus("message")}
-              onBlur={handleBlur}
+              onFocus={() => setFocusedField("message")}
+              onBlur={() => setFocusedField(null)}
               required
             />
-            <div className="flex justify-center items-center text-white">
-              <input type="checkbox" name="Privacy Policy" onClick={handleCheckboxChange} required />
-              <label htmlFor="Privacy Policy" className="ml-[1%] ">I agree to the <button type="button" onClick={() => setShowPrivacy(true)} className="hover:cursor-pointer hover:text-gray-400 text-underline">Privacy Policy</button></label>
+
+            {/* Privacy Policy Checkbox */}
+            <div className="flex items-start gap-3 mt-2">
+              <div className="relative flex items-center">
+                <input
+                  type="checkbox"
+                  id="privacy"
+                  checked={checked}
+                  onChange={handleCheckboxChange}
+                  required
+                  className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/20 bg-white/5 transition-all checked:border-cyan-500 checked:bg-cyan-500 hover:border-white/40"
+                />
+                <svg
+                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <label htmlFor="privacy" className="text-xs text-gray-400 cursor-pointer select-none pt-0.5">
+                I agree to the <button type="button" onClick={() => setShowPrivacy(true)} className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2">Privacy Policy</button>
+              </label>
             </div>
 
+            {/* Privacy Modal */}
             {showPrivacy && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"><div className="bg-black/90 backdrop-blur-xl border border-white/20 p-6 rounded-xl w-[90%] max-w-lg shadow-2xl overflow-y-auto max-h-[80vh] text-white">
-
-                {/* Header Row */}
-
-                <div className="flex justify-between items-center mb-4">
-
-                  <h2 className="text-2xl font-bold">Privacy Policy</h2>
-
-
-
-                  <button
-
-                    onClick={() => setShowPrivacy(false)}
-
-                    className="fixed top z-10 sm:ml-[65%] ml-[60%] bg-white text-black px-3 py-1 rounded-md hover:bg-gray-300"
-
-                  >
-
-                    Close
-
-                  </button>
-
+              <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+                <div className="bg-[#111] border border-white/10 p-6 md:p-8 rounded-2xl w-full max-w-lg shadow-2xl relative animate-in zoom-in-95 duration-200">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-bold text-white">Privacy Policy</h2>
+                    <button
+                      onClick={() => setShowPrivacy(false)}
+                      className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                  </div>
+                  <div className="max-h-[60vh] overflow-y-auto pr-2 custom-scroll">
+                    <pre className="whitespace-pre-wrap text-gray-400 font-sans text-sm leading-relaxed">
+                      {policyText || "Loading policy..."}
+                    </pre>
+                  </div>
                 </div>
-
-                <pre className="whitespace-pre-wrap text-gray-300 mb-6 font-sans text-sm leading-relaxed">
-                  {policyText}
-                </pre>
-
-              </div>
               </div>
             )}
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-sm hover:opacity-90 transition-opacity"
+              className="group relative w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-[length:200%_100%] text-white font-bold tracking-wide hover:bg-right transition-[background-position] duration-500 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
             >
-              {loading ? "Sending..." : "Submit Enquiry"}
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    SUBMIT ENQUIRY
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </>
+                )}
+              </span>
             </button>
           </form>
 
-          <div className="absolute left-0 right-0 flex flex-col items-center justify-center opacity-90 mt-4">
-            <div className="absolute bottom-[-2px] w-1/2 h-[4px] bg-[#4AB3FF] blur-[10px] rounded-full"></div>
-            <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#4AB3FF] to-transparent"></div>
-          </div>
         </div>
       </div>
 
       {status.msg && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black/80 z-[100]">
-          <div className="bg-[#0a192f] p-6 rounded-xl text-center border border-white/10 mx-4">
-            <p className={status.ok ? "text-cyan-400" : "text-red-400"}>{status.msg}</p>
-            <button onClick={() => setStatus({ ok: null, msg: "" })} className="mt-4 px-6 py-2 bg-cyan-700 text-white rounded-lg">
+        <div className="fixed inset-0 flex justify-center items-center bg-black/80 z-[200] backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-[#1a1a20] p-8 rounded-2xl text-center border border-white/10 mx-4 max-w-sm shadow-2xl">
+            <div className={`mb-4 inline-flex p-3 rounded-full ${status.ok ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
+              {status.ok ? (
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              ) : (
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              )}
+            </div>
+            <h3 className={`text-xl font-bold mb-2 ${status.ok ? "text-white" : "text-white"}`}>{status.ok ? "Success!" : "Error"}</h3>
+            <p className="text-gray-400 mb-6">{status.msg}</p>
+            <button onClick={() => setStatus({ ok: null, msg: "" })} className="w-full px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors font-medium">
               Close
             </button>
           </div>

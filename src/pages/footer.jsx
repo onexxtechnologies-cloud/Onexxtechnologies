@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 const Footer = () => {
   // Navigation items configuration
   const navLinks = [
-    { name: 'Home', id: 'home' },
-    { name: 'About', id: 'about' },
-    { name: 'Services', id: 'services' },
-    { name: 'Contact', id: 'contact' },
-    { name: 'FAQ', id: 'faq' },
+    { name: 'Home', href: '/#home' },
+    { name: 'About', href: '/#about' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'FAQ', href: '/#faq' },
   ];
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [policyText, setPolicyText] = useState("");
@@ -66,6 +66,7 @@ const Footer = () => {
             className="absolute text-[25vw] md:text-[20vw] font-black tracking-[0.05em] text-transparent select-none z-12"
             style={{
               WebkitTextStroke: '2px rgba(0,180,255,1)',
+              filter: 'blur(24px)',
             }}
           >
             ONEXX
@@ -104,7 +105,7 @@ const Footer = () => {
           {navLinks.map((link) => (
             <Link
               key={link.name}
-              to={`/#${link.id}`}
+              to={link.href}
               className="text-sm md:text-base font-medium text-gray-300 hover:text-white transition-colors uppercase tracking-wide py-2"
             >
               {link.name}

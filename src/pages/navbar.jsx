@@ -420,14 +420,7 @@ export default function Navbar() {
 
           {/* DESKTOP BUTTON */}
           <button
-            onClick={() => {
-              const el = document.getElementById("contact");
-              if (el) {
-                const navbarHeight = 70;
-                const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
-                window.scrollTo({ top: y, behavior: "smooth" });
-              }
-            }}
+            onClick={() => navigate("/contact")}
             className="desktop-only px-5 md:px-6 py-6 rounded-full font-semibold text-white text-sm md:text-base bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF] shadow-[0_0_20px_rgba(0,102,255,0.35)] hover:shadow-[0_0_30px_rgba(80,150,255,0.9)] transition whitespace-nowrap overflow-hidden relative group"
           >
             <span className="relative z-10">LET'S CONNECT</span>
@@ -438,14 +431,7 @@ export default function Navbar() {
           {/* MOBILE HAMBURGER */}
           <div className="mobile-only flex items-center ml-auto gap-3">
             <button
-              onClick={() => {
-                const el = document.getElementById("contact");
-                if (el) {
-                  const navbarHeight = 70;
-                  const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
-                  window.scrollTo({ top: y, behavior: "smooth" });
-                }
-              }}
+              onClick={() => navigate("/contact")}
               className="
                 px-3 py-2 items-center rounded-full font-semibold text-white text-[10px] sm:text-xs
                 bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
