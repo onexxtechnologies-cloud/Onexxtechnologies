@@ -371,11 +371,15 @@ export default function Navbar() {
       <style>
         {`
           .desktop-only { display: none !important; }
-          .mobile-only { display: block !important; }
+          .mobile-only { display: flex !important; }
           @media (min-width: 900px) { .desktop-only { display: flex !important; } .mobile-only { display: none !important; } }
           @keyframes fadeDown { 0%{opacity:0;transform:translateY(-20px)} 100%{opacity:1;transform:translateY(0);} }
           @keyframes fadeUp { 0%{opacity:1;transform:translateY(0);} 100%{opacity:0;transform:translateY(-20px);} }
           @keyframes lightSweep { 0% { transform: translateX(-100%) skewX(-15deg); } 100% { transform: translateX(200%) skewX(-15deg); } }
+          @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+          @keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+          @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
         `}
       </style>
 
@@ -388,7 +392,7 @@ export default function Navbar() {
             transition-all duration-500
             shadow-[0_0_25px_rgba(0,0,0,0.1)]
             hover:shadow-[0_0_35px_rgba(0,0,0,0.15)]
-            ${isScrolled ? "w-[90%] md:w-[90%] lg:w-[90%] mx-auto" : "w-[85%] md:w-[85%] lg:w-[75%] mx-auto"}
+            ${isScrolled ? "w-[95%] md:w-[90%] lg:w-[90%] mx-auto" : "w-[95%] md:w-[90%] lg:w-[75%] mx-auto"}
           `}
           style={{
             background: "linear-gradient(135deg, rgba(30,30,40,0.75) 0%, rgba(60,60,70,0.65) 50%, rgba(100,100,110,0.55) 100%)",
@@ -397,9 +401,9 @@ export default function Navbar() {
             border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
-          <a href="#home" className="flex items-center ">
-            <img src={OnexxLogo} className="h-10 w-10 sm:mb-0 mb-[5%] object-contain" alt="Onexx Home" />
-            <div className="text-white text-lg sm:mt-0 mt-[2%] md:text-2xl font-bold tracking-[0.15em] uppercase leading-tight">
+          <a href="#home" className="flex items-center gap-2">
+            <img src={OnexxLogo} className="h-8 w-8 sm:h-10 sm:w-10 object-contain" alt="Onexx Home" />
+            <div className="text-white text-base sm:text-lg md:text-2xl font-bold tracking-[0.15em] uppercase leading-tight">
               ONEXX
             </div>
 
@@ -443,18 +447,18 @@ export default function Navbar() {
                 }
               }}
               className="
-                px-4 py-2 items-center rounded-full font-semibold text-white text-xs
+                px-3 py-2 items-center rounded-full font-semibold text-white text-[10px] sm:text-xs
                 bg-gradient-to-r from-[#4AB3FF] to-[#1E6BFF]
                 shadow-[0_0_15px_rgba(0,102,255,0.35)]
                 active:scale-95 transition-transform duration-200
-                whitespace-nowrap overflow-hidden relative group translate-y-[-25%]
+                whitespace-nowrap overflow-hidden relative group
               "
             >
               <span className="relative z-10">Let’s Connect</span>
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:animate-[lightSweep_1s_ease-in-out_infinite]" />
             </button>
             <button
-              className="text-white p-2 focus:outline-none bg-transparent translate-y-[5%]"
+              className="text-white p-2 focus:outline-none bg-transparent"
               onClick={handleMobileToggle}
               aria-label="Toggle menu"
             >
@@ -466,17 +470,32 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* MOBILE MENU */}
+          {/* MOBILE SIDE DRAWER */}
           {(isMobileMenuOpen || isClosing) && (
-            <div
-              className="absolute top-full left-0 w-full z-[999] flex justify-center pt-2"
-              style={{ animation: `${isClosing ? "fadeUp" : "fadeDown"} 0.35s ease-out forwards` }}
-            >
+            <>
+              {/* BACKDROP */}
               <div
-                className="relative flex flex-col items-center justify-center text-center py-8 space-y-6 text-white w-[calc(100%-32px)] max-w-[400px]
-                backdrop-blur-[80px] saturate-[150%] border border-white/20 rounded-2xl shadow-2xl overflow-hidden"
-                style={{ background: "linear-gradient(135deg, rgba(30,35,45,0.95) 0%, rgba(50,60,80,0.9) 100%)" }}
+                className="fixed inset-0 bg-black/60 z-[998] backdrop-blur-[2px]"
+                onClick={handleMobileToggle}
+                style={{ animation: `${isClosing ? "fadeOut" : "fadeIn"} 0.3s ease-in-out forwards` }}
+              />
+
+              {/* DRAWER */}
+              <div
+                className="fixed top-0 right-0 h-screen w-[65%] sm:w-[50%] z-[999] flex flex-col items-center justify-center shadow-2xl border-l border-white/10"
+                style={{
+                  background: "linear-gradient(135deg, rgba(20,20,25,0.98) 0%, rgba(40,40,50,0.95) 100%)",
+                  animation: `${isClosing ? "slideOutRight" : "slideInRight"} 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards`
+                }}
               >
+                {/* Close Button */}
+                <button
+                  onClick={handleMobileToggle}
+                  className="absolute top-6 right-6 p-2 text-white/70 hover:text-white transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+
                 <div className="w-full flex justify-center">
                   <GooeyNav
                     items={items}
@@ -487,10 +506,8 @@ export default function Navbar() {
                     animationTime={500}
                   />
                 </div>
-
-
               </div>
-            </div>
+            </>
           )}
         </div>
       </header>
